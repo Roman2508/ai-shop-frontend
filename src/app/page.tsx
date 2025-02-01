@@ -1,33 +1,96 @@
-import { Button } from '@/components/ui/common/Button'
-import { Input } from '@/components/ui/common/Input'
-import { useTranslations } from 'next-intl'
+import { Button } from "@/components/ui/common/Button";
+import { Card } from "@/components/ui/common/Card";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/common/Dialog";
+import { Input } from "@/components/ui/common/Input";
+import { Textarea } from "@/components/ui/common/Textarea";
+import { useTranslations } from "next-intl";
+import { PropsWithChildren } from "react";
+
+const TestWrapper: React.FC<PropsWithChildren> = ({ children }) => {
+  return (
+    <div style={{ width: "300px", margin: "20px auto 0" }}>{children}</div>
+  );
+};
 
 export default function Home() {
-  const translations = useTranslations('home')
+  const translations = useTranslations("home");
 
   return (
     <div className="font-[family-name:var(--font-geist-sans)]">
-      <h1>{translations('title')}</h1>
+      <h1>{translations("title")}</h1>
 
-      <div className="px-[500] py-[10]">
+      <TestWrapper>
         <Button variant="default">Додати до корзини</Button>
-      </div>
+      </TestWrapper>
 
-      <div className="px-[500] py-[10]">
+      <TestWrapper>
         <Button variant="link">Скинути фільтри</Button>
-      </div>
+      </TestWrapper>
 
-      <div className="px-[500] py-[10]">
-        <Button variant="outline">На головну</Button>
-      </div>
+      <TestWrapper>
+        <Button variant="outline" size="full">
+          На головну
+        </Button>
+      </TestWrapper>
 
-      <div className="px-[500] py-[10]">
+      <TestWrapper>
         <Button variant="secondary">Купити в один клік</Button>
-      </div>
+      </TestWrapper>
 
-      <div style={{ width: '300px', margin: '0 auto' }}>
-        <Input />
-      </div>
+      <TestWrapper>
+        <Input placeholder="default" />
+      </TestWrapper>
+
+      <TestWrapper>
+        <Input placeholder="primary" variant="primary" />
+      </TestWrapper>
+
+      <TestWrapper>
+        <Input placeholder="secondary" variant="secondary" />
+      </TestWrapper>
+
+      <TestWrapper>
+        <Input placeholder="secondary" variant="secondary" />
+      </TestWrapper>
+
+      <TestWrapper>
+        <Textarea />
+      </TestWrapper>
+
+      <TestWrapper>
+        <Card>
+          <div>1</div>
+          <div>1</div>
+          <div>1</div>
+          <div>1</div>
+          <div>1</div>
+          <div>1</div>
+        </Card>
+      </TestWrapper>
+
+      <Dialog>
+        <DialogTrigger asChild>
+          <TestWrapper>
+            <Button variant="outline">Open Modal</Button>
+          </TestWrapper>
+        </DialogTrigger>
+
+        <DialogContent className="sm:max-w-[425px]">
+          <DialogHeader>
+            <DialogTitle>Edit profile</DialogTitle>
+            <DialogDescription>
+              Make changes to your profile here. Click save when you're done.
+            </DialogDescription>
+          </DialogHeader>
+        </DialogContent>
+      </Dialog>
     </div>
-  )
+  );
 }

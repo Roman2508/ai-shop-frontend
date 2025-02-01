@@ -34,7 +34,7 @@ export default async function RootLayout({
           <body className={`${montserrat.variable} antialiased min-h-screen flex flex-col`}>
             {/* <body className={`${montserrat.variable} antialiased min-h-screen flex flex-col bg-dark`}> */}
             <Header />
-            <main className="grow">{children}</main>
+            <main className="grow pt-[110] pb-[100]">{children}</main>
             {/* <main className="grow rounded-3xl bg-secondary">{children}</main> */}
             <Footer />
           </body>
