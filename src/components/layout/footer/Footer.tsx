@@ -1,5 +1,5 @@
-import { Button } from "@/components/ui/common/Button";
-import React from "react";
+import { Button } from '@/components/ui/common/Button'
+import React from 'react'
 
 const Footer = () => {
   return (
@@ -61,24 +61,22 @@ const Footer = () => {
         {/*  */}
       </div>
 
-      <div className="border-t-2 border-muted-foreground grow flex justify-between pt-[25]">
+      <div className="border-t-[1px] border-muted-foreground grow flex justify-between pt-[25]">
         <div className="flex gap-[20]">
           <p>© 2025 «AI Phone Shop»</p>
-          <p className="cursor-pointer hover:border-b-2">
-            Політика конфіденційності
-          </p>
+          <p className="cursor-pointer hover:border-b-2">Політика конфіденційності</p>
           <p className="cursor-pointer hover:border-b-2">Правова інформація</p>
         </div>
 
         <div className="flex gap-[10]">
           <p>Приймаэмо до оплати:</p>
-          <p style={{ background: "#d1d1d1", width: "40px" }}>1</p>
-          <p style={{ background: "#d1d1d1", width: "40px" }}>2</p>
-          <p style={{ background: "#d1d1d1", width: "40px" }}>3</p>
+          <p style={{ background: '#d1d1d1', width: '40px' }}>1</p>
+          <p style={{ background: '#d1d1d1', width: '40px' }}>2</p>
+          <p style={{ background: '#d1d1d1', width: '40px' }}>3</p>
         </div>
       </div>
     </footer>
-  );
-};
+  )
+}
 
-export default Footer;
+export default Footer

@@ -5,7 +5,7 @@ import LoginButton from "./LoginButton";
 
 const Header = () => {
   return (
-    <header className="fixed w-full flex justify-between items-center py-[20] px-[26] bg-dark text-white">
+    <header className="fixed w-full flex justify-between items-center py-[20] px-[26] bg-dark text-white z-[1]">
       {/* <header className="flex justify-between p-[20]"> */}
       <div className="grow flex gap-[10] items-center">
         <img src="logo.png" width="30px" height="30px" />
