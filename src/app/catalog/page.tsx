@@ -11,6 +11,15 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from '@/components/ui/common/Breadcrumb'
+import {
+  Pagination,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationContent,
+  PaginationPrevious,
+  PaginationEllipsis,
+} from '@/components/ui/common/Pagination'
 import { Card } from '@/components/ui/common/Card'
 import { Input } from '@/components/ui/common/Input'
 import { Label } from '@/components/ui/common/Label'
@@ -140,7 +149,36 @@ const CatalogPage = (props: Props) => {
                 ))}
             </div>
 
-            <div>pagination</div>
+            <Pagination className="mt-[40]">
+              <PaginationContent>
+                <PaginationItem>
+                  {/* <PaginationPrevious href="#" /> */}
+                  <Button variant="link" className="px-[5]">
+                    {'< Назад'}
+                  </Button>
+                </PaginationItem>
+                <PaginationItem>
+                  <PaginationLink href="#">1</PaginationLink>
+                </PaginationItem>
+                <PaginationItem>
+                  <PaginationLink href="#" isActive>
+                    2
+                  </PaginationLink>
+                </PaginationItem>
+                <PaginationItem>
+                  <PaginationLink href="#">3</PaginationLink>
+                </PaginationItem>
+                <PaginationItem>
+                  <PaginationEllipsis />
+                </PaginationItem>
+                <PaginationItem>
+                  {/* <PaginationNext href="#" /> */}
+                  <Button variant="link" className="px-[5]">
+                    {'Вперед >'}
+                  </Button>
+                </PaginationItem>
+              </PaginationContent>
+            </Pagination>
           </div>
         </div>
       </div>

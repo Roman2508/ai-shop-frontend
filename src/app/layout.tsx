@@ -10,7 +10,7 @@ import { ThemeProvider } from '@/providers/ThemeProvider'
 
 const montserrat = Montserrat({
   subsets: ['latin'],
-  weight: ['400', '600', '700'],
+  weight: ['400', '500', '600', '700'],
   variable: '--font-montserrat',
 })
 
@@ -28,7 +28,7 @@ export default async function RootLayout({
   const messages = await getMessages()
 
   return (
-    <html lang={locale}>
+    <html lang={locale} suppressHydrationWarning>
       <NextIntlClientProvider messages={messages}>
         <ThemeProvider attribute="class" defaultTheme="dark" disableTransitionOnChange>
           <body className={`${montserrat.variable} antialiased min-h-screen flex flex-col`}>

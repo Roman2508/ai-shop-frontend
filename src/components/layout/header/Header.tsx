@@ -1,13 +1,13 @@
-import React from "react";
-import Search from "./Search";
-import { Button } from "@/components/ui/common/Button";
-import LoginButton from "./LoginButton";
+import React from 'react'
+import Search from './Search'
+import { Button } from '@/components/ui/common/Button'
+import LoginButton from './LoginButton'
 
 const Header = () => {
   return (
-    <header className="fixed w-full flex justify-between items-center py-[20] px-[26] bg-dark text-white z-[1]">
+    <header className="fixed w-full flex justify-between items-center gap-[20] py-[20] px-[26] bg-dark text-white z-[1]">
       {/* <header className="flex justify-between p-[20]"> */}
-      <div className="grow flex gap-[10] items-center">
+      <div className="flex-1 flex gap-[10] items-center">
         <img src="logo.png" width="30px" height="30px" />
         <b className="text-[16px]">AI-PhoneShop</b>
       </div>
@@ -17,7 +17,7 @@ const Header = () => {
         <Search />
       </div>
 
-      <div className="flex gap-[20] grow justify-end items-center">
+      <div className="flex justify-end items-center gap-[20] flex-1">
         <div className="flex gap-[14]">
           <Button size="icon" variant="icon">
             TG
@@ -43,7 +43,7 @@ const Header = () => {
         </Button>
       </div>
     </header>
-  );
-};
+  )
+}
 
-export default Header;
+export default Header

@@ -83,9 +83,9 @@
 }
 
 ::-webkit-scrollbar-track {
-  /* @apply bg-background; */
+  @apply bg-background;
 }
 
 ::-webkit-scrollbar-thumb {
-  /* @apply rounded-full bg-secondary; */
+  @apply rounded-full bg-primary;
 }

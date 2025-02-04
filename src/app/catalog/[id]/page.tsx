@@ -12,11 +12,11 @@ import {
 } from '@/components/ui/common/Breadcrumb'
 import { Card } from '@/components/ui/common/Card'
 import { Input } from '@/components/ui/common/Input'
+import SaveIcon from '@/components/images/SaveIcon'
 import { Button } from '@/components/ui/common/Button'
+import CatalogCard from '@/components/features/CatalogCard'
 import ButtonWithIcon from '@/components/ui/custom/ButtonWithIcon'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/common/Tabs'
-import CatalogCard from '@/components/features/CatalogCard'
-import SaveIcon from '@/components/images/SaveIcon'
 
 const ProductPage = () => {
   return (

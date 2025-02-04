@@ -74,10 +74,10 @@ const ProfileLayout = ({
       <div className="flex items-baseline gap-[46]">
         <Card className="w-[300] py-[20] px-[25] sticky top-[100]">
           {linksList.map((el) => (
-            <a href={el.link} className="flex items-center gap-[15] pb-[10] mb-[10] border-b border-dashed">
+            <Link href={el.link} className="flex items-center gap-[15] pb-[10] mb-[10] border-b border-dashed">
               <img src={el.icon} style={{ border: '1px solid black', padding: '6px' }} />
               <p className={pathname === el.link ? 'text-primary font-semibold' : ''}>{el.label}</p>
-            </a>
+            </Link>
           ))}
         </Card>
 
