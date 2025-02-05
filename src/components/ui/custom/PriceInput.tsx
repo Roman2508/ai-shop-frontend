@@ -2,6 +2,7 @@
 
 import React from 'react'
 import { Input } from '../common/Input'
+import UahIcon from '@/components/images/UahIcon'
 
 type PriceInputPropsType = {
   variant?: 'from' | 'to'
@@ -23,21 +24,17 @@ const PriceInput: React.FC<PriceInputPropsType> = ({ variant = 'from' }) => {
       </span>
 
       <Input
-        value={value}
-        onChange={(e) => handleChangeValue(e.target.value)}
-        className="grow text-center pl-[18] pr-[5]"
-        variant="secondary"
         min={0}
         max={99999}
         maxLength={5}
+        value={value}
+        variant="secondary"
+        className="grow text-center pl-[18] pr-[5]"
+        onChange={(e) => handleChangeValue(e.target.value)}
       />
 
       <span className="absolute inset-y-0 right-0 flex items-center pr-2">
-        <img
-          width="12px"
-          height="12px"
-          src="https://w7.pngwing.com/pngs/1022/842/png-transparent-ukraine-ukrainian-hryvnia-hryvnia-sign-currency-symbol-banknote-text-logo-monochrome-thumbnail.png"
-        />
+        <UahIcon />
       </span>
     </div>
   )

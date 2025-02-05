@@ -17,7 +17,7 @@ type ButtonWithIconProps = {
   wrapperClassNames?: string
   iconVariant?: 'left' | 'right'
   // VectorIcon?: React.ReactElement<{ [props: string]: any }>
-  buttonVariant?: 'link' | 'default' | 'outline' | 'secondary' | 'icon' | null | undefined
+  buttonVariant?: 'link' | 'static' | 'default' | 'outline' | 'secondary' | 'icon' | null | undefined
   [restProp: string]: any
 }
 

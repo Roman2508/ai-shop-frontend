@@ -1,29 +1,53 @@
+'use client'
+
 import React from 'react'
+import Link from 'next/link'
+
 import Search from './Search'
-import { Button } from '@/components/ui/common/Button'
 import LoginButton from './LoginButton'
+import { Label } from '@/components/ui/common/Label'
+import { Switch } from '@/components/ui/common/Switch'
+import { Button } from '@/components/ui/common/Button'
+import ButtonWithIcon from '@/components/ui/custom/ButtonWithIcon'
+import { ThemeToggler } from './ThemeToggler'
 
 const Header = () => {
+  const handleChangeTheme = () => {
+    const currentTheme = window.localStorage.getItem('theme')
+    console.log(currentTheme)
+    if (currentTheme === 'dark') {
+      window.localStorage.setItem('theme', 'light')
+    } else {
+      window.localStorage.setItem('theme', 'dark')
+    }
+  }
+
   return (
     <header className="fixed w-full flex justify-between items-center gap-[20] py-[20] px-[26] bg-dark text-white z-[1]">
       {/* <header className="flex justify-between p-[20]"> */}
-      <div className="flex-1 flex gap-[10] items-center">
-        <img src="logo.png" width="30px" height="30px" />
-        <b className="text-[16px]">AI-PhoneShop</b>
+      <div className="flex-1 flex gap-[20] items-center">
+        <Link href="/catalog">
+          <ButtonWithIcon text="Каталог" iconSrc="/icons/burger.png" classNames="text-dark h-[36]" />
+        </Link>
+
+        <Search />
       </div>
 
       <div className="flex gap-[20]">
+        <Link className="flex gap-[10] items-center" href="/">
+          <img src="logo.png" width="30px" height="30px" />
+          <b className="text-[16px]">AI-PhoneShop</b>
+        </Link>
         {/* <p>Catalog</p> */}
-        <Search />
       </div>
 
       <div className="flex justify-end items-center gap-[20] flex-1">
         <div className="flex gap-[14]">
           <Button size="icon" variant="icon">
-            TG
+            <img width="16px" height="16px" src="/icons/telegram.png" />
           </Button>
           <Button size="icon" variant="icon">
-            VB
+            <img width="16px" height="16px" src="/icons/viber.png" />
           </Button>
         </div>
 
@@ -34,12 +58,14 @@ const Header = () => {
 
         <LoginButton />
 
+        <ThemeToggler />
+
         <Button size="icon" variant="icon">
-          <img
-            width="16px"
-            height="16px"
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQGd2sjxFQjvIeJHrB6h01ODTyCuzYmEwvy1w&s"
-          />
+          <img width="16px" height="16px" src="/icons/wishlist.png" />
+        </Button>
+
+        <Button size="icon" variant="icon">
+          <img width="16px" height="16px" src="/icons/shopping-bag.png" />
         </Button>
       </div>
     </header>

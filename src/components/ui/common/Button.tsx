@@ -15,6 +15,7 @@ const buttonVariants = cva(
         secondary: 'bg-secondary text-primary font-semibold',
         link: 'text-accent-foreground opacity-60 font-semibold underline-offset-4 hover:underline',
         icon: 'border border-muted-foreground bg-transparent text-muted font-semibold hover:border-muted',
+        static: 'border border-muted-foreground bg-transparent text-white font-semibold hover:border-muted',
       },
       size: {
         default: 'px-[32] py-[12] rounded-full',

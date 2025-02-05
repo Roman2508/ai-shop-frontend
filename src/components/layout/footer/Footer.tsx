@@ -1,4 +1,5 @@
 import { Button } from '@/components/ui/common/Button'
+import Image from 'next/image'
 import React from 'react'
 
 const Footer = () => {
@@ -14,10 +15,10 @@ const Footer = () => {
           <div className="flex gap-[15]">
             <Button>ЗАМОВИТИ ДЗВІНОК</Button>
             <Button size="icon" variant="icon" className="w-[44] h-[44]">
-              TG
+              <Image width={20} height={20} src="/icons/telegram.png" alt="telegram icon" />
             </Button>
             <Button size="icon" variant="icon" className="w-[44] h-[44]">
-              VB
+              <Image width={20} height={20} src="/icons/viber.png" alt="viber icon" />
             </Button>
           </div>
         </div>
@@ -45,14 +46,14 @@ const Footer = () => {
           <div className="flex flex-col gap-[16]">
             <div className="flex items-center gap-[12]">
               <Button size="icon" variant="icon" className="w-[44] h-[44]">
-                Phone
+                <Image width={20} height={20} src="/icons/footer-phone.png" alt="phone icon" />
               </Button>
               <p>+380 98-888-88-88</p>
             </div>
 
             <div className="flex items-center gap-[12]">
               <Button size="icon" variant="icon" className="w-[44] h-[44]">
-                Mail
+                <Image width={20} height={20} src="/icons/mail.png" alt="mail icon" />
               </Button>
               <p>help@example.com</p>
             </div>
@@ -64,15 +65,18 @@ const Footer = () => {
       <div className="border-t-[1px] border-muted-foreground grow flex justify-between pt-[25]">
         <div className="flex gap-[20]">
           <p>© 2025 «AI Phone Shop»</p>
-          <p className="cursor-pointer hover:border-b-2">Політика конфіденційності</p>
-          <p className="cursor-pointer hover:border-b-2">Правова інформація</p>
+          <p className="cursor-pointer">Політика конфіденційності</p>
+          <p className="cursor-pointer">Правова інформація</p>
         </div>
 
-        <div className="flex gap-[10]">
-          <p>Приймаэмо до оплати:</p>
-          <p style={{ background: '#d1d1d1', width: '40px' }}>1</p>
-          <p style={{ background: '#d1d1d1', width: '40px' }}>2</p>
-          <p style={{ background: '#d1d1d1', width: '40px' }}>3</p>
+        <div className="flex items-center gap-[10]">
+          <p>Приймаємо до оплати:</p>
+          <p className="flex items-center rounded-[5] p-[10]" style={{ background: 'rgba(255, 255, 255, .1)' }}>
+            <Image width={38} height={15} src="/icons/visa.png" alt="visa icon" />
+          </p>
+          <p className="flex items-center rounded-[5] p-[10]" style={{ background: 'rgba(255, 255, 255, .1)' }}>
+            <Image width={30} height={15} src="/icons/mastercard.png" alt="mastercard icon" />
+          </p>
         </div>
       </div>
     </footer>

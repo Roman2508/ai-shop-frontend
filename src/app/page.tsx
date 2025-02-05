@@ -1,24 +1,12 @@
-import { Button } from '@/components/ui/common/Button'
-import { Card } from '@/components/ui/common/Card'
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from '@/components/ui/common/Dialog'
-import { Input } from '@/components/ui/common/Input'
-import { Textarea } from '@/components/ui/common/Textarea'
-import ButtonWithIcon from '@/components/ui/custom/ButtonWithIcon'
-import { useTranslations } from 'next-intl'
-import Image from 'next/image'
 import Link from 'next/link'
-import { PropsWithChildren } from 'react'
-import ProductPage from './catalog/[id]/page'
-import CatalogCard from '@/components/features/CatalogCard'
+import Image from 'next/image'
+import { useTranslations } from 'next-intl'
 
-const aaa = ['Apple', 'Samsung', 'Xiaomi', 'Google Pixel', 'One Plus', 'Motorola', 'Nokia', 'Кнопкові телефони']
+import CatalogCard from '@/components/features/CatalogCard'
+import ButtonWithIcon from '@/components/ui/custom/ButtonWithIcon'
+import { Button } from '@/components/ui/common/Button'
+
+const categories = ['Apple', 'Samsung', 'Xiaomi', 'Google Pixel', 'One Plus', 'Motorola', 'Nokia', 'Кнопкові телефони']
 
 export default function Home() {
   const translations = useTranslations('home')
@@ -31,7 +19,7 @@ export default function Home() {
         <div className="flex gap-[30] mb-[70]">
           <div className="w-[320] min-w-[320] border rounded-[20]">
             <div className="pt-[20] px-[25]">
-              {aaa.map((el) => (
+              {categories.map((el) => (
                 <Link href="#" className="flex items-center py-[10] gap-[15] border-b border-dotted">
                   <div className="flex items-center justify-center bg-secondary w-[30] h-[30]">
                     <Image src="/icons/phone.png" width={20} height={20} alt="phone icon" />
@@ -42,12 +30,14 @@ export default function Home() {
               ))}
             </div>
 
-            <ButtonWithIcon
-              text="Ще категорії"
-              iconSrc="/icons/shopping-bag.png"
-              classNames="w-full rounded-[20]"
-              wrapperClassNames="mt-[15]"
-            />
+            <Link href="/catalog">
+              <ButtonWithIcon
+                text="Ще категорії"
+                iconSrc="/icons/shopping-bag.png"
+                classNames="w-full rounded-[20]"
+                wrapperClassNames="mt-[15]"
+              />
+            </Link>
           </div>
 
           <div
@@ -66,47 +56,23 @@ export default function Home() {
         </div>
 
         <div className="flex gap-[30] mb-[140]">
-          <div className="">
-            <div className="flex items-center gap-[15] mb-[15]">
-              <div className="flex items-center justify-center bg-secondary rounded-full w-[55] h-[55]">
-                <Image src="/icons/phone.png" width={30} height={20} alt="icon" />
+          {Array(3)
+            .fill(null)
+            .map((_, index) => (
+              <div key={index}>
+                <div className="flex items-center gap-[15] mb-[15]">
+                  <div className="flex items-center justify-center bg-secondary rounded-full w-[55] h-[55]">
+                    <Image src="/icons/phone.png" width={30} height={20} alt="icon" />
+                  </div>
+                  <h4 className="font-semibold text-xl">Большой ассортимент</h4>
+                </div>
+
+                <p>
+                  Обладаем опытом и всеми знаниями, что позволяет нам эффективно анализировать потребности клиента и
+                  предлагать наиболее подходящие решения.
+                </p>
               </div>
-              <h4 className="font-semibold text-xl">Большой ассортимент</h4>
-            </div>
-
-            <p>
-              Обладаем опытом и всеми знаниями, что позволяет нам эффективно анализировать потребности клиента и
-              предлагать наиболее подходящие решения.
-            </p>
-          </div>
-
-          <div>
-            <div className="flex items-center gap-[15] mb-[15]">
-              <div className="flex items-center justify-center bg-secondary rounded-full w-[55] h-[55]">
-                <Image src="/icons/phone.png" width={30} height={20} alt="icon" />
-              </div>
-              <h4 className="font-semibold text-xl">Большой ассортимент</h4>
-            </div>
-
-            <p>
-              Обладаем опытом и всеми знаниями, что позволяет нам эффективно анализировать потребности клиента и
-              предлагать наиболее подходящие решения.
-            </p>
-          </div>
-
-          <div className="">
-            <div className="flex items-center gap-[15] mb-[15]">
-              <div className="flex items-center justify-center bg-secondary rounded-full w-[55] h-[55]">
-                <Image src="/icons/phone.png" width={30} height={20} alt="icon" />
-              </div>
-              <h4 className="font-semibold text-xl">Большой ассортимент</h4>
-            </div>
-
-            <p>
-              Обладаем опытом и всеми знаниями, что позволяет нам эффективно анализировать потребности клиента и
-              предлагать наиболее подходящие решения.
-            </p>
-          </div>
+            ))}
         </div>
 
         <div className="mb-[120]">
@@ -118,6 +84,13 @@ export default function Home() {
             <CatalogCard viewType="cards" />
             <CatalogCard viewType="cards" />
           </div>
+          <div className="flex justify-center mt-[20]">
+            <Link href="/catalog">
+              <Button variant="link" className="px-[20]">
+                Показати більше
+              </Button>
+            </Link>
+          </div>
         </div>
 
         <div className="mb-[120]">
@@ -128,6 +101,13 @@ export default function Home() {
             <CatalogCard viewType="cards" />
             <CatalogCard viewType="cards" />
             <CatalogCard viewType="cards" />
+          </div>
+          <div className="flex justify-center mt-[20]">
+            <Link href="/catalog">
+              <Button variant="link" className="px-[20]">
+                Показати більше
+              </Button>
+            </Link>
           </div>
         </div>
 

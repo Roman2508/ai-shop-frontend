@@ -2,6 +2,7 @@ import React from 'react'
 import { Card } from '../ui/common/Card'
 import { Button } from '../ui/common/Button'
 import { Input } from '../ui/common/Input'
+import WishlistIcon from '../images/WishlistIcon'
 
 type CatalogCardPropsType = {
   viewType: 'cards' | 'rows'
@@ -12,16 +13,13 @@ const CatalogCard: React.FC<CatalogCardPropsType> = ({ viewType }) => {
     <Card className={viewType === 'cards' ? 'pb-[30] pt-[20] px-[20]' : 'flex py-[24] pl-[16] pr-[30] gap-[20]'}>
       <div className={viewType === 'cards' ? 'flex justify-end gap-[10]' : 'hidden'}>
         <Button size="icon" variant="icon" className="text-muted-foreground hover:border-muted-foreground">
-          20
-        </Button>
-        <Button size="icon" variant="icon" className="text-muted-foreground hover:border-muted-foreground">
-          20
+          <WishlistIcon className="fill-muted-foreground" />
         </Button>
       </div>
 
-      <div className="my-[10]">
+      <div className="my-[10] w-full">
         <img
-          className={viewType === 'cards' ? 'h-[260]' : 'h-[200]'}
+          className={viewType === 'cards' ? 'h-[260] w-full object-cover' : 'h-[200]'}
           src="https://www.shutterstock.com/image-vector/no-image-available-icon-template-600nw-1036735678.jpg"
         />
       </div>
@@ -30,10 +28,7 @@ const CatalogCard: React.FC<CatalogCardPropsType> = ({ viewType }) => {
         <div className={viewType === 'cards' ? '' : 'w-full'}>
           <div className={viewType === 'cards' ? 'hidden' : 'flex justify-end gap-[10]'}>
             <Button size="icon" variant="icon" className="text-muted-foreground hover:border-muted-foreground">
-              20
-            </Button>
-            <Button size="icon" variant="icon" className="text-muted-foreground hover:border-muted-foreground">
-              20
+              <WishlistIcon />
             </Button>
           </div>
 

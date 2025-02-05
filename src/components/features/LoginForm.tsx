@@ -61,7 +61,7 @@ const LoginForm = () => {
         />
 
         <div className="flex items-center space-x-2 mb-[20]">
-          <Checkbox id="terms" className="border border-primary" />
+          <Checkbox id="terms" className="border border-primary border-muted-foreground" />
           <label
             htmlFor="terms"
             className="text-sm font-medium leading-none cursor-pointer peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
