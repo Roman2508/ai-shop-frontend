@@ -1,14 +1,19 @@
-import { CodegenConfig } from './node_modules/@graphql-codegen/cli/typings/config.d'
+import { CodegenConfig } from "@graphql-codegen/cli";
+import "dotenv/config";
 
 const config: CodegenConfig = {
   schema: process.env.NEXT_PUBLIC_SERVER_URL,
-  documents: './src/graphql/**/*.graphql',
+  documents: ["./src/graphql/**/*.graphql", "./src/graphql/**/*.gql"],
   generates: {
-    'src/graphql/generated/output.ts': {
-      plugins: ['typescript', 'typescript-operations', 'typescript-react-apollo'],
+    "./src/graphql/generated/output.ts": {
+      plugins: [
+        "typescript",
+        "typescript-operations",
+        "typescript-react-apollo",
+      ],
     },
   },
   ignoreNoDocuments: true,
-}
+};
 
-export default config
+export default config;
