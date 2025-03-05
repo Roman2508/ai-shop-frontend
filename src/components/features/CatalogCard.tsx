@@ -17,7 +17,7 @@ const CatalogCard: React.FC<CatalogCardPropsType> = ({ viewType }) => {
         </Button>
       </div>
 
-      <div className="my-[10] w-full">
+      <div className="my-[10]">
         <img
           className={viewType === 'cards' ? 'h-[260] w-full object-cover' : 'h-[200]'}
           src="https://www.shutterstock.com/image-vector/no-image-available-icon-template-600nw-1036735678.jpg"

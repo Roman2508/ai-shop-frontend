@@ -68,7 +68,7 @@ const CatalogPage = (props: Props) => {
 
       <div className="flex gap-[40]">
         {/* filters */}
-        <Card className="px-[20] py-[28] w-[300]">
+        <Card className="px-[20] py-[28] w-[300] min-w-[300]">
           {Array(4)
             .fill(null)
             .map(() => (

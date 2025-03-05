@@ -7,6 +7,7 @@ import '../styles/global.css'
 import Footer from '@/components/layout/footer/Footer'
 import Header from '@/components/layout/header/Header'
 import { ThemeProvider } from '@/providers/ThemeProvider'
+import ApolloClientProvider from '@/providers/ApolloClientProvider'
 
 const montserrat = Montserrat({
   subsets: ['latin'],
@@ -29,15 +30,17 @@ export default async function RootLayout({
 
   return (
     <html lang={locale} suppressHydrationWarning>
-      <NextIntlClientProvider messages={messages}>
-        <ThemeProvider attribute="class" defaultTheme="system" disableTransitionOnChange>
-          <body className={`${montserrat.variable} antialiased min-h-screen flex flex-col`}>
-            <Header />
-            <main className="grow pt-[110] pb-[100]">{children}</main>
-            <Footer />
-          </body>
-        </ThemeProvider>
-      </NextIntlClientProvider>
+      <ApolloClientProvider>
+        <NextIntlClientProvider messages={messages}>
+          <ThemeProvider attribute="class" defaultTheme="system" disableTransitionOnChange>
+            <body className={`${montserrat.variable} antialiased min-h-screen flex flex-col`}>
+              <Header />
+              <main className="grow pt-[110] pb-[100]">{children}</main>
+              <Footer />
+            </body>
+          </ThemeProvider>
+        </NextIntlClientProvider>
+      </ApolloClientProvider>
     </html>
   )
 }

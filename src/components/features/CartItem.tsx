@@ -24,6 +24,7 @@ const CartItem: React.FC<CartItemPropsType> = (props) => {
       <div className="border border-border w-[110] h-[110] p-[10]">
         <img src={photo} />
       </div>
+      
       <div className="grow">
         <p className="text-primary font-semibold">{name}</p>
         <p className="">{description}</p>
