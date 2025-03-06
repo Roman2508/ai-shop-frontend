@@ -1,5 +1,5 @@
-query getAllProducts {
-  getAllProducts {
+query GetProductById($productId: String!) {
+  getProductById(productId: $productId) {
     id
     title
     price

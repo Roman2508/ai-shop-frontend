@@ -6,17 +6,17 @@ const middleware = (request: NextRequest) => {
 
   const isAuthPage = request.url.includes('/profile')
 
-  if (isAuthPage) {
-    if (session) {
-      return NextResponse.redirect(new URL('/catalog', request.url))
-    }
+  // if (isAuthPage) {
+  //   if (session) {
+  //     return NextResponse.redirect(new URL('/catalog', request.url))
+  //   }
 
-    return NextResponse.next()
-  }
+  //   return NextResponse.next()
+  // }
 
-  if (!session) {
-    return NextResponse.redirect(new URL('/catalog', request.url))
-  }
+  // if (!session) {
+  //   return NextResponse.redirect(new URL('/catalog', request.url))
+  // }
 }
 
 export const config = {

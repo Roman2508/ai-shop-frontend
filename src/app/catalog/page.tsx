@@ -1,7 +1,7 @@
-'use client'
+"use client";
 
-import React from 'react'
-import Link from 'next/link'
+import React from "react";
+import Link from "next/link";
 
 import {
   Breadcrumb,
@@ -10,7 +10,7 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from '@/components/ui/common/Breadcrumb'
+} from "@/components/ui/common/Breadcrumb";
 import {
   Pagination,
   PaginationItem,
@@ -19,7 +19,7 @@ import {
   PaginationContent,
   PaginationPrevious,
   PaginationEllipsis,
-} from '@/components/ui/common/Pagination'
+} from "@/components/ui/common/Pagination";
 import {
   Select,
   SelectItem,
@@ -28,23 +28,26 @@ import {
   SelectValue,
   SelectTrigger,
   SelectContent,
-} from '@/components/ui/common/Select'
-import { Card } from '@/components/ui/common/Card'
-import { Input } from '@/components/ui/common/Input'
-import { Label } from '@/components/ui/common/Label'
-import { Button } from '@/components/ui/common/Button'
-import { Checkbox } from '@/components/ui/common/Checkbox'
-import { Slider } from '@/components/ui/common/Slider'
-import PriceInput from '@/components/ui/custom/PriceInput'
-import CatalogCard from '@/components/features/CatalogCard'
-import Image from 'next/image'
-import ViewCardIcon from '@/components/images/ViewCardIcon'
-import ViewRowsIcon from '@/components/images/ViewRowsIcon'
+} from "@/components/ui/common/Select";
+import { Card } from "@/components/ui/common/Card";
+import { Input } from "@/components/ui/common/Input";
+import { Label } from "@/components/ui/common/Label";
+import { Button } from "@/components/ui/common/Button";
+import { Checkbox } from "@/components/ui/common/Checkbox";
+import { Slider } from "@/components/ui/common/Slider";
+import PriceInput from "@/components/ui/custom/PriceInput";
+import CatalogCard from "@/components/features/CatalogCard";
+import Image from "next/image";
+import ViewCardIcon from "@/components/images/ViewCardIcon";
+import ViewRowsIcon from "@/components/images/ViewRowsIcon";
+import { useGetAllProductsQuery } from "@/graphql/generated/output";
 
-type Props = {}
+type Props = {};
 
 const CatalogPage = (props: Props) => {
-  const [viewType, setViewType] = React.useState<'cards' | 'rows'>('cards')
+  const { data } = useGetAllProductsQuery();
+
+  const [viewType, setViewType] = React.useState<"cards" | "rows">("cards");
 
   return (
     <div className="max-w-[1640] mx-auto px-[16]">
@@ -64,7 +67,9 @@ const CatalogPage = (props: Props) => {
         </BreadcrumbList>
       </Breadcrumb>
 
-      <h1 className="text-xl font-semibold mb-[45]">Смартфони, мобільні пристрої та аксесуари</h1>
+      <h1 className="text-xl font-semibold mb-[45]">
+        Смартфони, мобільні пристрої та аксесуари
+      </h1>
 
       <div className="flex gap-[40]">
         {/* filters */}
@@ -76,7 +81,15 @@ const CatalogPage = (props: Props) => {
                 <b className="block mb-[20]">Бренд</b>
 
                 <div>
-                  {['Apple', 'Samsung', 'Meizu', 'Pocco', 'Xiaomi', 'LG', 'Nokia'].map((el) => (
+                  {[
+                    "Apple",
+                    "Samsung",
+                    "Meizu",
+                    "Pocco",
+                    "Xiaomi",
+                    "LG",
+                    "Nokia",
+                  ].map((el) => (
                     <div className="flex items-center space-x-2 mt-[12]">
                       <Label className="flex items-center gap-[12]">
                         <Checkbox />
@@ -129,8 +142,12 @@ const CatalogPage = (props: Props) => {
                       <SelectItem value="default">За замовчуванням</SelectItem>
                       <SelectItem value="rating">За рейтингом</SelectItem>
                       <SelectItem value="new">За новизною</SelectItem>
-                      <SelectItem value="price:desc">Від дешевих до дорогих</SelectItem>
-                      <SelectItem value="price:asc">Від дорогих до дешевих</SelectItem>
+                      <SelectItem value="price:desc">
+                        Від дешевих до дорогих
+                      </SelectItem>
+                      <SelectItem value="price:asc">
+                        Від дорогих до дешевих
+                      </SelectItem>
                     </SelectGroup>
                   </SelectContent>
                 </Select>
@@ -159,18 +176,30 @@ const CatalogPage = (props: Props) => {
                     size="icon"
                     variant="icon"
                     className="border-none w-[44] h-[44]"
-                    onClick={() => setViewType('cards')}
+                    onClick={() => setViewType("cards")}
                   >
-                    <ViewCardIcon className={viewType === 'cards' ? 'fill-primary' : 'fill-accent-foreground'} />
+                    <ViewCardIcon
+                      className={
+                        viewType === "cards"
+                          ? "fill-primary"
+                          : "fill-accent-foreground"
+                      }
+                    />
                   </Button>
 
                   <Button
                     size="icon"
                     variant="icon"
                     className="border-none w-[44] h-[44]"
-                    onClick={() => setViewType('rows')}
+                    onClick={() => setViewType("rows")}
                   >
-                    <ViewRowsIcon className={viewType === 'rows' ? 'fill-primary' : 'fill-accent-foreground'} />
+                    <ViewRowsIcon
+                      className={
+                        viewType === "rows"
+                          ? "fill-primary"
+                          : "fill-accent-foreground"
+                      }
+                    />
                   </Button>
                 </div>
               </div>
@@ -179,12 +208,18 @@ const CatalogPage = (props: Props) => {
 
           {/* catalog cards */}
           <div>
-            <div className={viewType === 'cards' ? 'grid grid-cols-4 gap-[18]' : 'grid grid-cols-1 gap-[18]'}>
-              {Array(20)
-                .fill(null)
-                .map((el) => (
-                  <CatalogCard viewType={viewType} />
-                ))}
+            <div
+              className={
+                viewType === "cards"
+                  ? "grid grid-cols-4 gap-[18]"
+                  : "grid grid-cols-1 gap-[18]"
+              }
+            >
+              {data
+                ? data.getAllProducts.map((product) => (
+                    <CatalogCard product={product} viewType={viewType} />
+                  ))
+                : "Loading..."}
             </div>
 
             <Pagination className="mt-[40]">
@@ -192,7 +227,7 @@ const CatalogPage = (props: Props) => {
                 <PaginationItem>
                   {/* <PaginationPrevious href="#" /> */}
                   <Button variant="link" className="px-[5]">
-                    {'< Назад'}
+                    {"< Назад"}
                   </Button>
                 </PaginationItem>
                 <PaginationItem>
@@ -212,7 +247,7 @@ const CatalogPage = (props: Props) => {
                 <PaginationItem>
                   {/* <PaginationNext href="#" /> */}
                   <Button variant="link" className="px-[5]">
-                    {'Вперед >'}
+                    {"Вперед >"}
                   </Button>
                 </PaginationItem>
               </PaginationContent>
@@ -221,7 +256,7 @@ const CatalogPage = (props: Props) => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default CatalogPage
+export default CatalogPage;

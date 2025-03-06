@@ -34,6 +34,7 @@ export type CreateOrderInput = {
 
 export type CreateProductInput = {
   battery: Scalars['Float']['input'];
+  brand: Scalars['String']['input'];
   builtInMemory: Scalars['Float']['input'];
   color: Scalars['String']['input'];
   deliverySet: Scalars['String']['input'];
@@ -153,15 +154,32 @@ export type OrderItemDto = {
 
 export type ProductModel = {
   __typename?: 'ProductModel';
+  battery: Scalars['Float']['output'];
+  brand: Scalars['String']['output'];
+  builtInMemory: Scalars['Float']['output'];
+  color: Scalars['String']['output'];
   createdAt: Scalars['DateTime']['output'];
+  deliverySet: Scalars['String']['output'];
+  frontCamera: Scalars['Float']['output'];
   id: Scalars['ID']['output'];
+  images: Array<Scalars['String']['output']>;
+  mainCamera: Scalars['Float']['output'];
+  materials: Scalars['String']['output'];
+  os: Scalars['String']['output'];
   price: Scalars['Float']['output'];
+  processorCores: Scalars['String']['output'];
+  processorName: Scalars['String']['output'];
+  ram: Scalars['Float']['output'];
+  screenDiagonal: Scalars['Float']['output'];
+  simCount: Scalars['Float']['output'];
+  simFormat: Array<Scalars['String']['output']>;
   title: Scalars['String']['output'];
   updatedAt: Scalars['DateTime']['output'];
 };
 
 export type Query = {
   __typename?: 'Query';
+  CreateManyProducts: ProductModel;
   CreateProduct: ProductModel;
   UpdateProduct: ProductModel;
   findAllUsers: Array<UserModel>;
@@ -235,7 +253,14 @@ export type FindAllUsersQuery = { __typename?: 'Query', findAllUsers: Array<{ __
 export type GetAllProductsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetAllProductsQuery = { __typename?: 'Query', getAllProducts: Array<{ __typename?: 'ProductModel', id: string, title: string, price: number }> };
+export type GetAllProductsQuery = { __typename?: 'Query', getAllProducts: Array<{ __typename?: 'ProductModel', id: string, title: string, price: number, brand: string, frontCamera: number, mainCamera: number, ram: number, color: string, builtInMemory: number, processorName: string, processorCores: string, os: string, deliverySet: string, materials: string, simCount: number, simFormat: Array<string>, images: Array<string>, battery: number, createdAt: any, screenDiagonal: number, updatedAt: any }> };
+
+export type GetProductByIdQueryVariables = Exact<{
+  productId: Scalars['String']['input'];
+}>;
+
+
+export type GetProductByIdQuery = { __typename?: 'Query', getProductById: { __typename?: 'ProductModel', id: string, title: string, price: number, brand: string, frontCamera: number, mainCamera: number, ram: number, color: string, builtInMemory: number, processorName: string, processorCores: string, os: string, deliverySet: string, materials: string, simCount: number, simFormat: Array<string>, images: Array<string>, battery: number, createdAt: any, screenDiagonal: number, updatedAt: any } };
 
 
 export const FindAllUsersDocument = gql`
@@ -286,6 +311,24 @@ export const GetAllProductsDocument = gql`
     id
     title
     price
+    brand
+    frontCamera
+    mainCamera
+    ram
+    color
+    builtInMemory
+    processorName
+    processorCores
+    os
+    deliverySet
+    materials
+    simCount
+    simFormat
+    images
+    battery
+    createdAt
+    screenDiagonal
+    updatedAt
   }
 }
     `;
@@ -321,3 +364,63 @@ export type GetAllProductsQueryHookResult = ReturnType<typeof useGetAllProductsQ
 export type GetAllProductsLazyQueryHookResult = ReturnType<typeof useGetAllProductsLazyQuery>;
 export type GetAllProductsSuspenseQueryHookResult = ReturnType<typeof useGetAllProductsSuspenseQuery>;
 export type GetAllProductsQueryResult = Apollo.QueryResult<GetAllProductsQuery, GetAllProductsQueryVariables>;
+export const GetProductByIdDocument = gql`
+    query GetProductById($productId: String!) {
+  getProductById(productId: $productId) {
+    id
+    title
+    price
+    brand
+    frontCamera
+    mainCamera
+    ram
+    color
+    builtInMemory
+    processorName
+    processorCores
+    os
+    deliverySet
+    materials
+    simCount
+    simFormat
+    images
+    battery
+    createdAt
+    screenDiagonal
+    updatedAt
+  }
+}
+    `;
+
+/**
+ * __useGetProductByIdQuery__
+ *
+ * To run a query within a React component, call `useGetProductByIdQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetProductByIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetProductByIdQuery({
+ *   variables: {
+ *      productId: // value for 'productId'
+ *   },
+ * });
+ */
+export function useGetProductByIdQuery(baseOptions: Apollo.QueryHookOptions<GetProductByIdQuery, GetProductByIdQueryVariables> & ({ variables: GetProductByIdQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetProductByIdQuery, GetProductByIdQueryVariables>(GetProductByIdDocument, options);
+      }
+export function useGetProductByIdLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetProductByIdQuery, GetProductByIdQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetProductByIdQuery, GetProductByIdQueryVariables>(GetProductByIdDocument, options);
+        }
+export function useGetProductByIdSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetProductByIdQuery, GetProductByIdQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetProductByIdQuery, GetProductByIdQueryVariables>(GetProductByIdDocument, options);
+        }
+export type GetProductByIdQueryHookResult = ReturnType<typeof useGetProductByIdQuery>;
+export type GetProductByIdLazyQueryHookResult = ReturnType<typeof useGetProductByIdLazyQuery>;
+export type GetProductByIdSuspenseQueryHookResult = ReturnType<typeof useGetProductByIdSuspenseQuery>;
+export type GetProductByIdQueryResult = Apollo.QueryResult<GetProductByIdQuery, GetProductByIdQueryVariables>;
