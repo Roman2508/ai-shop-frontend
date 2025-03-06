@@ -15,27 +15,27 @@ const linksList = [
   {
     label: 'Профіль',
     icon: '',
-    link: '',
+    link: '/profile/personal-information',
   },
   {
     label: 'Замовлення',
     icon: '',
-    link: '',
+    link: '/profile/orders',
   },
   {
     label: 'Кошик',
     icon: '',
-    link: '',
+    link: '/profile/cart',
   },
   {
     label: 'Список бажань',
     icon: '',
-    link: '',
+    link: '/profile/wishlist',
   },
   {
     label: 'Відгуки',
     icon: '',
-    link: '',
+    link: '/profile/reviews',
   },
 ]
 
