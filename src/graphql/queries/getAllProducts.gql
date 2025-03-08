@@ -1,25 +1,28 @@
 query getAllProducts {
   getAllProducts {
-    id
-    title
-    price
-    brand
-    frontCamera
-    mainCamera
-    ram
-    color
-    builtInMemory
-    processorName
-    processorCores
-    os
-    deliverySet
-    materials
-    simCount
-    simFormat
-    images
-    battery
-    createdAt
-    screenDiagonal
-    updatedAt
+    products {
+      id
+      title
+      price
+      brand
+      frontCamera
+      mainCamera
+      ram
+      color
+      builtInMemory
+      processorName
+      processorCores
+      os
+      deliverySet
+      materials
+      simCount
+      simFormat
+      images
+      battery
+      createdAt
+      screenDiagonal
+      updatedAt
+    }
+    total
   }
 }

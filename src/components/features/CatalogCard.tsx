@@ -13,23 +13,9 @@ type CatalogCardPropsType = {
 
 const CatalogCard: React.FC<CatalogCardPropsType> = ({ product, viewType }) => {
   return (
-    <Card
-      className={
-        viewType === "cards"
-          ? "pb-[30] pt-[20] px-[20]"
-          : "flex py-[24] pl-[16] pr-[30] gap-[20]"
-      }
-    >
-      <div
-        className={
-          viewType === "cards" ? "flex justify-end gap-[10]" : "hidden"
-        }
-      >
-        <Button
-          size="icon"
-          variant="icon"
-          className="text-muted-foreground hover:border-muted-foreground"
-        >
+    <Card className={viewType === "cards" ? "pb-[30] pt-[20] px-[20]" : "flex py-[24] pl-[16] pr-[30] gap-[20]"}>
+      <div className={viewType === "cards" ? "flex justify-end gap-[10]" : "hidden"}>
+        <Button size="icon" variant="icon" className="text-muted-foreground hover:border-muted-foreground">
           <WishlistIcon className="fill-muted-foreground" />
         </Button>
       </div>
@@ -37,30 +23,16 @@ const CatalogCard: React.FC<CatalogCardPropsType> = ({ product, viewType }) => {
       <div className="my-[10]">
         <Link href={`/catalog/${product.id}`}>
           <img
-            className={
-              viewType === "cards" ? "h-[260] w-full object-cover" : "h-[200]"
-            }
+            className={viewType === "cards" ? "h-[260] w-full object-cover" : "h-[200]"}
             src="https://www.shutterstock.com/image-vector/no-image-available-icon-template-600nw-1036735678.jpg"
           />
         </Link>
       </div>
 
-      <div
-        className={
-          viewType === "cards" ? "" : "flex justify-between w-full gap-[20]"
-        }
-      >
+      <div className={viewType === "cards" ? "" : "flex justify-between w-full gap-[20]"}>
         <div className={viewType === "cards" ? "" : "w-full"}>
-          <div
-            className={
-              viewType === "cards" ? "hidden" : "flex justify-end gap-[10]"
-            }
-          >
-            <Button
-              size="icon"
-              variant="icon"
-              className="text-muted-foreground hover:border-muted-foreground"
-            >
+          <div className={viewType === "cards" ? "hidden" : "flex justify-end gap-[10]"}>
+            <Button size="icon" variant="icon" className="text-muted-foreground hover:border-muted-foreground">
               <WishlistIcon />
             </Button>
           </div>
@@ -70,23 +42,13 @@ const CatalogCard: React.FC<CatalogCardPropsType> = ({ product, viewType }) => {
               {`${product.brand}, ${product.ram}/${product.builtInMemory} ГБ, ${product.color}`}
             </Link>
           </h3>
-          <p className="mb-[16] h-[80] text-sm">{product.title}</p>
+          <p className="mb-[16] h-[80] text-sm line-clamp-4">{product.title}</p>
         </div>
 
-        <div
-          className={
-            viewType === "cards"
-              ? ""
-              : "flex flex-col justify-center border-l rounded-r-[5] pl-[20]"
-          }
-        >
-          <b className="block mb-[16]">{product.price} грн</b>
+        <div className={viewType === "cards" ? "" : "flex flex-col justify-center border-l rounded-r-[5] pl-[20]"}>
+          <b className="block mb-[16]">{product.price.toLocaleString("uk-UA")} грн</b>
 
-          <div
-            className={
-              viewType === "cards" ? "flex mt-auto" : "flex flex-col w-[230]"
-            }
-          >
+          <div className={viewType === "cards" ? "flex mt-auto" : "flex flex-col w-[230]"}>
             <div
               className={
                 viewType === "cards"
@@ -116,9 +78,7 @@ const CatalogCard: React.FC<CatalogCardPropsType> = ({ product, viewType }) => {
             </div>
             <Button
               className={
-                viewType === "cards"
-                  ? "rounded-r-[5] rounded-l-[0] w-[50%]"
-                  : "rounded-b-[5] rounded-t-[0] w-[100%]"
+                viewType === "cards" ? "rounded-r-[5] rounded-l-[0] w-[50%]" : "rounded-b-[5] rounded-t-[0] w-[100%]"
               }
             >
               В корзину

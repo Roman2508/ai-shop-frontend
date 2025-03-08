@@ -1,20 +1,21 @@
-import Link from 'next/link'
-import Image from 'next/image'
-import { useTranslations } from 'next-intl'
+import Link from "next/link";
+import Image from "next/image";
+import { useTranslations, useLocale } from "next-intl";
 
-import CatalogCard from '@/components/features/CatalogCard'
-import ButtonWithIcon from '@/components/ui/custom/ButtonWithIcon'
-import { Button } from '@/components/ui/common/Button'
+import CatalogCard from "@/components/features/CatalogCard";
+import ButtonWithIcon from "@/components/ui/custom/ButtonWithIcon";
+import { Button } from "@/components/ui/common/Button";
 
-const categories = ['Apple', 'Samsung', 'Xiaomi', 'Google Pixel', 'One Plus', 'Motorola', 'Nokia', 'Кнопкові телефони']
+const categories = ["Apple", "Samsung", "Xiaomi", "Google Pixel", "One Plus", "Motorola", "Nokia", "Кнопкові телефони"];
 
 export default function Home() {
-  const translations = useTranslations('home')
+  const translations = useTranslations("home");
+  const locale = useLocale();
 
   return (
     <div className="font-[family-name:var(--font-geist-sans)]">
       <div className="max-w-[1640] mx-auto px-[16]">
-        <h1>{translations('title')}</h1>
+        <h1>{translations("title")}</h1>
 
         <div className="flex gap-[30] mb-[70]">
           <div className="w-[320] min-w-[320] border rounded-[20]">
@@ -42,7 +43,9 @@ export default function Home() {
 
           <div
             className="w-full flex-1 rounded-[20] p-[40]"
-            style={{ background: 'radial-gradient(circle, rgba(215, 228, 215, 0.8) 30%, rgba(180, 200, 180, 1) 100%)' }}
+            style={{
+              background: "radial-gradient(circle, rgba(215, 228, 215, 0.8) 30%, rgba(180, 200, 180, 1) 100%)",
+            }}
             // style={{ background: 'radial-gradient(circle,  #3c4d3c 0%, #2d3e2d 70%, #263626 100%)' }}
           >
             2
@@ -78,11 +81,11 @@ export default function Home() {
         <div className="mb-[120]">
           <h3 className="font-semibold text-3xl mb-[40]">Популярні</h3>
           <div className="grid grid-cols-5 gap-[20]">
-            <CatalogCard viewType="cards" />
-            <CatalogCard viewType="cards" />
-            <CatalogCard viewType="cards" />
-            <CatalogCard viewType="cards" />
-            <CatalogCard viewType="cards" />
+            {/* <CatalogCard viewType="cards" product={[]} />
+            <CatalogCard viewType="cards" product={[]} />
+            <CatalogCard viewType="cards" product={[]} />
+            <CatalogCard viewType="cards" product={[]} />
+            <CatalogCard viewType="cards" product={[]} /> */}
           </div>
           <div className="flex justify-center mt-[20]">
             <Link href="/catalog">
@@ -96,11 +99,11 @@ export default function Home() {
         <div className="mb-[120]">
           <h3 className="font-semibold text-3xl mb-[40]">Новинки</h3>
           <div className="grid grid-cols-5 gap-[20]">
+            {/* <CatalogCard viewType="cards" />
             <CatalogCard viewType="cards" />
             <CatalogCard viewType="cards" />
             <CatalogCard viewType="cards" />
-            <CatalogCard viewType="cards" />
-            <CatalogCard viewType="cards" />
+            <CatalogCard viewType="cards" /> */}
           </div>
           <div className="flex justify-center mt-[20]">
             <Link href="/catalog">
@@ -124,5 +127,5 @@ export default function Home() {
         </div>
       </div>
     </div>
-  )
+  );
 }

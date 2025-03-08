@@ -1,0 +1,54 @@
+query PaginateAndFilterProducts($query: PaginateAndFilterInput!) {
+  paginateAndFilter(data: $query) {
+    products {
+      id
+      title
+      price
+      brand
+      frontCamera
+      mainCamera
+      ram
+      color
+      builtInMemory
+      processorName
+      processorCores
+      os
+      deliverySet
+      materials
+      simCount
+      simFormat
+      images
+      battery
+      createdAt
+      screenDiagonal
+      updatedAt
+    }
+    total
+  }
+}
+
+# query PaginateAndFilterProducts($query: PaginateAndFilterInput!) {
+#   paginateAndFilter(data: $query) {
+#     id
+#     title
+#     price
+#     brand
+#     frontCamera
+#     mainCamera
+#     ram
+#     color
+#     builtInMemory
+#     processorName
+#     processorCores
+#     os
+#     deliverySet
+#     materials
+#     simCount
+#     simFormat
+#     images
+#     battery
+#     createdAt
+#     screenDiagonal
+#     updatedAt
+#   }
+# }

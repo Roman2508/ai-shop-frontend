@@ -1,43 +1,61 @@
-'use client'
+"use client";
 
-import React from 'react'
-import { Input } from '../common/Input'
-import UahIcon from '@/components/images/UahIcon'
+import React from "react";
+import { Input } from "../common/Input";
+import UahIcon from "@/components/images/UahIcon";
+import { InputMaybe, PaginateAndFilterInput } from "@/graphql/generated/output";
+// import { FilterType } from "@/app/catalog/page";
 
 type PriceInputPropsType = {
-  variant?: 'from' | 'to'
-}
+  price?: InputMaybe<number>;
+  locale: string;
+  maxPrice: number;
+  variant?: "from" | "to";
+  handleChangeFilter: (key: keyof PaginateAndFilterInput, value: string) => void;
+};
 
-const PriceInput: React.FC<PriceInputPropsType> = ({ variant = 'from' }) => {
-  const [value, setValue] = React.useState(1000)
+const PriceInput: React.FC<PriceInputPropsType> = ({
+  price,
+  locale,
+  maxPrice,
+  variant = "from",
+  handleChangeFilter,
+}) => {
+  const defaultValue = variant === "from" ? 0 : maxPrice;
+  const [value, setValue] = React.useState(defaultValue);
 
-  const handleChangeValue = (e: any) => {
-    // const value = typeof Number(e.varget.value) === 'number' ? Number(e.varget.value) : 0
-    // setValue(value)
-    setValue(Number(e.varget.value))
-  }
+  React.useEffect(() => {
+    if (!price) return;
+    setValue(Number(price));
+  }, [price]);
 
   return (
     <div className="relative">
       <span className="absolute inset-y-0 left-0 flex items-center pl-4 text-sm">
-        {variant === 'from' ? 'Від' : 'До'}
+        {variant === "from" && locale === "ua" && "Від"}
+        {variant === "from" && locale === "en" && "From"}
+        {variant === "to" && locale === "ua" && "До"}
+        {variant === "to" && locale === "en" && "To"}
       </span>
 
       <Input
         min={0}
-        max={99999}
         maxLength={5}
         value={value}
+        max={maxPrice}
         variant="secondary"
         className="grow text-center pl-[18] pr-[5]"
-        onChange={(e) => handleChangeValue(e.target.value)}
+        onChange={(e) => {
+          setValue(Number(e.target.value));
+          handleChangeFilter(variant === "from" ? "priceFrom" : "priceTo", e.target.value);
+        }}
       />
 
       <span className="absolute inset-y-0 right-0 flex items-center pr-2">
         <UahIcon />
       </span>
     </div>
-  )
-}
+  );
+};
 
-export default PriceInput
+export default PriceInput;

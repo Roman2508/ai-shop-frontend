@@ -90,7 +90,9 @@ export type Mutation = {
   changeEmail: Scalars['Boolean']['output'];
   changePassword: Scalars['Boolean']['output'];
   clearSessionCookie: Scalars['Boolean']['output'];
+  createManyProducts: Scalars['Boolean']['output'];
   createPayment: Scalars['Boolean']['output'];
+  createProduct: ProductModel;
   createReview: Scalars['Boolean']['output'];
   createUser: Scalars['Boolean']['output'];
   deleteReview: Scalars['Boolean']['output'];
@@ -98,6 +100,7 @@ export type Mutation = {
   logoutUser: Scalars['Boolean']['output'];
   removeSession: Scalars['Boolean']['output'];
   toggleFavorite: Scalars['Boolean']['output'];
+  updateProduct: ProductModel;
   updateStatus: Scalars['Boolean']['output'];
 };
 
@@ -114,6 +117,11 @@ export type MutationChangePasswordArgs = {
 
 export type MutationCreatePaymentArgs = {
   data: CreateOrderInput;
+};
+
+
+export type MutationCreateProductArgs = {
+  data: CreateProductInput;
 };
 
 
@@ -146,10 +154,38 @@ export type MutationToggleFavoriteArgs = {
   data: Scalars['String']['input'];
 };
 
+
+export type MutationUpdateProductArgs = {
+  productId: Scalars['String']['input'];
+};
+
 export type OrderItemDto = {
   price: Scalars['Float']['input'];
   productId: Scalars['String']['input'];
   quantity: Scalars['Float']['input'];
+};
+
+export type PaginateAndFilterInput = {
+  battery?: InputMaybe<Scalars['String']['input']>;
+  brand?: InputMaybe<Scalars['String']['input']>;
+  builtInMemory?: InputMaybe<Scalars['String']['input']>;
+  color?: InputMaybe<Scalars['String']['input']>;
+  deliverySet?: InputMaybe<Scalars['String']['input']>;
+  frontCamera?: InputMaybe<Scalars['String']['input']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  mainCamera?: InputMaybe<Scalars['String']['input']>;
+  materials?: InputMaybe<Scalars['String']['input']>;
+  os?: InputMaybe<Scalars['String']['input']>;
+  priceFrom?: InputMaybe<Scalars['Int']['input']>;
+  priceTo?: InputMaybe<Scalars['Int']['input']>;
+  processorCores?: InputMaybe<Scalars['String']['input']>;
+  processorName?: InputMaybe<Scalars['String']['input']>;
+  ram?: InputMaybe<Scalars['String']['input']>;
+  screenDiagonal?: InputMaybe<Scalars['String']['input']>;
+  simCount?: InputMaybe<Scalars['String']['input']>;
+  simFormat?: InputMaybe<Scalars['String']['input']>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  sortBy?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type ProductModel = {
@@ -177,30 +213,24 @@ export type ProductModel = {
   updatedAt: Scalars['DateTime']['output'];
 };
 
+export type ProductsAndTotalModel = {
+  __typename?: 'ProductsAndTotalModel';
+  products: Array<ProductModel>;
+  total: Scalars['Int']['output'];
+};
+
 export type Query = {
   __typename?: 'Query';
-  CreateManyProducts: ProductModel;
-  CreateProduct: ProductModel;
-  UpdateProduct: ProductModel;
   findAllUsers: Array<UserModel>;
   findCurrentSession: SessionModel;
   findProfile: UserModel;
   findSessionsByUser: Array<SessionModel>;
-  getAllProducts: Array<ProductModel>;
+  getAllProducts: ProductsAndTotalModel;
   getMostPopularProducts: Array<ProductModel>;
   getProductById: ProductModel;
   getSimilarProducts: ProductModel;
+  paginateAndFilter: ProductsAndTotalModel;
   searchProduct: Array<ProductModel>;
-};
-
-
-export type QueryCreateProductArgs = {
-  data: CreateProductInput;
-};
-
-
-export type QueryUpdateProductArgs = {
-  productId: Scalars['String']['input'];
 };
 
 
@@ -211,6 +241,11 @@ export type QueryGetProductByIdArgs = {
 
 export type QueryGetSimilarProductsArgs = {
   productId: Scalars['String']['input'];
+};
+
+
+export type QueryPaginateAndFilterArgs = {
+  data: PaginateAndFilterInput;
 };
 
 
@@ -253,7 +288,7 @@ export type FindAllUsersQuery = { __typename?: 'Query', findAllUsers: Array<{ __
 export type GetAllProductsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetAllProductsQuery = { __typename?: 'Query', getAllProducts: Array<{ __typename?: 'ProductModel', id: string, title: string, price: number, brand: string, frontCamera: number, mainCamera: number, ram: number, color: string, builtInMemory: number, processorName: string, processorCores: string, os: string, deliverySet: string, materials: string, simCount: number, simFormat: Array<string>, images: Array<string>, battery: number, createdAt: any, screenDiagonal: number, updatedAt: any }> };
+export type GetAllProductsQuery = { __typename?: 'Query', getAllProducts: { __typename?: 'ProductsAndTotalModel', total: number, products: Array<{ __typename?: 'ProductModel', id: string, title: string, price: number, brand: string, frontCamera: number, mainCamera: number, ram: number, color: string, builtInMemory: number, processorName: string, processorCores: string, os: string, deliverySet: string, materials: string, simCount: number, simFormat: Array<string>, images: Array<string>, battery: number, createdAt: any, screenDiagonal: number, updatedAt: any }> } };
 
 export type GetProductByIdQueryVariables = Exact<{
   productId: Scalars['String']['input'];
@@ -261,6 +296,13 @@ export type GetProductByIdQueryVariables = Exact<{
 
 
 export type GetProductByIdQuery = { __typename?: 'Query', getProductById: { __typename?: 'ProductModel', id: string, title: string, price: number, brand: string, frontCamera: number, mainCamera: number, ram: number, color: string, builtInMemory: number, processorName: string, processorCores: string, os: string, deliverySet: string, materials: string, simCount: number, simFormat: Array<string>, images: Array<string>, battery: number, createdAt: any, screenDiagonal: number, updatedAt: any } };
+
+export type PaginateAndFilterProductsQueryVariables = Exact<{
+  query: PaginateAndFilterInput;
+}>;
+
+
+export type PaginateAndFilterProductsQuery = { __typename?: 'Query', paginateAndFilter: { __typename?: 'ProductsAndTotalModel', total: number, products: Array<{ __typename?: 'ProductModel', id: string, title: string, price: number, brand: string, frontCamera: number, mainCamera: number, ram: number, color: string, builtInMemory: number, processorName: string, processorCores: string, os: string, deliverySet: string, materials: string, simCount: number, simFormat: Array<string>, images: Array<string>, battery: number, createdAt: any, screenDiagonal: number, updatedAt: any }> } };
 
 
 export const FindAllUsersDocument = gql`
@@ -308,27 +350,30 @@ export type FindAllUsersQueryResult = Apollo.QueryResult<FindAllUsersQuery, Find
 export const GetAllProductsDocument = gql`
     query getAllProducts {
   getAllProducts {
-    id
-    title
-    price
-    brand
-    frontCamera
-    mainCamera
-    ram
-    color
-    builtInMemory
-    processorName
-    processorCores
-    os
-    deliverySet
-    materials
-    simCount
-    simFormat
-    images
-    battery
-    createdAt
-    screenDiagonal
-    updatedAt
+    products {
+      id
+      title
+      price
+      brand
+      frontCamera
+      mainCamera
+      ram
+      color
+      builtInMemory
+      processorName
+      processorCores
+      os
+      deliverySet
+      materials
+      simCount
+      simFormat
+      images
+      battery
+      createdAt
+      screenDiagonal
+      updatedAt
+    }
+    total
   }
 }
     `;
@@ -424,3 +469,66 @@ export type GetProductByIdQueryHookResult = ReturnType<typeof useGetProductByIdQ
 export type GetProductByIdLazyQueryHookResult = ReturnType<typeof useGetProductByIdLazyQuery>;
 export type GetProductByIdSuspenseQueryHookResult = ReturnType<typeof useGetProductByIdSuspenseQuery>;
 export type GetProductByIdQueryResult = Apollo.QueryResult<GetProductByIdQuery, GetProductByIdQueryVariables>;
+export const PaginateAndFilterProductsDocument = gql`
+    query PaginateAndFilterProducts($query: PaginateAndFilterInput!) {
+  paginateAndFilter(data: $query) {
+    products {
+      id
+      title
+      price
+      brand
+      frontCamera
+      mainCamera
+      ram
+      color
+      builtInMemory
+      processorName
+      processorCores
+      os
+      deliverySet
+      materials
+      simCount
+      simFormat
+      images
+      battery
+      createdAt
+      screenDiagonal
+      updatedAt
+    }
+    total
+  }
+}
+    `;
+
+/**
+ * __usePaginateAndFilterProductsQuery__
+ *
+ * To run a query within a React component, call `usePaginateAndFilterProductsQuery` and pass it any options that fit your needs.
+ * When your component renders, `usePaginateAndFilterProductsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = usePaginateAndFilterProductsQuery({
+ *   variables: {
+ *      query: // value for 'query'
+ *   },
+ * });
+ */
+export function usePaginateAndFilterProductsQuery(baseOptions: Apollo.QueryHookOptions<PaginateAndFilterProductsQuery, PaginateAndFilterProductsQueryVariables> & ({ variables: PaginateAndFilterProductsQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<PaginateAndFilterProductsQuery, PaginateAndFilterProductsQueryVariables>(PaginateAndFilterProductsDocument, options);
+      }
+export function usePaginateAndFilterProductsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<PaginateAndFilterProductsQuery, PaginateAndFilterProductsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<PaginateAndFilterProductsQuery, PaginateAndFilterProductsQueryVariables>(PaginateAndFilterProductsDocument, options);
+        }
+export function usePaginateAndFilterProductsSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<PaginateAndFilterProductsQuery, PaginateAndFilterProductsQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<PaginateAndFilterProductsQuery, PaginateAndFilterProductsQueryVariables>(PaginateAndFilterProductsDocument, options);
+        }
+export type PaginateAndFilterProductsQueryHookResult = ReturnType<typeof usePaginateAndFilterProductsQuery>;
+export type PaginateAndFilterProductsLazyQueryHookResult = ReturnType<typeof usePaginateAndFilterProductsLazyQuery>;
+export type PaginateAndFilterProductsSuspenseQueryHookResult = ReturnType<typeof usePaginateAndFilterProductsSuspenseQuery>;
+export type PaginateAndFilterProductsQueryResult = Apollo.QueryResult<PaginateAndFilterProductsQuery, PaginateAndFilterProductsQueryVariables>;
