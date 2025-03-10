@@ -1,3 +1,4 @@
+'use client'
 import { z } from 'zod'
 import React from 'react'
 import { useForm } from 'react-hook-form'
@@ -100,8 +101,8 @@ const mainCharacteristicsInputsData = [
     type: 'number',
     placeholder: "Вкажіть об'єм вбудованої пам'яті",
   },
-  { key: 'frontCamera', label: 'Фронтальна камера', type: 'number', placeholder: '---' },
-  { key: 'mainCamera', label: 'Основна камера', type: 'number', placeholder: '---' },
+  { key: 'frontCamera', label: 'Фронтальна камера', type: 'number', placeholder: 'Вкажіть к-ть Мп фронтальної камери' },
+  { key: 'mainCamera', label: 'Основна камера', type: 'number', placeholder: 'Вкажіть к-ть Мп основної камери' },
   { key: 'screenDiagonal', label: 'Діагональ екрану', type: 'number', placeholder: 'Вкажіть діагональ екрану' },
   { key: 'simCount', label: 'Кількість сім-карт', type: 'number', placeholder: 'Вкажіть кількість сам-карт' },
   { key: 'processorName', label: 'Назва процесора', type: 'text', placeholder: 'Вкажіть назву процесора' },
@@ -196,6 +197,8 @@ const mainCharacteristicsSelectData = [
 ] as const
 
 const CreateProductForm = () => {
+  const fileRef = React.useRef<HTMLInputElement>(null)
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -205,6 +208,10 @@ const CreateProductForm = () => {
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
     console.log(values)
+  }
+
+  const handleChangeUpload = (e: any) => {
+    console.log(e.target.files)
   }
 
   return (
@@ -297,10 +304,13 @@ const CreateProductForm = () => {
                 ))}
             </div>
 
-            <Button variant="secondary" type="button">
+            <Button variant="secondary" type="button" onClick={() => {
+              if(!fileRef.current) return
+              fileRef.current.click()
+            }}>
               Завантажити фото
             </Button>
-            <input type="file" /* className="hidden"  */ />
+            <input ref={fileRef} onClick={handleChangeUpload} type="file" className="hidden" multiple />
           </div>
         </div>
 

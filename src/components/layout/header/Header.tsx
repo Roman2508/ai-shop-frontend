@@ -5,11 +5,11 @@ import Link from 'next/link'
 
 import Search from './Search'
 import LoginButton from './LoginButton'
+import { ThemeToggler } from './ThemeToggler'
 import { Label } from '@/components/ui/common/Label'
 import { Switch } from '@/components/ui/common/Switch'
 import { Button } from '@/components/ui/common/Button'
 import ButtonWithIcon from '@/components/ui/custom/ButtonWithIcon'
-import { ThemeToggler } from './ThemeToggler'
 
 const Header = () => {
   const handleChangeTheme = () => {
@@ -27,7 +27,7 @@ const Header = () => {
       {/* <header className="flex justify-between p-[20]"> */}
       <div className="flex-1 flex gap-[20] items-center">
         <Link href="/catalog">
-          <ButtonWithIcon text="Каталог" iconSrc="/icons/burger.png" classNames="text-dark h-[36]" />
+          <ButtonWithIcon text="Каталог" iconSrc="/icons/burger-white.png" classNames="text-white h-[36] font-regular" />
         </Link>
 
         <Search />

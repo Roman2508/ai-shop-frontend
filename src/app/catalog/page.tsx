@@ -1,8 +1,9 @@
-"use client";
+'use client'
 
-import React from "react";
-import Link from "next/link";
-import { useLocale } from "next-intl";
+import React from 'react'
+import Link from 'next/link'
+import { useLocale } from 'next-intl'
+import { useDebouncedCallback } from 'use-debounce'
 
 import {
   Breadcrumb,
@@ -11,14 +12,14 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from "@/components/ui/common/Breadcrumb";
+} from '@/components/ui/common/Breadcrumb'
 import {
   Pagination,
   PaginationItem,
   PaginationLink,
   PaginationContent,
   PaginationEllipsis,
-} from "@/components/ui/common/Pagination";
+} from '@/components/ui/common/Pagination'
 import {
   Select,
   SelectItem,
@@ -26,118 +27,125 @@ import {
   SelectValue,
   SelectTrigger,
   SelectContent,
-} from "@/components/ui/common/Select";
+} from '@/components/ui/common/Select'
 import {
   ProductModel,
   useGetAllProductsQuery,
   PaginateAndFilterInput,
   usePaginateAndFilterProductsQuery,
-} from "@/graphql/generated/output";
-import { Card } from "@/components/ui/common/Card";
-import { Label } from "@/components/ui/common/Label";
-import { Button } from "@/components/ui/common/Button";
-import { Slider } from "@/components/ui/common/Slider";
-import { Checkbox } from "@/components/ui/common/Checkbox";
-import PriceInput from "@/components/ui/custom/PriceInput";
-import CatalogCard from "@/components/features/CatalogCard";
-import ViewCardIcon from "@/components/images/ViewCardIcon";
-import ViewRowsIcon from "@/components/images/ViewRowsIcon";
-import { productInputFilters } from "@/constants/product-filters";
-import CatalogCardSkeleton from "@/components/features/CatalogCardSkeleton";
+} from '@/graphql/generated/output'
+import { Card } from '@/components/ui/common/Card'
+import { Label } from '@/components/ui/common/Label'
+import { Button } from '@/components/ui/common/Button'
+import { Slider } from '@/components/ui/common/Slider'
+import { Checkbox } from '@/components/ui/common/Checkbox'
+import PriceInput from '@/components/ui/custom/PriceInput'
+import CatalogCard from '@/components/features/CatalogCard'
+import ViewCardIcon from '@/components/images/ViewCardIcon'
+import ViewRowsIcon from '@/components/images/ViewRowsIcon'
+import { productInputFilters } from '@/constants/product-filters'
+import CatalogCardSkeleton from '@/components/features/CatalogCardSkeleton'
 
 const CatalogPage = () => {
-  const locale = useLocale();
+  const locale = useLocale()
 
-  const [isLoading, setIsLoading] = React.useState(false);
-  const [maxPrice, setMaxPrice] = React.useState(100000);
-  const [total, setTotal] = React.useState(0);
-  const [currentPage, setCurrentPage] = React.useState(1);
-  const [filter, setFilter] = React.useState<PaginateAndFilterInput>({});
-  const [viewType, setViewType] = React.useState<"cards" | "rows">("cards");
+  const [isLoading, setIsLoading] = React.useState(false)
+  const [maxPrice, setMaxPrice] = React.useState(100000)
+  const [total, setTotal] = React.useState(0)
+  const [currentPage, setCurrentPage] = React.useState(1)
+  const [filter, setFilter] = React.useState<PaginateAndFilterInput>({})
+  const [viewType, setViewType] = React.useState<'cards' | 'rows'>('cards')
 
-  const [products, setProducts] = React.useState<ProductModel[]>([]);
+  const [products, setProducts] = React.useState<ProductModel[]>([])
 
-  const { data } = useGetAllProductsQuery();
+  const { data } = useGetAllProductsQuery()
   const { refetch: refetchFilteredData } = usePaginateAndFilterProductsQuery({
     variables: { query: filter },
     skip: true,
-  });
+  })
+
+  const debouncedChangePriceFrom = useDebouncedCallback((value) => {
+    handleChangeFilter('priceFrom', String(value))
+  }, 100)
+  const debouncedChangePriceTo = useDebouncedCallback((value) => {
+    handleChangeFilter('priceTo', String(value))
+  }, 100)
 
   const handleChangeFilter = (key: keyof PaginateAndFilterInput, value: string) => {
     setFilter((prev: PaginateAndFilterInput) => {
-      let newFilters: PaginateAndFilterInput = {};
-      const filterKeys = ["priceFrom", "priceTo", "sortBy", "limit", "skip"];
+      let newFilters: PaginateAndFilterInput = {}
+      const filterKeys = ['priceFrom', 'priceTo', 'sortBy', 'limit', 'skip']
 
       if (filterKeys.some((el) => el === key)) {
-        return { ...prev, [key]: Number(value) };
+        return { ...prev, [key]: Number(value) }
       }
 
       if (!prev[key]) {
-        newFilters = { ...prev, [key]: value };
+        newFilters = { ...prev, [key]: value }
       }
 
-      if (key in prev && typeof prev[key] === "string") {
-        const prevSelected = prev[key].split(";");
+      if (key in prev && typeof prev[key] === 'string') {
+        const prevSelected = prev[key].split(';')
 
         if (!prevSelected.length) {
-          newFilters = { ...prev, [key]: value };
+          newFilters = { ...prev, [key]: value }
         }
 
         if (prevSelected.some((el) => el === value)) {
-          const filterSelected = prevSelected.filter((el) => el !== value).join(";");
-          newFilters = { ...prev, [key]: filterSelected };
+          const filterSelected = prevSelected.filter((el) => el !== value).join(';')
+          newFilters = { ...prev, [key]: filterSelected }
         } else {
-          newFilters = { ...prev, [key]: `${prev[key]};${value}` };
+          newFilters = { ...prev, [key]: `${prev[key]};${value}` }
         }
       }
 
-      const withoutEmpty: PaginateAndFilterInput = {};
+      const withoutEmpty: PaginateAndFilterInput = {}
 
       for (const key in newFilters) {
         if (!!newFilters[key as keyof PaginateAndFilterInput]) {
           // @ts-ignore
-          withoutEmpty[key] = newFilters[key as keyof PaginateAndFilterInput];
+          withoutEmpty[key] = newFilters[key as keyof PaginateAndFilterInput]
         }
       }
 
-      return withoutEmpty;
-    });
-  };
+      return withoutEmpty
+    })
+  }
 
   const fetchFilteredData = async (additionalFilter: PaginateAndFilterInput | undefined = {}) => {
     try {
-      setIsLoading(true);
-      const { data: filteredData } = await refetchFilteredData({ query: { ...filter, ...additionalFilter } });
+      setIsLoading(true)
+      const { data: filteredData } = await refetchFilteredData({ query: { ...filter, ...additionalFilter } })
 
-      const items = filteredData?.paginateAndFilter ? filteredData.paginateAndFilter.products : [];
-      setProducts(items);
-      const total = filteredData?.paginateAndFilter ? filteredData.paginateAndFilter.total : 0;
-      setTotal(total);
+      const items = filteredData?.paginateAndFilter ? filteredData.paginateAndFilter.products : []
+      setProducts(items)
+      const total = filteredData?.paginateAndFilter ? filteredData.paginateAndFilter.total : 0
+      setTotal(total)
     } finally {
-      setIsLoading(false);
+      setIsLoading(false)
     }
-  };
+  }
 
   React.useEffect(() => {
     if (!products.length) {
-      const items = data?.getAllProducts ? data.getAllProducts.products : [];
-      setProducts(items);
-      const total = data?.getAllProducts ? data.getAllProducts.total : 0;
-      setTotal(total);
+      const items = data?.getAllProducts ? data.getAllProducts.products : []
+      setProducts(items)
+      const total = data?.getAllProducts ? data.getAllProducts.total : 0
+      setTotal(total)
     }
 
-    if (!data?.getAllProducts.products.length) return;
-    let maxPrice = 0;
+    if (!data?.getAllProducts.products.length) return
+    let maxPrice = 0
 
     data.getAllProducts.products.forEach((el) => {
       if (el.price > maxPrice) {
-        maxPrice = el.price;
+        maxPrice = el.price
       }
-    });
-    setMaxPrice(maxPrice);
-  }, [data]);
+    })
+    setMaxPrice(maxPrice)
+  }, [data])
 
-  console.log(filter);
+  console.log(filter)
 
   return (
     <div className="max-w-[1640] mx-auto px-[16]">
@@ -164,7 +172,7 @@ const CatalogPage = () => {
         <Card className="px-[20] py-[28] w-[300] min-w-[300]">
           {productInputFilters.map((filter) => (
             <div className="pb-[28] mb-[28] border-b-2" key={filter.key}>
-              <b className="block mb-[20]">{locale === "ua" ? filter.label_ua : filter.label_en}</b>
+              <b className="block mb-[20]">{locale === 'ua' ? filter.label_ua : filter.label_en}</b>
 
               <div className="max-h-[230] overflow-y-auto">
                 {filter.items.map((el) => (
@@ -174,8 +182,8 @@ const CatalogPage = () => {
                       onClick={() => handleChangeFilter(filter.key, el.key)}
                     >
                       <Checkbox />
-                      <p className={filter.key === "color" ? "first-letter:uppercase" : ""}>
-                        {locale === "ua" ? el.label_ua : el.label_en}
+                      <p className={filter.key === 'color' ? 'first-letter:uppercase' : ''}>
+                        {locale === 'ua' ? el.label_ua : el.label_en}
                       </p>
                     </Label>
                   </div>
@@ -194,8 +202,10 @@ const CatalogPage = () => {
               defaultValue={[0, maxPrice]}
               value={[filter.priceFrom || 0, filter.priceTo || maxPrice]}
               onValueChange={(e) => {
-                handleChangeFilter("priceFrom", String(e[0]));
-                handleChangeFilter("priceTo", String(e[1]));
+                // debouncedChangePriceFrom(e[0])
+                // debouncedChangePriceTo(e[1])
+                handleChangeFilter('priceFrom', String(e[0]))
+                handleChangeFilter('priceTo', String(e[1]))
               }}
             />
             <div className="mt-[30] flex gap-[10] align-center">
@@ -221,8 +231,8 @@ const CatalogPage = () => {
             variant="default"
             className="w-full mb-[10]"
             onClick={() => {
-              window.scrollTo({ top: 0, behavior: "smooth" });
-              fetchFilteredData();
+              window.scrollTo({ top: 0, behavior: 'smooth' })
+              fetchFilteredData()
             }}
           >
             Застосувати фільтри
@@ -281,18 +291,18 @@ const CatalogPage = () => {
                     size="icon"
                     variant="icon"
                     className="border-none w-[44] h-[44]"
-                    onClick={() => setViewType("cards")}
+                    onClick={() => setViewType('cards')}
                   >
-                    <ViewCardIcon className={viewType === "cards" ? "fill-primary" : "fill-accent-foreground"} />
+                    <ViewCardIcon className={viewType === 'cards' ? 'fill-primary' : 'fill-accent-foreground'} />
                   </Button>
 
                   <Button
                     size="icon"
                     variant="icon"
                     className="border-none w-[44] h-[44]"
-                    onClick={() => setViewType("rows")}
+                    onClick={() => setViewType('rows')}
                   >
-                    <ViewRowsIcon className={viewType === "rows" ? "fill-primary" : "fill-accent-foreground"} />
+                    <ViewRowsIcon className={viewType === 'rows' ? 'fill-primary' : 'fill-accent-foreground'} />
                   </Button>
                 </div>
               </div>
@@ -301,7 +311,13 @@ const CatalogPage = () => {
 
           {/* catalog cards */}
           <div>
-            <div className={viewType === "cards" ? "grid grid-cols-4 gap-[18]" : "grid grid-cols-1 gap-[18]"}>
+            <div
+              className={
+                viewType === 'cards'
+                  ? 'grid md:grid-cols-2 2xl:grid-cols-3 3xl:grid-cols-4 gap-[18]'
+                  : 'grid grid-cols-1 gap-[18]'
+              }
+            >
               {!isLoading && data
                 ? products.map((product) => <CatalogCard product={product} viewType={viewType} />)
                 : Array(12)
@@ -311,25 +327,37 @@ const CatalogPage = () => {
 
             <Pagination className="mt-[40]">
               <PaginationContent>
-                <PaginationItem>
+                <PaginationItem
+                  onClick={() => {
+                    setCurrentPage((prev) => {
+                      if (prev - 1 > 0) {
+                        const skip = (filter.limit || 24) * (prev - 1)
+                        fetchFilteredData({ skip: skip - 1 })
+                        return prev - 1
+                      } else {
+                        return prev
+                      }
+                    })
+                  }}
+                >
                   {/* <PaginationPrevious href="#" /> */}
-                  <Button variant="link" className="px-[5]">
-                    {"< Назад"}
-                  </Button>
+                  <PaginationLink href="#" className="px-[5] w-[100]">
+                    <Button variant="link">{'< Назад'}</Button>
+                  </PaginationLink>
                 </PaginationItem>
                 {/* <PaginationItem>
                   <PaginationLink href="#">1</PaginationLink>
                 </PaginationItem> */}
 
-                {Array(Math.ceil(total / (filter.limit || 24) + 1))
+                {Array(Math.ceil(total / (filter.limit || 24)))
                   .fill(null)
                   .map((_, index) => (
                     <PaginationItem
                       key={index}
                       onClick={() => {
-                        const skip = (filter.limit || 24) * index + 1;
-                        fetchFilteredData({ skip: skip - 1 });
-                        setCurrentPage(index + 1);
+                        const skip = (filter.limit || 24) * index + 1
+                        fetchFilteredData({ skip: skip - 1 })
+                        setCurrentPage(index + 1)
                       }}
                     >
                       <PaginationLink href="#" isActive={index + 1 === currentPage}>
@@ -341,11 +369,29 @@ const CatalogPage = () => {
                 <PaginationItem>
                   <PaginationEllipsis />
                 </PaginationItem>
-                <PaginationItem>
+
+                <PaginationItem
+                  onClick={() => {
+                    setCurrentPage((prev) => {
+                      alert(111)
+                      const pagesCount = Math.ceil(total / (filter.limit || 24))
+                      if (prev + 1 <= pagesCount) {
+                        const skip = (filter.limit || 24) * (prev + 1)
+                        fetchFilteredData({ skip: skip + 1 })
+                        return prev + 1
+                      } else {
+                        return prev
+                      }
+                    })
+                  }}
+                >
                   {/* <PaginationNext href="#" /> */}
-                  <Button variant="link" className="px-[5]">
-                    {"Вперед >"}
-                  </Button>
+                  <PaginationLink href="#" className="px-[5] w-[100]">
+                    <Button variant="link" className="px-[5]">
+                      {'Вперед >'}
+                    </Button>
+                  </PaginationLink>
+                  {/*  */}
                 </PaginationItem>
               </PaginationContent>
             </Pagination>
@@ -353,7 +399,7 @@ const CatalogPage = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default CatalogPage;
+export default CatalogPage
