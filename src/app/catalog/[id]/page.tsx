@@ -1,8 +1,8 @@
-'use client'
-import React from 'react'
-import Link from 'next/link'
-import Image from 'next/image'
-import { useParams } from 'next/navigation'
+"use client";
+import React from "react";
+import Link from "next/link";
+import Image from "next/image";
+import { useParams } from "next/navigation";
 
 import {
   Breadcrumb,
@@ -11,35 +11,43 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from '@/components/ui/common/Breadcrumb'
-import { Card } from '@/components/ui/common/Card'
-import SaveIcon from '@/components/images/SaveIcon'
-import { Input } from '@/components/ui/common/Input'
-import { Button } from '@/components/ui/common/Button'
-import { Skeleton } from '@/components/ui/common/Skeleton'
-import CatalogCard from '@/components/features/CatalogCard'
-import ButtonWithIcon from '@/components/ui/custom/ButtonWithIcon'
-import { Tabs, TabsList, TabsContent, TabsTrigger } from '@/components/ui/common/Tabs'
-import { useGetAllProductsQuery, useGetProductByIdQuery } from '@/graphql/generated/output'
-import CatalogCardSkeleton from '@/components/features/CatalogCardSkeleton'
+} from "@/components/ui/common/Breadcrumb";
+import { Card } from "@/components/ui/common/Card";
+import SaveIcon from "@/components/images/SaveIcon";
+import { Input } from "@/components/ui/common/Input";
+import { Button } from "@/components/ui/common/Button";
+import { Skeleton } from "@/components/ui/common/Skeleton";
+import CatalogCard from "@/components/features/CatalogCard";
+import ButtonWithIcon from "@/components/ui/custom/ButtonWithIcon";
+import { ProductModel, useGetAllProductsQuery, useGetProductByIdQuery } from "@/graphql/generated/output";
+import CatalogCardSkeleton from "@/components/features/CatalogCardSkeleton";
+import ProductTabs from "@/components/features/product/ProductTabs";
+import { getProductAttributeLabel } from "@/utils/get-product-attribute-label";
+import { useLocale } from "next-intl";
 
 const mainCharacteristicsKeys = [
-  { key: 'screenDiagonal', label_ua: 'Діагональ екрану', label_en: 'Screen diagonal' },
-  { key: 'os', label_ua: 'Операційна система', label_en: 'OS' },
-  { key: 'frontCamera', label_ua: 'Фронтальна камера', label_en: 'Front camera' },
-  { key: 'mainCamera', label_ua: 'Головна камера', label_en: 'Main camera' },
-  { key: 'proccessorName', label_ua: 'Назва процесора', label_en: 'Processor name' },
-  { key: 'processorCores', label_ua: 'Кількість ядер процесора', label_en: 'Processor cores' },
-]
+  { key: "screenDiagonal", label_ua: "Діагональ екрану", label_en: "Screen diagonal" },
+  { key: "os", label_ua: "Операційна система", label_en: "OS" },
+  { key: "frontCamera", label_ua: "Фронтальна камера", label_en: "Front camera" },
+  { key: "mainCamera", label_ua: "Головна камера", label_en: "Main camera" },
+  { key: "proccessorName", label_ua: "Назва процесора", label_en: "Processor name" },
+  { key: "processorCores", label_ua: "Кількість ядер процесора", label_en: "Processor cores" },
+];
 
 const ProductPage = () => {
-  const { id } = useParams()
+  const { id } = useParams();
 
-  const { data } = useGetAllProductsQuery()
+  const locale = useLocale();
+
+  const { data } = useGetAllProductsQuery();
   const { data: product } = useGetProductByIdQuery({
-    variables: { productId: typeof id === 'string' ? id : '' },
+    variables: { productId: typeof id === "string" ? id : "" },
     // variables: { productId: String('router.query.id') },
-  })
+  });
+
+  const productName = product
+    ? `${product.getProductById.brand}, ${product.getProductById.ram}/${product.getProductById.builtInMemory} ГБ, ${product.getProductById.color}`
+    : "";
 
   return (
     <div className="max-w-[1640] mx-auto px-[16]">
@@ -58,13 +66,15 @@ const ProductPage = () => {
           </BreadcrumbItem>
           <BreadcrumbSeparator />
           <BreadcrumbItem>
-            <BreadcrumbPage>Breadcrumb</BreadcrumbPage>
+            <BreadcrumbPage>{product ? productName : ""}</BreadcrumbPage>
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>
 
       <div>
-        <p className="text-right mb-[20] opacity-[60%]">Артикул: 123456</p>
+        <p className="text-right mb-[20] opacity-[60%]">
+          {product ? `Артикул: ${product.getProductById.id.slice(2, 8)}` : "..."}
+        </p>
 
         {/* main */}
         <div className="flex gap-[40] mb-[75]">
@@ -83,9 +93,7 @@ const ProductPage = () => {
 
           <div className="flex flex-col justify-between items-start gap-[20] w-[60%]">
             {product?.getProductById ? (
-              <h1 className="text-3xl font-semibold">
-                {`${product?.getProductById.brand}, ${product?.getProductById.ram}/${product?.getProductById.builtInMemory} ГБ, ${product?.getProductById.color}`}
-              </h1>
+              <h1 className="text-3xl font-semibold">{productName}</h1>
             ) : (
               <Skeleton className="w-[70%] h-[36]" />
             )}
@@ -117,7 +125,6 @@ const ProductPage = () => {
 
             <div className="flex gap-[30]">
               <Card className="p-[30] w-[60%]">
-                {/* {product?.getProductById ? (): ()} */}
                 {product?.getProductById ? (
                   <b className="mb-[10] block">Короткий опис</b>
                 ) : (
@@ -143,27 +150,30 @@ const ProductPage = () => {
 
                 {product?.getProductById ? (
                   <>
-                    {/* {Object.keys(product?.getProductById).map((key, index) => {})} */}
-                    {[
-                      { name: 'Код:', value: '224008' },
-                      { name: 'Производитель:', value: product?.getProductById.brand },
-                      { name: 'Функционал:', value: 'Переговорное устройство' },
-                    ].map((el) => (
-                      <div className="flex py-[10] border-t border-dashed">
-                        <p className="w-[40%]">{el.name}</p>
-                        <p className="w-[60%]">{el.value}</p>
-                      </div>
-                    ))}
+                    {(Object.keys(product.getProductById) as Array<keyof ProductModel>).map(
+                      (key: keyof ProductModel) => {
+                        const keys = mainCharacteristicsKeys.map((el) => el.key);
+
+                        if (keys.includes(key)) {
+                          return (
+                            <div className="flex py-[10] border-t border-dashed">
+                              <p className="w-[60%]">{getProductAttributeLabel(key, locale as "ua" | "en")}</p>
+                              <p className="w-[40%]">{product.getProductById[key]}</p>
+                            </div>
+                          );
+                        }
+                      }
+                    )}
                   </>
                 ) : (
                   <>
                     {[...Array(4).fill(null)].map((_, index) => (
                       <div className="flex py-[10] border-t border-dashed" key={index}>
-                        <div className="w-[40%]">
+                        <div className="w-[60%]">
                           <Skeleton className="w-[100] h-[20]" />
                         </div>
 
-                        <div className="w-[60%]">
+                        <div className="w-[40%]">
                           <Skeleton className="w-[80%] h-[20]" />
                         </div>
                       </div>
@@ -198,7 +208,7 @@ const ProductPage = () => {
 
                     {product?.getProductById ? (
                       <>
-                        <div className={'flex items-center border border-border rounded-full w-[100%]'}>
+                        <div className={"flex items-center border border-border rounded-full w-[100%]"}>
                           <Button className="p-[10] pl-[40] bg-transparent text-text">-</Button>
                           <Input value={1} className="border-[0] grow text-center" />
                           <Button className="p-[10] pr-[40] bg-transparent text-text">+</Button>
@@ -234,7 +244,7 @@ const ProductPage = () => {
 
                 <div className="flex items-center gap-[15] bg-secondary mt-auto px-[35] py-[30] rounded-t-[10]">
                   <Image src="/images/box.png" alt="box icon" width={47} height={47} className="w-[47] h-[47]" />
-                  <p className="text-sm">Безкоштовна доставка при замовленні від 50 000 грн., а також при самовивозі</p>
+                  <p className="text-sm">Безкоштовна доставка при замовленні від 10 000 грн., а також при самовивозі</p>
                 </div>
               </Card>
             </div>
@@ -244,47 +254,7 @@ const ProductPage = () => {
         {/* more info */}
         <div className="mb-[75]">
           {/* tabs */}
-
-          <Tabs defaultValue="description">
-            <TabsList>
-              <TabsTrigger value="description">Опис</TabsTrigger>
-              <TabsTrigger value="technical-specifications">Технічні характеристики</TabsTrigger>
-              <TabsTrigger value="reviews">Відгуки (10)</TabsTrigger>
-            </TabsList>
-            <TabsContent value="description">
-              <p className="mb-[10]">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde natus placeat quia odio exercitationem,
-                quas quaerat, repellendus tempora, corrupti ullam nulla excepturi velit! Voluptas molestias repellat
-                recusandae, ratione fuga cupiditate. Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde natus
-                placeat quia odio exercitationem, quas quaerat, repellendus tempora, corrupti ullam nulla excepturi
-                velit! Voluptas molestias repellat recusandae, ratione fuga cupiditate.
-              </p>
-              <p className="mb-[10]">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde natus placeat quia odio exercitationem,
-                quas quaerat, repellendus tempora, corrupti ullam nulla excepturi velit! Voluptas molestias repellat
-                recusandae, ratione fuga cupiditate. Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde natus
-                placeat quia odio exercitationem, quas quaerat, repellendus tempora, corrupti ullam nulla excepturi
-                velit! Voluptas molestias repellat recusandae, ratione fuga cupiditate.
-              </p>
-              <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde natus placeat quia odio exercitationem,
-                quas quaerat, repellendus tempora, corrupti ullam nulla excepturi velit! Voluptas molestias repellat
-                recusandae, ratione fuga cupiditate. Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde natus
-                placeat quia odio exercitationem, quas quaerat, repellendus tempora, corrupti ullam nulla excepturi
-                velit! Voluptas molestias repellat recusandae, ratione fuga cupiditate.
-              </p>
-            </TabsContent>
-            <TabsContent value="technical-specifications">Change your password here.</TabsContent>
-            <TabsContent value="reviews">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde natus placeat quia odio exercitationem, quas
-              quaerat, repellendus tempora, corrupti ullam nulla excepturi velit! Voluptas molestias repellat
-              recusandae, ratione fuga cupiditate. Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde natus
-              placeat quia odio exercitationem, quas quaerat, repellendus tempora, corrupti ullam nulla excepturi velit!
-              Voluptas molestias repellat recusandae, ratione fuga cupiditate.
-            </TabsContent>
-          </Tabs>
-
-          {/* content */}
+          <ProductTabs product={product?.getProductById} />
         </div>
 
         {/* popular */}
@@ -293,27 +263,30 @@ const ProductPage = () => {
             <h2 className="text-2xl font-semibold">Популярні товари</h2>
             <div className="flex gap-[10]">
               <Button size="icon" variant="outline" className="border-destructive text-destructive">
-                {'<'}
+                {"<"}
               </Button>
 
               <Button size="icon" variant="outline">
-                {'>'}
+                {">"}
               </Button>
             </div>
           </div>
 
           <div className="grid grid-cols-5 gap-[18] grid-flow-col">
-          
             {data
               ? data.getAllProducts.products
                   .slice(0, 5)
                   .map((product) => <CatalogCard product={product} viewType="cards" />)
-              : [...Array(5).fill(null).map((_, index) => <CatalogCardSkeleton key={index} viewType="cards" />)]}
+              : [
+                  ...Array(5)
+                    .fill(null)
+                    .map((_, index) => <CatalogCardSkeleton key={index} viewType="cards" />),
+                ]}
           </div>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default ProductPage
+export default ProductPage;

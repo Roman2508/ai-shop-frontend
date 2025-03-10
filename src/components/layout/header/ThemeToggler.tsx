@@ -1,19 +1,19 @@
-'use client'
+"use client";
 
-import * as React from 'react'
-import { Moon, MoonIcon, Sun } from 'lucide-react'
-import { useTheme } from 'next-themes'
+import * as React from "react";
+import { useTheme } from "next-themes";
+import { Moon, Sun } from "lucide-react";
 
 import {
   DropdownMenu,
   DropdownMenuItem,
   DropdownMenuTrigger,
   DropdownMenuContent,
-} from '@/components/ui/common/DropdownMenu'
-import { Button } from '@/components/ui/common/Button'
+} from "@/components/ui/common/DropdownMenu";
+import { Button } from "@/components/ui/common/Button";
 
-export function ThemeToggler() {
-  const { setTheme } = useTheme()
+const ThemeToggler = () => {
+  const { setTheme } = useTheme();
 
   return (
     <DropdownMenu>
@@ -25,10 +25,12 @@ export function ThemeToggler() {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="center">
-        <DropdownMenuItem onClick={() => setTheme('light')}>Світла</DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme('dark')}>Темна</DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme('system')}>Системна</DropdownMenuItem>
+        <DropdownMenuItem onClick={() => setTheme("light")}>Світла</DropdownMenuItem>
+        <DropdownMenuItem onClick={() => setTheme("dark")}>Темна</DropdownMenuItem>
+        <DropdownMenuItem onClick={() => setTheme("system")}>Системна</DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
-  )
-}
+  );
+};
+
+export { ThemeToggler };
