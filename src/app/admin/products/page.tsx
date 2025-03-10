@@ -29,6 +29,7 @@ import {
 import { Button } from '@/components/ui/common/Button'
 import { Checkbox } from '@/components/ui/common/Checkbox'
 import { useGetAllProductsQuery } from '@/graphql/generated/output'
+import { Skeleton } from '@/components/ui/common/Skeleton'
 
 interface AdminProductsPageProps {}
 
@@ -59,7 +60,7 @@ const AdminProductsPage: React.FC<AdminProductsPageProps> = ({}) => {
 
       <div className="flex flex-col gap-[46]">
         <div className="flex justify-between items-center">
-          <h2>Title</h2>
+          <h1 className="text-3xl font-semibold">Title</h1>
 
           <div className="flex gap-[10]">
             <Button variant="outline" className="h-[36]">
@@ -103,7 +104,7 @@ const AdminProductsPage: React.FC<AdminProductsPageProps> = ({}) => {
                     {/* <Image src="" alt="" width={30} height={30} /> */}
                   </TableCell>
 
-                  <TableCell>{product.title}</TableCell>
+                  <TableCell className="w-full max-w-[40%]">{product.title}</TableCell>
 
                   <TableCell className="text-center">{product.price} грн.</TableCell>
 
@@ -122,46 +123,37 @@ const AdminProductsPage: React.FC<AdminProductsPageProps> = ({}) => {
                 </TableRow>
               ))
             ) : (
-              <h1>Loading...</h1>
-            )}
-
-            {/* 
-            {Array(20)
-              .fill(null)
-              .map((_, index) => (
-                <TableRow key={index}>
-                  <TableCell className="font-medium">
-                    <Checkbox />
-                  </TableCell>
-
-                  <TableCell className="text-center">
-                    <div>
-                      <img
-                        className="h-[50] w-[50] object-cover"
-                        src="https://www.shutterstock.com/image-vector/no-image-available-icon-template-600nw-1036735678.jpg"
-                      />
-                    </div>
-                  </TableCell>
-
-                    <TableCell>Lorem ipsum dolor sit amet consectetur adipisicing</TableCell>
-
-                    <TableCell className="text-center">20 000 грн.</TableCell>
-
-                    <TableCell className="text-center">{Math.round(Math.random() * 20)}</TableCell>
-
-                    <TableCell className="text-center">Credit Card</TableCell>
-
-                    <TableCell className="text-center">
-                    <Button size="icon" variant="outline" className="w-[42] h-[42] mr-[10]">
-                        Edit
-                    </Button>
-                    <Button size="icon" variant="outline" className="w-[42] h-[42]">
-                        Del
-                    </Button>
-                    </TableCell>
+              <>
+                {Array(10)
+                  .fill(null)
+                  .map((_, index) => (
+                    <TableRow>
+                      <TableCell className="text-center">
+                        <Skeleton className="h-[20] w-[20px] rounded-[0]" />
+                      </TableCell>
+                      <TableCell className="text-center">
+                        <Skeleton className="h-[50] w-[50px] rounded-[0]" />
+                      </TableCell>
+                      <TableCell className="w-full max-w-[40%]">
+                        <Skeleton className="h-[20] w-[100%] rounded-[0]" />
+                      </TableCell>
+                      <TableCell className="text-center">
+                        <Skeleton className="h-[20] w-[100%] rounded-[0]" />
+                      </TableCell>
+                      <TableCell className="text-center">
+                        <Skeleton className="h-[20] w-[100px] rounded-[0]" />
+                      </TableCell>
+                      <TableCell className="text-center">
+                        <Skeleton className="h-[20] w-[100px] rounded-[0]" />
+                      </TableCell>
+                      <TableCell className="flex justify-center gap-[10]">
+                        <Skeleton className="h-[45] w-[45]" />
+                        <Skeleton className="h-[45] w-[45]" />
+                      </TableCell>
                     </TableRow>
-                    ))}
-            */}
+                  ))}
+              </>
+            )}
           </TableBody>
         </Table>
 

@@ -3,10 +3,10 @@
 import React from 'react'
 
 import { Button } from '@/components/ui/common/Button'
-import ButtonWithIcon from '@/components/ui/custom/ButtonWithIcon'
-import ProfileLayout from '@/components/layout/profile/ProfileLayout'
-import EditProfileForm from '@/components/features/EditProfileForm'
 import ViewProfile from '@/components/features/ViewProfile'
+import ButtonWithIcon from '@/components/ui/custom/ButtonWithIcon'
+import EditProfileForm from '@/components/features/EditProfileForm'
+import ProfileLayout from '@/components/layout/profile/ProfileLayout'
 
 const personalInfo = [
   { name: 'ПІБ', value: 'ПроектСтрой' },
