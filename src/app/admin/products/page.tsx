@@ -88,40 +88,48 @@ const AdminProductsPage: React.FC<AdminProductsPageProps> = ({}) => {
           </TableHeader>
           <TableBody>
             {data ? (
-              data.getAllProducts.map((product) => (
-                <TableRow key={product.id}>
-                  <TableCell className="font-medium">
-                    <Checkbox />
-                  </TableCell>
+              data.getAllProducts.products.map((product) => {
+                const productName = product
+                  ? `${product.brand}, ${product.ram}/${product.builtInMemory} ГБ, ${product.color}`
+                  : ''
 
-                  <TableCell className="text-center">
-                    <div>
-                      <img
-                        className="h-[50] w-[50] object-cover"
-                        src="https://www.shutterstock.com/image-vector/no-image-available-icon-template-600nw-1036735678.jpg"
-                      />
-                    </div>
-                    {/* <Image src="" alt="" width={30} height={30} /> */}
-                  </TableCell>
+                return (
+                  <TableRow key={product.id}>
+                    <TableCell className="font-medium">
+                      <Checkbox />
+                    </TableCell>
 
-                  <TableCell className="w-full max-w-[40%]">{product.title}</TableCell>
+                    <TableCell className="text-center">
+                      <div>
+                        <img
+                          className="h-[50] w-[50] object-cover"
+                          src="https://www.shutterstock.com/image-vector/no-image-available-icon-template-600nw-1036735678.jpg"
+                        />
+                      </div>
+                      {/* <Image src="" alt="" width={30} height={30} /> */}
+                    </TableCell>
 
-                  <TableCell className="text-center">{product.price} грн.</TableCell>
+                    <TableCell className="w-full max-w-[40%]">{productName}</TableCell>
 
-                  <TableCell className="text-center">{Math.round(Math.random() * 20)}</TableCell>
+                    <TableCell className="text-center text-primary font-bold">
+                      {product.price.toLocaleString('uk-UA')} грн.
+                    </TableCell>
 
-                  <TableCell className="text-center">Credit Card</TableCell>
+                    <TableCell className="text-center">{Math.round(Math.random() * 20)}</TableCell>
 
-                  <TableCell className="text-center">
-                    <Button size="icon" variant="outline" className="w-[42] h-[42] mr-[10]">
-                      Edit
-                    </Button>
-                    <Button size="icon" variant="outline" className="w-[42] h-[42]">
-                      Del
-                    </Button>
-                  </TableCell>
-                </TableRow>
-              ))
+                    <TableCell className="text-center">Credit Card</TableCell>
+
+                    <TableCell className="text-center">
+                      <Button size="icon" variant="outline" className="w-[42] h-[42] mr-[10]">
+                        Edit
+                      </Button>
+                      <Button size="icon" variant="outline" className="w-[42] h-[42]">
+                        Del
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                )
+              })
             ) : (
               <>
                 {Array(10)

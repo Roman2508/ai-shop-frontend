@@ -2,7 +2,7 @@
 
 import React from 'react'
 import Link from 'next/link'
-import { useLocale } from 'next-intl'
+import { useLocale, useTranslations } from 'next-intl'
 import { useDebouncedCallback } from 'use-debounce'
 
 import {
@@ -48,6 +48,7 @@ import CatalogCardSkeleton from '@/components/features/CatalogCardSkeleton'
 
 const CatalogPage = () => {
   const locale = useLocale()
+  const t = useTranslations('catalog')
 
   const [isLoading, setIsLoading] = React.useState(false)
   const [maxPrice, setMaxPrice] = React.useState(100000)
@@ -145,27 +146,25 @@ const CatalogPage = () => {
     setMaxPrice(maxPrice)
   }, [data])
 
-  console.log(filter)
-
   return (
     <div className="max-w-[1640] mx-auto px-[16]">
       <Breadcrumb className="mb-[45]">
         <BreadcrumbList>
           <BreadcrumbItem>
             <BreadcrumbLink>
-              <Link href="/">Головна</Link>
+              <Link href="/">{t('breadcrumbs.home')}</Link>
             </BreadcrumbLink>
           </BreadcrumbItem>
 
           <BreadcrumbSeparator />
 
           <BreadcrumbItem>
-            <BreadcrumbPage>Каталог</BreadcrumbPage>
+            <BreadcrumbPage>{t('breadcrumbs.catalog')}</BreadcrumbPage>
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>
 
-      <h1 className="text-xl font-semibold mb-[45]">Смартфони, мобільні пристрої та аксесуари</h1>
+      <h1 className="text-xl font-semibold mb-[45]">{t('title')}</h1>
 
       <div className="flex items-baseline gap-[40]">
         {/* filters */}
@@ -193,7 +192,7 @@ const CatalogPage = () => {
           ))}
 
           <div className="pb-[28] mb-[28] border-b-2">
-            <b className="block mb-[20]">Ціна</b>
+            <b className="block mb-[20]">{t('filter.price')}</b>
 
             <Slider
               min={0}
@@ -235,10 +234,17 @@ const CatalogPage = () => {
               fetchFilteredData()
             }}
           >
-            Застосувати фільтри
+            {t('filter.applyFilters')}
           </Button>
-          <Button variant="link" className="w-full" onClick={() => setFilter({})}>
-            Скинути фільтри
+          <Button
+            variant="link"
+            className="w-full"
+            onClick={() => {
+              alert('FIX')
+              setFilter({})
+            }}
+          >
+            {t('filter.resetFilters')}
           </Button>
         </Card>
 
@@ -246,23 +252,25 @@ const CatalogPage = () => {
           {/* catalog filters */}
           <div className="flex justify-between items-center">
             <div>
-              Товарів в категорії: <b>{products.length}</b>
+              {`${t('filter.totalItems')} `}
+              <b>{products.length}</b>
             </div>
 
             <div className="flex items-center gap-[50]">
               <div className="flex items-center gap-[10]">
-                <p>Сортувати</p>
+                <p className="text-nowrap">{t('filter.sort.title')}</p>
+
                 <Select onValueChange={(value) => fetchFilteredData({ sortBy: value })}>
                   <SelectTrigger>
-                    <SelectValue placeholder="За замовчуванням" />
+                    <SelectValue placeholder={t('filter.sort.byDefault')} />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectGroup>
-                      <SelectItem value="default">За замовчуванням</SelectItem>
-                      <SelectItem value="rating">За рейтингом</SelectItem>
-                      <SelectItem value="new">За новизною</SelectItem>
-                      <SelectItem value="price:asc">Від дешевих до дорогих</SelectItem>
-                      <SelectItem value="price:desc">Від дорогих до дешевих</SelectItem>
+                      <SelectItem value="default">{t('filter.sort.byDefault')}</SelectItem>
+                      <SelectItem value="rating">{t('filter.sort.byRating')}</SelectItem>
+                      <SelectItem value="new">{t('filter.sort.byNew')}</SelectItem>
+                      <SelectItem value="price:asc">{t('filter.sort.byPrice:asc')}</SelectItem>
+                      <SelectItem value="price:desc">{t('filter.sort.byPrice:desc')}</SelectItem>
                     </SelectGroup>
                   </SelectContent>
                 </Select>
@@ -270,7 +278,7 @@ const CatalogPage = () => {
 
               <div className="flex items-center gap-[30]">
                 <div className="flex items-center gap-[10]">
-                  <div className="">Показати на сторінці</div>
+                  <div className="">{t('filter.itemsPerPage')}</div>
                   <Select onValueChange={(value) => fetchFilteredData({ limit: Number(value) })}>
                     <SelectTrigger className="w-[75]">
                       <SelectValue placeholder="24" />
@@ -342,7 +350,7 @@ const CatalogPage = () => {
                 >
                   {/* <PaginationPrevious href="#" /> */}
                   <PaginationLink href="#" className="px-[5] w-[100]">
-                    <Button variant="link">{'< Назад'}</Button>
+                    <Button variant="link">{`< ${t('pagination.prev')}`}</Button>
                   </PaginationLink>
                 </PaginationItem>
                 {/* <PaginationItem>
@@ -388,7 +396,7 @@ const CatalogPage = () => {
                   {/* <PaginationNext href="#" /> */}
                   <PaginationLink href="#" className="px-[5] w-[100]">
                     <Button variant="link" className="px-[5]">
-                      {'Вперед >'}
+                      {`${t('pagination.next')} >`}
                     </Button>
                   </PaginationLink>
                   {/*  */}

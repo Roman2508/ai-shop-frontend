@@ -8,6 +8,7 @@ import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, For
 import { Input } from '../ui/common/Input'
 import { Button } from '../ui/common/Button'
 import { Checkbox } from '../ui/common/Checkbox'
+import { useTranslations } from 'next-intl'
 
 const formSchema = z.object({
   username: z.string().min(2, {
@@ -15,7 +16,13 @@ const formSchema = z.object({
   }),
 })
 
-const RegisterForm = () => {
+interface IRegisterFormProps {
+  setFromType: React.Dispatch<React.SetStateAction<'login' | 'register'>>
+}
+
+const RegisterForm: React.FC<IRegisterFormProps> = ({ setFromType }) => {
+  const t = useTranslations('header')
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -27,6 +34,10 @@ const RegisterForm = () => {
     console.log(values)
   }
 
+  const handleChangeFormType = () => {
+    setFromType('login')
+  }
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
@@ -35,9 +46,9 @@ const RegisterForm = () => {
           name="username"
           render={({ field }) => (
             <FormItem className="pt-[30] pb-[20]">
-              <FormLabel>Логін</FormLabel>
+              <FormLabel>{t('auth.loginBtn')}</FormLabel>
               <FormControl>
-                <Input placeholder="Вкажіть назву профіля" className="h-[50] px-[20] w-full" {...field} />
+                <Input placeholder={t('auth.registerForm.loginLabel')} className="h-[50] px-[20] w-full" {...field} />
               </FormControl>
               {/* <FormDescription>This is your public display name.</FormDescription> */}
               <FormMessage />
@@ -50,9 +61,13 @@ const RegisterForm = () => {
           name="username"
           render={({ field }) => (
             <FormItem className="pb-[30]">
-              <FormLabel>Пароль</FormLabel>
+              <FormLabel>{t('auth.registerForm.passLabel')}</FormLabel>
               <FormControl>
-                <Input placeholder="Вкажіть назву профіля" className="h-[50] px-[20] w-full" {...field} />
+                <Input
+                  placeholder={t('auth.registerForm.passPlaceholder')}
+                  className="h-[50] px-[20] w-full"
+                  {...field}
+                />
               </FormControl>
               {/* <FormDescription>This is your public display name.</FormDescription> */}
               <FormMessage />
@@ -65,9 +80,13 @@ const RegisterForm = () => {
           name="username"
           render={({ field }) => (
             <FormItem className="pb-[30]">
-              <FormLabel>Повторіть пароль</FormLabel>
+              <FormLabel>{t('auth.registerForm.repeatPassLabel')}</FormLabel>
               <FormControl>
-                <Input placeholder="Вкажіть назву профіля" className="h-[50] px-[20] w-full" {...field} />
+                <Input
+                  placeholder={t('auth.registerForm.repeatPassPlaceholder')}
+                  className="h-[50] px-[20] w-full"
+                  {...field}
+                />
               </FormControl>
               {/* <FormDescription>This is your public display name.</FormDescription> */}
               <FormMessage />
@@ -76,16 +95,17 @@ const RegisterForm = () => {
         />
 
         <Button type="submit" className="w-full">
-          Зареєструватись
+          {t('auth.registerBtn')}
         </Button>
 
         <div className="mt-[20] flex">
-          {/* <Button variant="link" className="w-full text-primary opacity-100">
-            Забули пароль?
-          </Button> */}
-
-          <Button variant="link" type="button" className="w-full text-primary opacity-100">
-            Увійти
+          <Button
+            variant="link"
+            type="button"
+            onClick={handleChangeFormType}
+            className="w-full text-primary opacity-100"
+          >
+            {t('auth.loginBtn')}
           </Button>
         </div>
       </form>

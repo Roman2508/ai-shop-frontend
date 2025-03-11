@@ -1,27 +1,21 @@
-"use client";
+'use client'
 
-import React from "react";
-import Link from "next/link";
+import React from 'react'
+import Link from 'next/link'
 
-import Search from "./Search";
-import LoginButton from "./LoginButton";
-import { ThemeToggler } from "./ThemeToggler";
-import { Label } from "@/components/ui/common/Label";
-import { Switch } from "@/components/ui/common/Switch";
-import { Button } from "@/components/ui/common/Button";
-import ButtonWithIcon from "@/components/ui/custom/ButtonWithIcon";
-import LangToggler from "./LangToggler";
+import Search from './Search'
+import LoginButton from './LoginButton'
+import LangToggler from './LangToggler'
+import { useAuth } from '@/hooks/useAuth'
+import { ThemeToggler } from './ThemeToggler'
+import { Button } from '@/components/ui/common/Button'
+import ButtonWithIcon from '@/components/ui/custom/ButtonWithIcon'
+import { useTranslations } from 'next-intl'
 
 const Header = () => {
-  const handleChangeTheme = () => {
-    const currentTheme = window.localStorage.getItem("theme");
-    console.log(currentTheme);
-    if (currentTheme === "dark") {
-      window.localStorage.setItem("theme", "light");
-    } else {
-      window.localStorage.setItem("theme", "dark");
-    }
-  };
+  const t = useTranslations('header')
+
+  const { isAuthentificated } = useAuth()
 
   return (
     <header className="fixed w-full flex justify-between items-center gap-[20] py-[20] px-[26] bg-dark text-white z-[1]">
@@ -29,7 +23,7 @@ const Header = () => {
       <div className="flex-1 flex gap-[20] items-center">
         <Link href="/catalog">
           <ButtonWithIcon
-            text="Каталог"
+            text={t('catalogBtn')}
             iconSrc="/icons/burger-white.png"
             classNames="text-white h-[36] font-regular"
           />
@@ -58,14 +52,14 @@ const Header = () => {
 
         <div className="flex flex-col items-end leading-[1.2] text-[14px]">
           <b>+380 98-888-88-88</b>
-          <span className="opacity-[0.6] text-[12px]">щоденно</span>
+          <span className="opacity-[0.6] text-[12px]">{t('phoneBtn')}</span>
         </div>
 
         <ThemeToggler />
 
         <LangToggler />
 
-        {true ? (
+        {!isAuthentificated ? (
           <LoginButton />
         ) : (
           <>
@@ -76,11 +70,17 @@ const Header = () => {
             <Button size="icon" variant="icon">
               <img width="16px" height="16px" src="/icons/shopping-bag.png" />
             </Button>
+
+            <Link href="/profile/personal-information">
+              <Button size="icon" variant="icon">
+                <img width="16px" height="16px" src="/icons/user.png" />
+              </Button>
+            </Link>
           </>
         )}
       </div>
     </header>
-  );
-};
+  )
+}
 
-export default Header;
+export default Header

@@ -22,11 +22,9 @@ const WishlistPage = () => {
       </div>
 
       <div className="grid grid-cols-4 gap-[18]">
-        {Array(10)
-          .fill(null)
-          .map((_) => (
-            <CatalogCard viewType={'cards'} />
-          ))}
+        {[...Array(10)].map((_) => (
+          <CatalogCard viewType={'cards'} />
+        ))}
       </div>
     </ProfileLayout>
   )

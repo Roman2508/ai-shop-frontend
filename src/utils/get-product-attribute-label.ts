@@ -3,7 +3,7 @@ const attributes = [
   { key: "os", label_ua: "Операційна система", label_en: "OS" },
   { key: "frontCamera", label_ua: "Фронтальна камера", label_en: "Front camera" },
   { key: "mainCamera", label_ua: "Головна камера", label_en: "Main camera" },
-  { key: "proccessorName", label_ua: "Назва процесора", label_en: "Processor name" },
+  { key: "processorName", label_ua: "Назва процесора", label_en: "Processor name" },
   { key: "processorCores", label_ua: "Кількість ядер процесора", label_en: "Processor cores" },
   { key: "brand", label_ua: "Бренд", label_en: "Brand" },
   { key: "builtInMemory", label_ua: "Вбудована пам'ять", label_en: "Built in memory" },

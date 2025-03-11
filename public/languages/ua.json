@@ -1,5 +1,61 @@
 {
+  "header": {
+    "catalogBtn": "Каталог",
+    "searchBtn": "Пошук",
+    "phoneBtn": "щоденно",
+    "auth": {
+      "loginBtn": "Увійти",
+      "registerBtn": "Зареєструватись",
+      "loginForm": {
+        "title": "Вхід в особистий кабінет",
+        "loginLabel": "Логін",
+        "loginPlaceholder": "Вкажіть назву профіля",
+        "passLabel": "Пароль",
+        "passPlaceholder": "Введіть свій пароль",
+        "rememberBtn": "Запам'ятати мене",
+        "forgotPassBtn": "Забули пароль?"
+      },
+      "registerForm": {
+        "title": "Реєстрація",
+        "loginLabel": "Логін",
+        "loginPlaceholder": "Вкажіть назву профіля",
+        "passLabel": "Пароль",
+        "passPlaceholder": "Введіть свій пароль",
+        "repeatPassLabel": "Повторіть пароль",
+        "repeatPassPlaceholder": "Повторіть пароль"
+      }
+    }
+  },
+  "footer": {
+    "": ""
+  },
   "home": {
     "title": "Головна сторінка"
+  },
+  "catalog": {
+    "breadcrumbs": {
+      "home": "Головна",
+      "catalog": "Каталог"
+    },
+    "title": "Смартфони, мобільні пристрої та аксесуари",
+    "filter": {
+      "totalItems": "Товарів в категорії:",
+      "sort": {
+        "title": "Сортувати",
+        "byDefault": "За замовчуванням",
+        "byRating": "За рейтингом",
+        "byNew": "За новизною",
+        "byPrice:asc": "Від дешевих до дорогих",
+        "byPrice:desc": "Від дорогих до дешевих"
+      },
+      "itemsPerPage": "Показати на сторінці",
+      "price": "Ціна",
+      "applyFilters": "Застосувати фільтри",
+      "resetFilters": "Скинути фільтри"
+    },
+    "pagination": {
+      "next": "Назад",
+      "prev": "Вперед"
+    }
   }
 }

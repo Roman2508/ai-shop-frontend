@@ -1,5 +1,62 @@
 {
+  "header": {
+    "catalogBtn": "Catalog",
+    "searchBtn": "Search",
+    "phoneBtn": "Daily",
+    "auth": {
+      "loginBtn": "Login",
+      "registerBtn": "Register",
+      "loginForm": {
+        "title": "Login to your personal account",
+        "loginLabel": "Your login",
+        "loginPlaceholder": "Entyr your login",
+        "passLabel": "Your password",
+        "passPlaceholder": "Enter your password",
+        "rememberBtn": "Remember me",
+        "forgotPassBtn": "Forgot your password?"
+      },
+      "registerForm": {
+        "title": "Registration",
+        "loginLabel": "Your login",
+        "loginPlaceholder": "Entyr your login",
+        "passLabel": "Your password",
+        "passPlaceholder": "Enter your password",
+        "rememberBtn": "Remember me",
+        "repeatPassLabel": "Repeat your password",
+        "repeatPassPlaceholder": "Repeat your password"
+      }
+    }
+  },
+  "footer": {
+    "": ""
+  },
   "home": {
     "title": "Home page"
+  },
+  "catalog": {
+    "breadcrumbs": {
+      "home": "Home",
+      "catalog": "Catalog"
+    },
+    "title": "Smartphones, mobile devices and accessories",
+    "filter": {
+      "totalItems": "Items in category",
+      "sort": {
+        "title": "Sort by",
+        "byDefault": "Default",
+        "byRating": "By rating",
+        "byNew": "By novelty",
+        "byPrice:asc": "From cheap to expensive",
+        "byPrice:desc": "From expensive to cheap"
+      },
+      "itemsPerPage": "Items per page",
+      "price": "Price",
+      "applyFilters": "Apply filters",
+      "resetFilters": "Reset filters"
+    },
+    "pagination": {
+      "next": "Next",
+      "prev": "Prev"
+    }
   }
 }
