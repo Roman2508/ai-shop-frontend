@@ -1,22 +1,13 @@
-import { ApolloClient, createHttpLink, InMemoryCache, split } from '@apollo/client'
-import { getMainDefinition } from '@apollo/client/utilities'
-
-const httpLink = createHttpLink({
-  uri: process.env.NEXT_PUBLIC_SERVER_URL,
-  credentials: 'include',
-  headers: {
-    'apollo-require-preflight': 'true',
-  },
-})
-
-const splitLink = split(({ query }) => {
-  const definition = getMainDefinition(query)
-  console.log(definition)
-  return definition.kind === 'OperationDefinition'
-  // && definition.operation === 'subscription'
-}, httpLink)
+import { ApolloClient, InMemoryCache } from "@apollo/client";
+import createUploadLink from "apollo-upload-client/createUploadLink.mjs";
 
 export const client = new ApolloClient({
-  link: httpLink,
+  link: createUploadLink({
+    uri: process.env.NEXT_PUBLIC_SERVER_URL,
+    credentials: "include",
+    headers: {
+      "apollo-require-preflight": "true",
+    },
+  }),
   cache: new InMemoryCache(),
-})
+});

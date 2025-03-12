@@ -1,16 +1,21 @@
-'use client'
-import { z } from 'zod'
-import React from 'react'
-import { useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
+"use client";
+import { z } from "zod";
+import React from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 
-import { Input } from '../../ui/common/Input'
-import { Button } from '../../ui/common/Button'
-import { Textarea } from '../../ui/common/Textarea'
-import { Form, FormItem, FormField, FormMessage, FormControl, FormDescription } from '@/components/ui/common/Form'
-import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '../../ui/common/Select'
-import { formSchema, defaultValues, mainCharacteristicsInputsData, mainCharacteristicsSelectData } from './form-helpers'
-import { useUploadFileMutation } from '@/graphql/generated/output'
+import {
+  formSchema,
+  defaultValues,
+  mainCharacteristicsInputsData,
+  mainCharacteristicsSelectData,
+} from "./form-helpers";
+import { Input } from "../../ui/common/Input";
+import { Button } from "../../ui/common/Button";
+import { Textarea } from "../../ui/common/Textarea";
+import { useUploadFileMutation } from "@/graphql/generated/output";
+import { Form, FormItem, FormField, FormMessage, FormControl, FormDescription } from "@/components/ui/common/Form";
+import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "../../ui/common/Select";
 
 /* 
         price: z.number
@@ -32,38 +37,43 @@ import { useUploadFileMutation } from '@/graphql/generated/output'
     */
 
 const CreateProductForm = () => {
-  const fileRef = React.useRef<HTMLInputElement>(null)
+  const fileRef = React.useRef<HTMLInputElement>(null);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues,
-  })
+  });
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
-    console.log(values)
-  }
-  const [file, setFile] = React.useState<any>()
-  const [upload] = useUploadFileMutation()
+    console.log(values);
+  };
+
+  const [file, setFile] = React.useState<FileList | []>([]);
+  const [upload] = useUploadFileMutation({ variables: { file } });
 
   const handleChangeUpload = async (event: any) => {
-    const _event = event as React.ChangeEvent<HTMLInputElement>
+    const _event = event as React.ChangeEvent<HTMLInputElement>;
 
     if (_event.target.files?.length) {
-      const formData = new FormData()
-      formData.append('file', _event.target.files[0])
-      
-      // setFile(formData)
-      setFile(_event.target.files[0])
+      // const formData = new FormData();
 
-      console.log(_event.target.files[0])
-      console.log(formData)
+      // for (let i = 0; i < _event.target.files.length; i++) {
+      //   formData.append("file", _event.target.files[0]);
+      // }
+
+      setFile(_event.target.files);
+
+      // formData.append("file", _event.target.files[0]);
+      // setFile(_event.target.files[0]);
     }
-  }
+  };
 
   const aaaaaa = () => {
-    console.log('click', file)
-    upload({ variables: { file: file } })
-  }
+    console.log("click", file);
+    upload({ variables: { file } });
+  };
+
+  console.log(file);
 
   return (
     <Form {...form}>
@@ -76,7 +86,7 @@ const CreateProductForm = () => {
               name="brand"
               control={form.control}
               render={({ field }) => {
-                const { onChange: onValueChange, ...rest } = field
+                const { onChange: onValueChange, ...rest } = field;
                 return (
                   <FormItem>
                     <FormDescription>Бренд</FormDescription>
@@ -98,7 +108,7 @@ const CreateProductForm = () => {
                     </FormControl>
                     <FormMessage />
                   </FormItem>
-                )
+                );
               }}
             />
 
@@ -148,30 +158,34 @@ const CreateProductForm = () => {
           <h4 className="font-semibold mb-[20]">Фото</h4>
 
           <div className="flex flex-wrap gap-[26]">
-            <div className="flex gap-[10] w-full">
-              {Array(3)
-                .fill(null)
-                .map((_, index) => (
-                  <div className="w-[150] h-[150]" key={index}>
-                    <img src="https://www.shutterstock.com/image-vector/no-image-available-icon-template-600nw-1036735678.jpg" />
-                  </div>
-                ))}
+            <div className="flex gap-[10] w-full h-[150] border border-border rounded-[10]">
+              {Array.from(file).map((f, index) => (
+                <div className="w-[150] h-[150]" key={index}>
+                  <img src={f ? URL.createObjectURL(f) : ""} className="w-full h-full object-cover" />
+                </div>
+              ))}
+              {/* {file && (
+                <div className="w-[150] h-[150] mr-[10]">
+                <img src={URL.createObjectURL(file)} className="w-full h-full object-cover" />
+                // <img src="https://www.shutterstock.com/image-vector/no-image-available-icon-template-600nw-1036735678.jpg" />
+                </div>
+              )} */}
             </div>
 
             <Button
               variant="secondary"
               type="button"
               onClick={() => {
-                if (!fileRef.current) return
-                fileRef.current.click()
+                if (!fileRef.current) return;
+                fileRef.current.click();
               }}
             >
               Завантажити фото
             </Button>
             <input ref={fileRef} onClick={handleChangeUpload} type="file" className="hidden" multiple />
-            <button onClick={aaaaaa} type="button">
-              absfgsfafa
-            </button>
+            <Button onClick={aaaaaa} type="button" variant="outline">
+              Upload
+            </Button>
           </div>
         </div>
 
@@ -196,17 +210,17 @@ const CreateProductForm = () => {
                           placeholder={input.placeholder}
                           className="h-[50] px-[20] w-[280]"
                           onChange={(e) => {
-                            if (input.type === 'number') {
-                              field.onChange(Number(e.target.value))
+                            if (input.type === "number") {
+                              field.onChange(Number(e.target.value));
                             } else {
-                              field.onChange(e.target.value)
+                              field.onChange(e.target.value);
                             }
                           }}
                         />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
-                  )
+                  );
                 }}
               />
             ))}
@@ -223,7 +237,7 @@ const CreateProductForm = () => {
                 control={form.control}
                 name={select.key}
                 render={({ field }) => {
-                  const { onChange: onValueChange, ...rest } = field
+                  const { onChange: onValueChange, ...rest } = field;
                   return (
                     <FormItem>
                       <FormDescription>{select.label}</FormDescription>
@@ -245,7 +259,7 @@ const CreateProductForm = () => {
                       </FormControl>
                       <FormMessage />
                     </FormItem>
-                  )
+                  );
                 }}
               />
             ))}
@@ -257,7 +271,7 @@ const CreateProductForm = () => {
         </Button>
       </form>
     </Form>
-  )
-}
+  );
+};
 
-export default CreateProductForm
+export default CreateProductForm;

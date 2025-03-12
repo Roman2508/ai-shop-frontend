@@ -103,7 +103,7 @@ export type Mutation = {
   toggleFavorite: Scalars['Boolean']['output'];
   updateProduct: ProductModel;
   updateStatus: Scalars['Boolean']['output'];
-  uploadFile: Scalars['String']['output'];
+  uploadFile: Scalars['Boolean']['output'];
 };
 
 
@@ -306,7 +306,7 @@ export type UploadFileMutationVariables = Exact<{
 }>;
 
 
-export type UploadFileMutation = { __typename?: 'Mutation', uploadFile: string };
+export type UploadFileMutation = { __typename?: 'Mutation', uploadFile: boolean };
 
 export type FindAllUsersQueryVariables = Exact<{ [key: string]: never; }>;
 

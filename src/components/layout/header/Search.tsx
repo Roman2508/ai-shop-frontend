@@ -1,18 +1,12 @@
-import React from 'react'
-import { useTranslations } from 'next-intl'
+import React from "react";
+import { useTranslations } from "next-intl";
 
-import {
-  Dialog,
-  DialogTitle,
-  DialogHeader,
-  DialogTrigger,
-  DialogContent,
-} from '@/components/ui/common/Dialog'
-import { Input } from '@/components/ui/common/Input'
-import SearchIcon from '@/components/images/SearchIcon'
+import { Dialog, DialogTitle, DialogHeader, DialogTrigger, DialogContent } from "@/components/ui/common/Dialog";
+import { Input } from "@/components/ui/common/Input";
+import SearchIcon from "@/components/images/SearchIcon";
 
 const Search = () => {
-  const t = useTranslations('header')
+  const t = useTranslations("header");
 
   return (
     <>
@@ -25,8 +19,8 @@ const Search = () => {
 
             <Input
               variant="static"
-              placeholder={`${t('searchBtn')}...`}
-              className="cursor-pointer pr-10 w-[340]"
+              placeholder={`${t("searchBtn")}...`}
+              className="cursor-pointer pr-10 w-[128] lg:w-[200] xl:w-[340]"
               readOnly
             />
           </div>
@@ -34,7 +28,7 @@ const Search = () => {
 
         <DialogContent className="sm:max-w-[600px]">
           <DialogHeader>
-            <DialogTitle className="mb-[20]">{t('searchBtn')}</DialogTitle>
+            <DialogTitle className="mb-[20]">{t("searchBtn")}</DialogTitle>
 
             {/* <Input variant="default" placeholder="Пошук..." className="pr-10 w-full" /> */}
             <div className="relative cursor-pointer">
@@ -42,7 +36,7 @@ const Search = () => {
                 <SearchIcon className="fill-muted-foreground" />
               </span>
 
-              <Input variant="default" placeholder={`${t('searchBtn')}...`} className="pr-10 w-full" />
+              <Input variant="default" placeholder={`${t("searchBtn")}...`} className="pr-10 w-full" />
             </div>
 
             <div className="min-h-[400]">
@@ -70,7 +64,7 @@ const Search = () => {
         </DialogContent>
       </Dialog>
     </>
-  )
-}
+  );
+};
 
-export default Search
+export default Search;
