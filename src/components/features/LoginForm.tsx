@@ -6,14 +6,15 @@ import { useForm } from 'react-hook-form'
 import { useTranslations } from 'next-intl'
 import { zodResolver } from '@hookform/resolvers/zod'
 
+import { useAuth } from '@/hooks/useAuth'
 import { Input } from '../ui/common/Input'
 import { Button } from '../ui/common/Button'
 import { Checkbox } from '../ui/common/Checkbox'
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '../ui/common/Form'
 import { useLoginMutation } from '@/graphql/generated/output'
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '../ui/common/Form'
 
 const formSchema = z.object({
-  username: z.string().min(3, {
+  login: z.string().min(3, {
     message: "Ім'я користувача не може бути менше 3 символів",
   }),
   password: z.string().min(8, {
@@ -28,24 +29,29 @@ interface ILoginFormProps {
 const LoginForm: React.FC<ILoginFormProps> = ({ setFromType }) => {
   const t = useTranslations('header')
 
-  const {} = useLoginMutation({
+  const { auth } = useAuth()
+
+  const [login, { loading: isLoading }] = useLoginMutation({
     onCompleted(data, clientOptions) {
       console.log(data, clientOptions)
+      auth()
     },
     onError(error, clientOptions) {
-      console.log(data, clientOptions)
+      console.log(error, clientOptions)
     },
   })
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      username: '',
+      login: '',
+      password: '',
     },
   })
 
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
-    console.log(values)
+  const onSubmit = (data: z.infer<typeof formSchema>) => {
+    console.log(data)
+    login({ variables: { data } })
   }
 
   const handleChangeFormType = () => {
@@ -57,7 +63,7 @@ const LoginForm: React.FC<ILoginFormProps> = ({ setFromType }) => {
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <FormField
           control={form.control}
-          name="username"
+          name="login"
           render={({ field }) => (
             <FormItem className="pt-[30] pb-[20]">
               <FormLabel>{t('auth.loginForm.loginLabel')}</FormLabel>
@@ -97,7 +103,7 @@ const LoginForm: React.FC<ILoginFormProps> = ({ setFromType }) => {
           </label>
         </div>
 
-        <Button type="submit" className="w-full">
+        <Button type="submit" className="w-full" disabled={isLoading}>
           {t('auth.loginBtn')}
         </Button>
 

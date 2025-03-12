@@ -29,7 +29,7 @@ import {
 import { Button } from '@/components/ui/common/Button'
 import { Checkbox } from '@/components/ui/common/Checkbox'
 import { useGetAllProductsQuery } from '@/graphql/generated/output'
-import CreateProductForm from '@/components/features/CreateProductForm'
+import CreateProductForm from '@/components/features/create-product-form/CreateProductForm'
 
 interface AdminProductsPageProps {}
 
