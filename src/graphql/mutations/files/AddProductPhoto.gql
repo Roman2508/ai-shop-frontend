@@ -1,0 +1,3 @@
+mutation AddProductPhoto($productId: String!, $file: Upload!) {
+  addProductPhoto(productId: $productId, file: $file)
+}

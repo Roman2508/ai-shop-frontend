@@ -37,7 +37,7 @@ export const formSchema = z.object({
     message: 'Вказано не вірне значення',
   }),
 
-  simFormat: z.string().min(1, {
+  simFormat: z.string().array().nonempty({
     message: 'Це поле не може бути пустим',
   }),
 
@@ -61,7 +61,7 @@ export const formSchema = z.object({
     message: 'Це поле не може бути пустим',
   }),
 
-  deliverySet: z.string().min(1, {
+  deliverySet: z.string().array().nonempty({
     message: 'Це поле не може бути пустим',
   }),
 
@@ -80,13 +80,13 @@ export const defaultValues = {
   mainCamera: 0,
   screenDiagonal: 0,
   simCount: 0,
-  simFormat: '',
+  simFormat: [],
   os: '',
   processorName: '',
   processorCores: '',
   battery: 0,
   materials: '',
-  deliverySet: '',
+  deliverySet: [],
   color: '',
 }
 
@@ -106,7 +106,7 @@ export const mainCharacteristicsInputsData = [
   {
     key: 'processorCores',
     label: 'Кількість ядер процесора',
-    type: 'number',
+    type: 'string',
     placeholder: 'Вкажіть кількість ядер процесора',
   },
   { key: 'battery', label: 'Ємність акумулятора', type: 'number', placeholder: 'Вкажіть ємність акумулятора' },

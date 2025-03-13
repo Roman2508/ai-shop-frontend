@@ -24,6 +24,7 @@ import ProductTabs from '@/components/features/product/ProductTabs'
 import CatalogCardSkeleton from '@/components/features/CatalogCardSkeleton'
 import { getProductAttributeLabel } from '@/utils/get-product-attribute-label'
 import { ProductModel, useGetAllProductsQuery, useGetProductByIdQuery } from '@/graphql/generated/output'
+import getPhotoUrl from '@/utils/get-photo-url'
 
 const mainCharacteristicsKeys = [
   { key: 'screenDiagonal', label_ua: 'Діагональ екрану', label_en: 'Screen diagonal' },
@@ -39,6 +40,8 @@ const ProductPage = () => {
 
   const locale = useLocale()
 
+  const [mainPhotoName, setMainPhotoName] = React.useState('')
+
   const { data } = useGetAllProductsQuery()
   const { data: product } = useGetProductByIdQuery({
     variables: { productId: typeof id === 'string' ? id : '' },
@@ -48,6 +51,15 @@ const ProductPage = () => {
   const productName = product
     ? `${product.getProductById.brand}, ${product.getProductById.ram}/${product.getProductById.builtInMemory} ГБ, ${product.getProductById.color}`
     : ''
+
+  React.useEffect(() => {
+    if (product) {
+      if (product.getProductById.images.length) {
+        const firstPhotoName = product.getProductById.images[0]
+        setMainPhotoName(firstPhotoName)
+      }
+    }
+  }, [product])
 
   return (
     <div className="max-w-[1640] mx-auto px-[16]">
@@ -79,12 +91,29 @@ const ProductPage = () => {
         {/* main */}
         <div className="flex gap-[40] mb-[75]">
           <Card className="p-[10] w-[40%]">
-            <div className="h-[600] w-[100%]">
+            <div className="h-[100%] w-[100%]">
               {product?.getProductById ? (
-                <img
-                  className="w-full block"
-                  src="https://www.shutterstock.com/image-vector/no-image-available-icon-template-600nw-1036735678.jpg"
-                />
+                <div className="flex flex-col h-full">
+                  <div className="h-[80%]">
+                    <img
+                      className="w-full h-full block"
+                      src={getPhotoUrl(mainPhotoName, 'products')}
+                      // src="https://www.shutterstock.com/image-vector/no-image-available-icon-template-600nw-1036735678.jpg"
+                    />
+                  </div>
+
+                  <div className="h-[20%] flex gap-[10] mt-[10] overflow-y-auto">
+                    {product.getProductById.images.map((imgName) => {
+                      return (
+                        <img
+                          src={getPhotoUrl(imgName, 'products')}
+                          onClick={() => setMainPhotoName(imgName)}
+                          className="w-[100] h-[100] block cursor-pointer"
+                        />
+                      )
+                    })}
+                  </div>
+                </div>
               ) : (
                 <Skeleton className="w-full h-full" />
               )}
@@ -132,7 +161,7 @@ const ProductPage = () => {
                 )}
 
                 {product?.getProductById ? (
-                  <p className="mb-[25]">{product?.getProductById.title}</p>
+                  <p className="mb-[25] line-clamp-[4]">{product?.getProductById.title}</p>
                 ) : (
                   <>
                     <Skeleton className="mb-2 w-full h-[16]" />

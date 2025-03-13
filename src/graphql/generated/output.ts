@@ -40,7 +40,6 @@ export type CreateProductInput = {
   color: Scalars['String']['input'];
   deliverySet: Scalars['String']['input'];
   frontCamera: Scalars['Float']['input'];
-  images: Array<Scalars['String']['input']>;
   mainCamera: Scalars['Float']['input'];
   materials: Scalars['String']['input'];
   os: Scalars['String']['input'];
@@ -88,6 +87,7 @@ export type LoginInput = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  addProductPhoto: Scalars['Boolean']['output'];
   changeEmail: Scalars['Boolean']['output'];
   changePassword: Scalars['Boolean']['output'];
   clearSessionCookie: Scalars['Boolean']['output'];
@@ -99,11 +99,18 @@ export type Mutation = {
   deleteReview: Scalars['Boolean']['output'];
   loginUser: UserModel;
   logoutUser: Scalars['Boolean']['output'];
+  removeProductPhoto: Scalars['Boolean']['output'];
   removeSession: Scalars['Boolean']['output'];
   toggleFavorite: Scalars['Boolean']['output'];
   updateProduct: ProductModel;
   updateStatus: Scalars['Boolean']['output'];
-  uploadFile: Scalars['Boolean']['output'];
+  uploadFile: Scalars['String']['output'];
+};
+
+
+export type MutationAddProductPhotoArgs = {
+  file: Scalars['Upload']['input'];
+  productId: Scalars['String']['input'];
 };
 
 
@@ -144,6 +151,12 @@ export type MutationDeleteReviewArgs = {
 
 export type MutationLoginUserArgs = {
   data: LoginInput;
+};
+
+
+export type MutationRemoveProductPhotoArgs = {
+  filename: Scalars['String']['input'];
+  productId: Scalars['String']['input'];
 };
 
 
@@ -287,6 +300,11 @@ export type UserModel = {
   username: Scalars['String']['output'];
 };
 
+export type ClearSessionCookieMutationVariables = Exact<{ [key: string]: never; }>;
+
+
+export type ClearSessionCookieMutation = { __typename?: 'Mutation', clearSessionCookie: boolean };
+
 export type LoginMutationVariables = Exact<{
   data: LoginInput;
 }>;
@@ -301,12 +319,27 @@ export type RegisterMutationVariables = Exact<{
 
 export type RegisterMutation = { __typename?: 'Mutation', createUser: boolean };
 
+export type AddProductPhotoMutationVariables = Exact<{
+  productId: Scalars['String']['input'];
+  file: Scalars['Upload']['input'];
+}>;
+
+
+export type AddProductPhotoMutation = { __typename?: 'Mutation', addProductPhoto: boolean };
+
 export type UploadFileMutationVariables = Exact<{
   file: Scalars['Upload']['input'];
 }>;
 
 
-export type UploadFileMutation = { __typename?: 'Mutation', uploadFile: boolean };
+export type UploadFileMutation = { __typename?: 'Mutation', uploadFile: string };
+
+export type CreateProductMutationVariables = Exact<{
+  data: CreateProductInput;
+}>;
+
+
+export type CreateProductMutation = { __typename?: 'Mutation', createProduct: { __typename?: 'ProductModel', id: string } };
 
 export type FindAllUsersQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -332,7 +365,42 @@ export type PaginateAndFilterProductsQueryVariables = Exact<{
 
 export type PaginateAndFilterProductsQuery = { __typename?: 'Query', paginateAndFilter: { __typename?: 'ProductsAndTotalModel', total: number, products: Array<{ __typename?: 'ProductModel', id: string, title: string, price: number, brand: string, frontCamera: number, mainCamera: number, ram: number, color: string, builtInMemory: number, processorName: string, processorCores: string, os: string, deliverySet: string, materials: string, simCount: number, simFormat: Array<string>, images: Array<string>, battery: number, createdAt: any, screenDiagonal: number, updatedAt: any }> } };
 
+export type FindProfileQueryVariables = Exact<{ [key: string]: never; }>;
 
+
+export type FindProfileQuery = { __typename?: 'Query', findProfile: { __typename?: 'UserModel', id: string, username: string, displayName: string, email: string, avatar?: string | null, createdAt: any, updatedAt: any } };
+
+
+export const ClearSessionCookieDocument = gql`
+    mutation ClearSessionCookie {
+  clearSessionCookie
+}
+    `;
+export type ClearSessionCookieMutationFn = Apollo.MutationFunction<ClearSessionCookieMutation, ClearSessionCookieMutationVariables>;
+
+/**
+ * __useClearSessionCookieMutation__
+ *
+ * To run a mutation, you first call `useClearSessionCookieMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useClearSessionCookieMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [clearSessionCookieMutation, { data, loading, error }] = useClearSessionCookieMutation({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useClearSessionCookieMutation(baseOptions?: Apollo.MutationHookOptions<ClearSessionCookieMutation, ClearSessionCookieMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<ClearSessionCookieMutation, ClearSessionCookieMutationVariables>(ClearSessionCookieDocument, options);
+      }
+export type ClearSessionCookieMutationHookResult = ReturnType<typeof useClearSessionCookieMutation>;
+export type ClearSessionCookieMutationResult = Apollo.MutationResult<ClearSessionCookieMutation>;
+export type ClearSessionCookieMutationOptions = Apollo.BaseMutationOptions<ClearSessionCookieMutation, ClearSessionCookieMutationVariables>;
 export const LoginDocument = gql`
     mutation Login($data: LoginInput!) {
   loginUser(data: $data) {
@@ -399,6 +467,38 @@ export function useRegisterMutation(baseOptions?: Apollo.MutationHookOptions<Reg
 export type RegisterMutationHookResult = ReturnType<typeof useRegisterMutation>;
 export type RegisterMutationResult = Apollo.MutationResult<RegisterMutation>;
 export type RegisterMutationOptions = Apollo.BaseMutationOptions<RegisterMutation, RegisterMutationVariables>;
+export const AddProductPhotoDocument = gql`
+    mutation AddProductPhoto($productId: String!, $file: Upload!) {
+  addProductPhoto(productId: $productId, file: $file)
+}
+    `;
+export type AddProductPhotoMutationFn = Apollo.MutationFunction<AddProductPhotoMutation, AddProductPhotoMutationVariables>;
+
+/**
+ * __useAddProductPhotoMutation__
+ *
+ * To run a mutation, you first call `useAddProductPhotoMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddProductPhotoMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addProductPhotoMutation, { data, loading, error }] = useAddProductPhotoMutation({
+ *   variables: {
+ *      productId: // value for 'productId'
+ *      file: // value for 'file'
+ *   },
+ * });
+ */
+export function useAddProductPhotoMutation(baseOptions?: Apollo.MutationHookOptions<AddProductPhotoMutation, AddProductPhotoMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<AddProductPhotoMutation, AddProductPhotoMutationVariables>(AddProductPhotoDocument, options);
+      }
+export type AddProductPhotoMutationHookResult = ReturnType<typeof useAddProductPhotoMutation>;
+export type AddProductPhotoMutationResult = Apollo.MutationResult<AddProductPhotoMutation>;
+export type AddProductPhotoMutationOptions = Apollo.BaseMutationOptions<AddProductPhotoMutation, AddProductPhotoMutationVariables>;
 export const UploadFileDocument = gql`
     mutation UploadFile($file: Upload!) {
   uploadFile(file: $file)
@@ -430,6 +530,39 @@ export function useUploadFileMutation(baseOptions?: Apollo.MutationHookOptions<U
 export type UploadFileMutationHookResult = ReturnType<typeof useUploadFileMutation>;
 export type UploadFileMutationResult = Apollo.MutationResult<UploadFileMutation>;
 export type UploadFileMutationOptions = Apollo.BaseMutationOptions<UploadFileMutation, UploadFileMutationVariables>;
+export const CreateProductDocument = gql`
+    mutation CreateProduct($data: CreateProductInput!) {
+  createProduct(data: $data) {
+    id
+  }
+}
+    `;
+export type CreateProductMutationFn = Apollo.MutationFunction<CreateProductMutation, CreateProductMutationVariables>;
+
+/**
+ * __useCreateProductMutation__
+ *
+ * To run a mutation, you first call `useCreateProductMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateProductMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createProductMutation, { data, loading, error }] = useCreateProductMutation({
+ *   variables: {
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useCreateProductMutation(baseOptions?: Apollo.MutationHookOptions<CreateProductMutation, CreateProductMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateProductMutation, CreateProductMutationVariables>(CreateProductDocument, options);
+      }
+export type CreateProductMutationHookResult = ReturnType<typeof useCreateProductMutation>;
+export type CreateProductMutationResult = Apollo.MutationResult<CreateProductMutation>;
+export type CreateProductMutationOptions = Apollo.BaseMutationOptions<CreateProductMutation, CreateProductMutationVariables>;
 export const FindAllUsersDocument = gql`
     query findAllUsers {
   findAllUsers {
@@ -657,3 +790,48 @@ export type PaginateAndFilterProductsQueryHookResult = ReturnType<typeof usePagi
 export type PaginateAndFilterProductsLazyQueryHookResult = ReturnType<typeof usePaginateAndFilterProductsLazyQuery>;
 export type PaginateAndFilterProductsSuspenseQueryHookResult = ReturnType<typeof usePaginateAndFilterProductsSuspenseQuery>;
 export type PaginateAndFilterProductsQueryResult = Apollo.QueryResult<PaginateAndFilterProductsQuery, PaginateAndFilterProductsQueryVariables>;
+export const FindProfileDocument = gql`
+    query FindProfile {
+  findProfile {
+    id
+    username
+    displayName
+    email
+    avatar
+    createdAt
+    updatedAt
+  }
+}
+    `;
+
+/**
+ * __useFindProfileQuery__
+ *
+ * To run a query within a React component, call `useFindProfileQuery` and pass it any options that fit your needs.
+ * When your component renders, `useFindProfileQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useFindProfileQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useFindProfileQuery(baseOptions?: Apollo.QueryHookOptions<FindProfileQuery, FindProfileQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<FindProfileQuery, FindProfileQueryVariables>(FindProfileDocument, options);
+      }
+export function useFindProfileLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<FindProfileQuery, FindProfileQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<FindProfileQuery, FindProfileQueryVariables>(FindProfileDocument, options);
+        }
+export function useFindProfileSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<FindProfileQuery, FindProfileQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<FindProfileQuery, FindProfileQueryVariables>(FindProfileDocument, options);
+        }
+export type FindProfileQueryHookResult = ReturnType<typeof useFindProfileQuery>;
+export type FindProfileLazyQueryHookResult = ReturnType<typeof useFindProfileLazyQuery>;
+export type FindProfileSuspenseQueryHookResult = ReturnType<typeof useFindProfileSuspenseQuery>;
+export type FindProfileQueryResult = Apollo.QueryResult<FindProfileQuery, FindProfileQueryVariables>;

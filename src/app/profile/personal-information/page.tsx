@@ -7,6 +7,7 @@ import ViewProfile from '@/components/features/ViewProfile'
 import ButtonWithIcon from '@/components/ui/custom/ButtonWithIcon'
 import EditProfileForm from '@/components/features/EditProfileForm'
 import ProfileLayout from '@/components/layout/profile/ProfileLayout'
+import { useCurrent } from '@/hooks/useCurrent'
 
 const personalInfo = [
   { name: 'ПІБ', value: 'ПроектСтрой' },
@@ -35,6 +36,8 @@ const profileData = [
 const PersonalInformationPage = () => {
   const [pageView, setPageView] = React.useState<'view' | 'edit'>('view')
 
+  const { user } = useCurrent()
+
   const handleChangePageView = () => {
     if (pageView === 'view') {
       setPageView('edit')
@@ -62,7 +65,7 @@ const PersonalInformationPage = () => {
       </div>
 
       <div className="px-[50] py-[40] rounded-[5] border border-border">
-        {pageView === 'view' && <ViewProfile items={profileData} />}
+        {pageView === 'view' && <ViewProfile items={profileData} user={user} />}
         {pageView === 'edit' && <EditProfileForm />}
       </div>
     </ProfileLayout>
