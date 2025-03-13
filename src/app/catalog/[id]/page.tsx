@@ -1,9 +1,9 @@
-'use client'
-import React from 'react'
-import Link from 'next/link'
-import Image from 'next/image'
-import { useLocale } from 'next-intl'
-import { useParams } from 'next/navigation'
+"use client";
+import React from "react";
+import Link from "next/link";
+import Image from "next/image";
+import { useLocale } from "next-intl";
+import { useParams } from "next/navigation";
 
 import {
   Breadcrumb,
@@ -12,54 +12,53 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from '@/components/ui/common/Breadcrumb'
-import { Card } from '@/components/ui/common/Card'
-import SaveIcon from '@/components/images/SaveIcon'
-import { Input } from '@/components/ui/common/Input'
-import { Button } from '@/components/ui/common/Button'
-import { Skeleton } from '@/components/ui/common/Skeleton'
-import CatalogCard from '@/components/features/CatalogCard'
-import ButtonWithIcon from '@/components/ui/custom/ButtonWithIcon'
-import ProductTabs from '@/components/features/product/ProductTabs'
-import CatalogCardSkeleton from '@/components/features/CatalogCardSkeleton'
-import { getProductAttributeLabel } from '@/utils/get-product-attribute-label'
-import { ProductModel, useGetAllProductsQuery, useGetProductByIdQuery } from '@/graphql/generated/output'
-import getPhotoUrl from '@/utils/get-photo-url'
+} from "@/components/ui/common/Breadcrumb";
+import { Card } from "@/components/ui/common/Card";
+import SaveIcon from "@/components/images/SaveIcon";
+import { Input } from "@/components/ui/common/Input";
+import { Button } from "@/components/ui/common/Button";
+import { Skeleton } from "@/components/ui/common/Skeleton";
+import CatalogCard from "@/components/features/CatalogCard";
+import ButtonWithIcon from "@/components/ui/custom/ButtonWithIcon";
+import ProductTabs from "@/components/features/product/ProductTabs";
+import CatalogCardSkeleton from "@/components/features/CatalogCardSkeleton";
+import { getProductAttributeLabel } from "@/utils/get-product-attribute-label";
+import { ProductModel, useGetAllProductsQuery, useGetProductByIdQuery } from "@/graphql/generated/output";
+import getPhotoUrl from "@/utils/get-photo-url";
 
 const mainCharacteristicsKeys = [
-  { key: 'screenDiagonal', label_ua: 'Діагональ екрану', label_en: 'Screen diagonal' },
-  { key: 'os', label_ua: 'Операційна система', label_en: 'OS' },
-  { key: 'frontCamera', label_ua: 'Фронтальна камера', label_en: 'Front camera' },
-  { key: 'mainCamera', label_ua: 'Головна камера', label_en: 'Main camera' },
-  { key: 'proccessorName', label_ua: 'Назва процесора', label_en: 'Processor name' },
-  { key: 'processorCores', label_ua: 'Кількість ядер процесора', label_en: 'Processor cores' },
-]
+  { key: "screenDiagonal", label_ua: "Діагональ екрану", label_en: "Screen diagonal" },
+  { key: "os", label_ua: "Операційна система", label_en: "OS" },
+  { key: "frontCamera", label_ua: "Фронтальна камера", label_en: "Front camera" },
+  { key: "mainCamera", label_ua: "Головна камера", label_en: "Main camera" },
+  { key: "proccessorName", label_ua: "Назва процесора", label_en: "Processor name" },
+  { key: "processorCores", label_ua: "Кількість ядер процесора", label_en: "Processor cores" },
+];
 
 const ProductPage = () => {
-  const { id } = useParams()
+  const { id } = useParams();
 
-  const locale = useLocale()
+  const locale = useLocale();
 
-  const [mainPhotoName, setMainPhotoName] = React.useState('')
+  const [mainPhotoName, setMainPhotoName] = React.useState("");
 
-  const { data } = useGetAllProductsQuery()
+  const { data } = useGetAllProductsQuery();
   const { data: product } = useGetProductByIdQuery({
-    variables: { productId: typeof id === 'string' ? id : '' },
-    // variables: { productId: String('router.query.id') },
-  })
+    variables: { productId: typeof id === "string" ? id : "" },
+  });
 
   const productName = product
     ? `${product.getProductById.brand}, ${product.getProductById.ram}/${product.getProductById.builtInMemory} ГБ, ${product.getProductById.color}`
-    : ''
+    : "";
 
   React.useEffect(() => {
     if (product) {
       if (product.getProductById.images.length) {
-        const firstPhotoName = product.getProductById.images[0]
-        setMainPhotoName(firstPhotoName)
+        const firstPhotoName = product.getProductById.images[0];
+        setMainPhotoName(firstPhotoName);
       }
     }
-  }, [product])
+  }, [product]);
 
   return (
     <div className="max-w-[1640] mx-auto px-[16]">
@@ -78,14 +77,14 @@ const ProductPage = () => {
           </BreadcrumbItem>
           <BreadcrumbSeparator />
           <BreadcrumbItem>
-            <BreadcrumbPage>{product ? productName : ''}</BreadcrumbPage>
+            <BreadcrumbPage>{product ? productName : ""}</BreadcrumbPage>
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>
 
       <div>
         <p className="text-right mb-[20] opacity-[60%]">
-          {product ? `Артикул: ${product.getProductById.id.slice(2, 8)}` : '...'}
+          {product ? `Артикул: ${product.getProductById.id.slice(2, 8)}` : "..."}
         </p>
 
         {/* main */}
@@ -97,7 +96,7 @@ const ProductPage = () => {
                   <div className="h-[80%]">
                     <img
                       className="w-full h-full block"
-                      src={getPhotoUrl(mainPhotoName, 'products')}
+                      src={getPhotoUrl(mainPhotoName, "products")}
                       // src="https://www.shutterstock.com/image-vector/no-image-available-icon-template-600nw-1036735678.jpg"
                     />
                   </div>
@@ -106,11 +105,11 @@ const ProductPage = () => {
                     {product.getProductById.images.map((imgName) => {
                       return (
                         <img
-                          src={getPhotoUrl(imgName, 'products')}
+                          src={getPhotoUrl(imgName, "products")}
                           onClick={() => setMainPhotoName(imgName)}
                           className="w-[100] h-[100] block cursor-pointer"
                         />
-                      )
+                      );
                     })}
                   </div>
                 </div>
@@ -181,15 +180,15 @@ const ProductPage = () => {
                   <>
                     {(Object.keys(product.getProductById) as Array<keyof ProductModel>).map(
                       (key: keyof ProductModel) => {
-                        const keys = mainCharacteristicsKeys.map((el) => el.key)
+                        const keys = mainCharacteristicsKeys.map((el) => el.key);
 
                         if (keys.includes(key)) {
                           return (
                             <div className="flex py-[10] border-t border-dashed">
-                              <p className="w-[60%]">{getProductAttributeLabel(key, locale as 'ua' | 'en')}</p>
+                              <p className="w-[60%]">{getProductAttributeLabel(key, locale as "ua" | "en")}</p>
                               <p className="w-[40%]">{product.getProductById[key]}</p>
                             </div>
-                          )
+                          );
                         }
                       }
                     )}
@@ -226,7 +225,7 @@ const ProductPage = () => {
                     {product?.getProductById ? (
                       <div className="text-center">
                         <p className="text-sm opacity-[70%]">Ціна</p>
-                        <b className="text-xl">{product.getProductById.price.toLocaleString('uk-UA')} грн.</b>
+                        <b className="text-xl">{product.getProductById.price.toLocaleString("uk-UA")} грн.</b>
                       </div>
                     ) : (
                       <div className="flex flex-col items-center">
@@ -237,7 +236,7 @@ const ProductPage = () => {
 
                     {product?.getProductById ? (
                       <>
-                        <div className={'flex items-center border border-border rounded-full w-[100%]'}>
+                        <div className={"flex items-center border border-border rounded-full w-[100%]"}>
                           <Button className="p-[10] pl-[40] bg-transparent text-text">-</Button>
                           <Input value={1} className="border-[0] grow text-center" />
                           <Button className="p-[10] pr-[40] bg-transparent text-text">+</Button>
@@ -292,11 +291,11 @@ const ProductPage = () => {
             <h2 className="text-2xl font-semibold">Популярні товари</h2>
             <div className="flex gap-[10]">
               <Button size="icon" variant="outline" className="border-destructive text-destructive">
-                {'<'}
+                {"<"}
               </Button>
 
               <Button size="icon" variant="outline">
-                {'>'}
+                {">"}
               </Button>
             </div>
           </div>
@@ -315,7 +314,7 @@ const ProductPage = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default ProductPage
+export default ProductPage;

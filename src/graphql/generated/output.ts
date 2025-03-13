@@ -96,6 +96,7 @@ export type Mutation = {
   createProduct: ProductModel;
   createReview: Scalars['Boolean']['output'];
   createUser: Scalars['Boolean']['output'];
+  deleteProduct: ProductModel;
   deleteReview: Scalars['Boolean']['output'];
   loginUser: UserModel;
   logoutUser: Scalars['Boolean']['output'];
@@ -144,6 +145,11 @@ export type MutationCreateUserArgs = {
 };
 
 
+export type MutationDeleteProductArgs = {
+  productId: Scalars['String']['input'];
+};
+
+
 export type MutationDeleteReviewArgs = {
   id: Scalars['String']['input'];
 };
@@ -171,7 +177,7 @@ export type MutationToggleFavoriteArgs = {
 
 
 export type MutationUpdateProductArgs = {
-  productId: Scalars['String']['input'];
+  data: UpdateProductInput;
 };
 
 
@@ -288,6 +294,27 @@ export type SessionModel = {
   userId: Scalars['String']['output'];
 };
 
+export type UpdateProductInput = {
+  battery?: InputMaybe<Scalars['Float']['input']>;
+  brand?: InputMaybe<Scalars['String']['input']>;
+  builtInMemory?: InputMaybe<Scalars['Float']['input']>;
+  color?: InputMaybe<Scalars['String']['input']>;
+  deliverySet?: InputMaybe<Scalars['String']['input']>;
+  frontCamera?: InputMaybe<Scalars['Float']['input']>;
+  mainCamera?: InputMaybe<Scalars['Float']['input']>;
+  materials?: InputMaybe<Scalars['String']['input']>;
+  os?: InputMaybe<Scalars['String']['input']>;
+  price?: InputMaybe<Scalars['Float']['input']>;
+  processorCores?: InputMaybe<Scalars['String']['input']>;
+  processorName?: InputMaybe<Scalars['String']['input']>;
+  productId: Scalars['String']['input'];
+  ram?: InputMaybe<Scalars['Float']['input']>;
+  screenDiagonal?: InputMaybe<Scalars['Float']['input']>;
+  simCount?: InputMaybe<Scalars['Float']['input']>;
+  simFormat?: InputMaybe<Array<Scalars['String']['input']>>;
+  title?: InputMaybe<Scalars['String']['input']>;
+};
+
 export type UserModel = {
   __typename?: 'UserModel';
   avatar?: Maybe<Scalars['String']['output']>;
@@ -340,6 +367,21 @@ export type CreateProductMutationVariables = Exact<{
 
 
 export type CreateProductMutation = { __typename?: 'Mutation', createProduct: { __typename?: 'ProductModel', id: string } };
+
+export type RemoveProductPhotoMutationVariables = Exact<{
+  productId: Scalars['String']['input'];
+  filename: Scalars['String']['input'];
+}>;
+
+
+export type RemoveProductPhotoMutation = { __typename?: 'Mutation', removeProductPhoto: boolean };
+
+export type UpdateProductMutationVariables = Exact<{
+  data: UpdateProductInput;
+}>;
+
+
+export type UpdateProductMutation = { __typename?: 'Mutation', updateProduct: { __typename?: 'ProductModel', id: string } };
 
 export type FindAllUsersQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -563,6 +605,71 @@ export function useCreateProductMutation(baseOptions?: Apollo.MutationHookOption
 export type CreateProductMutationHookResult = ReturnType<typeof useCreateProductMutation>;
 export type CreateProductMutationResult = Apollo.MutationResult<CreateProductMutation>;
 export type CreateProductMutationOptions = Apollo.BaseMutationOptions<CreateProductMutation, CreateProductMutationVariables>;
+export const RemoveProductPhotoDocument = gql`
+    mutation RemoveProductPhoto($productId: String!, $filename: String!) {
+  removeProductPhoto(productId: $productId, filename: $filename)
+}
+    `;
+export type RemoveProductPhotoMutationFn = Apollo.MutationFunction<RemoveProductPhotoMutation, RemoveProductPhotoMutationVariables>;
+
+/**
+ * __useRemoveProductPhotoMutation__
+ *
+ * To run a mutation, you first call `useRemoveProductPhotoMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useRemoveProductPhotoMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [removeProductPhotoMutation, { data, loading, error }] = useRemoveProductPhotoMutation({
+ *   variables: {
+ *      productId: // value for 'productId'
+ *      filename: // value for 'filename'
+ *   },
+ * });
+ */
+export function useRemoveProductPhotoMutation(baseOptions?: Apollo.MutationHookOptions<RemoveProductPhotoMutation, RemoveProductPhotoMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<RemoveProductPhotoMutation, RemoveProductPhotoMutationVariables>(RemoveProductPhotoDocument, options);
+      }
+export type RemoveProductPhotoMutationHookResult = ReturnType<typeof useRemoveProductPhotoMutation>;
+export type RemoveProductPhotoMutationResult = Apollo.MutationResult<RemoveProductPhotoMutation>;
+export type RemoveProductPhotoMutationOptions = Apollo.BaseMutationOptions<RemoveProductPhotoMutation, RemoveProductPhotoMutationVariables>;
+export const UpdateProductDocument = gql`
+    mutation UpdateProduct($data: UpdateProductInput!) {
+  updateProduct(data: $data) {
+    id
+  }
+}
+    `;
+export type UpdateProductMutationFn = Apollo.MutationFunction<UpdateProductMutation, UpdateProductMutationVariables>;
+
+/**
+ * __useUpdateProductMutation__
+ *
+ * To run a mutation, you first call `useUpdateProductMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateProductMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateProductMutation, { data, loading, error }] = useUpdateProductMutation({
+ *   variables: {
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useUpdateProductMutation(baseOptions?: Apollo.MutationHookOptions<UpdateProductMutation, UpdateProductMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateProductMutation, UpdateProductMutationVariables>(UpdateProductDocument, options);
+      }
+export type UpdateProductMutationHookResult = ReturnType<typeof useUpdateProductMutation>;
+export type UpdateProductMutationResult = Apollo.MutationResult<UpdateProductMutation>;
+export type UpdateProductMutationOptions = Apollo.BaseMutationOptions<UpdateProductMutation, UpdateProductMutationVariables>;
 export const FindAllUsersDocument = gql`
     query findAllUsers {
   findAllUsers {

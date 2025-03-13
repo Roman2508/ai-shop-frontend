@@ -1,0 +1,3 @@
+mutation RemoveProductPhoto($productId: String!, $filename: String!) {
+  removeProductPhoto(productId: $productId, filename: $filename)
+}

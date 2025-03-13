@@ -1,41 +1,38 @@
-import React from 'react'
-import { Trash2 } from 'lucide-react'
+import React from "react";
+import { Trash2 } from "lucide-react";
 
-import { Button } from '@/components/ui/common/Button'
-import { useUploadFileMutation } from '@/graphql/generated/output'
+import { Button } from "@/components/ui/common/Button";
 
 interface IUploadFilesProps {
-  files: File[]
-  setFiles: React.Dispatch<React.SetStateAction<File[]>>
+  files: File[];
+  setFiles: React.Dispatch<React.SetStateAction<File[]>>;
 }
 
 const UploadFiles: React.FC<IUploadFilesProps> = ({ files, setFiles }) => {
-  const fileRef = React.useRef<HTMLInputElement>(null)
-
-  const [upload] = useUploadFileMutation({ variables: { file: files } })
+  const fileRef = React.useRef<HTMLInputElement>(null);
 
   const handleChangeUpload = async (event: any) => {
-    const _event = event as React.ChangeEvent<HTMLInputElement>
+    const _event = event as React.ChangeEvent<HTMLInputElement>;
 
-    const filesLength = _event.target.files ? _event.target.files.length : 0
+    const filesLength = _event.target.files ? _event.target.files.length : 0;
 
     if (files.length + filesLength > 5) {
-      alert('Не можна завантажити більше 5 файлів')
+      alert("Не можна завантажити більше 5 файлів");
     }
 
     setFiles((prev) => {
-      const newFiles = _event.target.files ? Array.from(_event.target.files) : []
-      return [...prev, ...newFiles]
-    })
-  }
+      const newFiles = _event.target.files ? Array.from(_event.target.files) : [];
+      return [...prev, ...newFiles];
+    });
+  };
 
   const onRemoveFile = (index: number) => {
-    if (!window.confirm('Ви дійсно хочете видалити це фото?')) return
+    if (!window.confirm("Ви дійсно хочете видалити це фото?")) return;
 
     setFiles((prev) => {
-      return prev.filter((_, elIdx) => elIdx !== index)
-    })
-  }
+      return prev.filter((_, elIdx) => elIdx !== index);
+    });
+  };
 
   return (
     <div className="border-b pb-[40] mb-[30]">
@@ -51,7 +48,7 @@ const UploadFiles: React.FC<IUploadFilesProps> = ({ files, setFiles }) => {
               >
                 <Trash2 className="h-14 w-14 stroke-black bg-primary rounded-lg p-[10] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               </div>
-              <img src={f ? URL.createObjectURL(f) : ''} className="w-full h-full object-cover" />
+              <img src={f ? URL.createObjectURL(f) : ""} className="w-full h-full object-cover" />
             </div>
           ))}
         </div>
@@ -60,8 +57,8 @@ const UploadFiles: React.FC<IUploadFilesProps> = ({ files, setFiles }) => {
           variant="secondary"
           type="button"
           onClick={() => {
-            if (!fileRef.current) return
-            fileRef.current.click()
+            if (!fileRef.current) return;
+            fileRef.current.click();
           }}
         >
           Завантажити фото
@@ -70,7 +67,7 @@ const UploadFiles: React.FC<IUploadFilesProps> = ({ files, setFiles }) => {
         <input ref={fileRef} onChange={handleChangeUpload} type="file" className="hidden" multiple />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default UploadFiles
+export default UploadFiles;

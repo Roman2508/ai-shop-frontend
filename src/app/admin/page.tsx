@@ -1,23 +1,7 @@
-'use client'
-import React from 'react'
-import Link from 'next/link'
+"use client";
+import React from "react";
+import Link from "next/link";
 
-import {
-  Table,
-  TableRow,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableCaption,
-} from '@/components/ui/common/Table'
-import {
-  Pagination,
-  PaginationLink,
-  PaginationItem,
-  PaginationContent,
-  PaginationEllipsis,
-} from '@/components/ui/common/Pagination'
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -25,10 +9,9 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from '@/components/ui/common/Breadcrumb'
-import { Button } from '@/components/ui/common/Button'
-import { Checkbox } from '@/components/ui/common/Checkbox'
-import { Card } from '@/components/ui/common/Card'
+} from "@/components/ui/common/Breadcrumb";
+import { Card } from "@/components/ui/common/Card";
+import { Button } from "@/components/ui/common/Button";
 
 interface AdminPageProps {}
 
@@ -112,7 +95,7 @@ const AdminPage: React.FC<AdminPageProps> = ({}) => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default AdminPage
+export default AdminPage;

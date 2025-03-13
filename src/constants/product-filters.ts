@@ -36,6 +36,7 @@ export const PHONE_BRAND_NAMES = [
   { label_ua: "Emporia", label_en: "Emporia", key: "emporia" },
   { label_ua: "Swisstone", label_en: "Swisstone", key: "swisstone" },
   { label_ua: "Cmf", label_en: "Cmf", key: "cmf" },
+  { label_ua: "HMD", label_en: "HMD", key: "HMD" },
   {
     label_ua: "Nothing Phone",
     label_en: "Nothing Phone",

@@ -1,23 +1,15 @@
-'use client'
-import React from 'react'
-import Link from 'next/link'
+"use client";
+import React from "react";
+import Link from "next/link";
+import { Trash2, Edit2 } from "lucide-react";
 
-import {
-  Table,
-  TableRow,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableCaption,
-} from '@/components/ui/common/Table'
 import {
   Pagination,
   PaginationLink,
   PaginationItem,
   PaginationContent,
   PaginationEllipsis,
-} from '@/components/ui/common/Pagination'
+} from "@/components/ui/common/Pagination";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -25,16 +17,18 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from '@/components/ui/common/Breadcrumb'
-import { Button } from '@/components/ui/common/Button'
-import { Checkbox } from '@/components/ui/common/Checkbox'
-import { useGetAllProductsQuery } from '@/graphql/generated/output'
-import { Skeleton } from '@/components/ui/common/Skeleton'
+} from "@/components/ui/common/Breadcrumb";
+import getPhotoUrl from "@/utils/get-photo-url";
+import { Button } from "@/components/ui/common/Button";
+import { Checkbox } from "@/components/ui/common/Checkbox";
+import { Skeleton } from "@/components/ui/common/Skeleton";
+import { useGetAllProductsQuery } from "@/graphql/generated/output";
+import { Table, TableRow, TableBody, TableCell, TableHead, TableHeader } from "@/components/ui/common/Table";
 
-interface AdminProductsPageProps {}
+const EMPTY_IMAGE = "https://www.shutterstock.com/image-vector/no-image-available-icon-template-600nw-1036735678.jpg";
 
-const AdminProductsPage: React.FC<AdminProductsPageProps> = ({}) => {
-  const { data, loading } = useGetAllProductsQuery()
+const AdminProductsPage = () => {
+  const { data } = useGetAllProductsQuery();
 
   return (
     <div className="max-w-[1640] mx-auto px-[16]">
@@ -60,15 +54,17 @@ const AdminProductsPage: React.FC<AdminProductsPageProps> = ({}) => {
 
       <div className="flex flex-col gap-[46]">
         <div className="flex justify-between items-center">
-          <h1 className="text-3xl font-semibold">Title</h1>
+          <h1 className="text-3xl font-semibold">Товари</h1>
 
           <div className="flex gap-[10]">
             <Button variant="outline" className="h-[36]">
               Фільтр
             </Button>
-            <Button variant="default" className="h-[36]">
-              + Додати товар
-            </Button>
+            <Link href="/admin/products/create">
+              <Button variant="default" className="h-[36]">
+                + Додати товар
+              </Button>
+            </Link>
           </div>
         </div>
 
@@ -91,7 +87,7 @@ const AdminProductsPage: React.FC<AdminProductsPageProps> = ({}) => {
               data.getAllProducts.products.map((product) => {
                 const productName = product
                   ? `${product.brand}, ${product.ram}/${product.builtInMemory} ГБ, ${product.color}`
-                  : ''
+                  : "";
 
                 return (
                   <TableRow key={product.id}>
@@ -103,16 +99,15 @@ const AdminProductsPage: React.FC<AdminProductsPageProps> = ({}) => {
                       <div>
                         <img
                           className="h-[50] w-[50] object-cover"
-                          src="https://www.shutterstock.com/image-vector/no-image-available-icon-template-600nw-1036735678.jpg"
+                          src={product.images.length ? getPhotoUrl(product.images[0], "products") : EMPTY_IMAGE}
                         />
                       </div>
-                      {/* <Image src="" alt="" width={30} height={30} /> */}
                     </TableCell>
 
                     <TableCell className="w-full max-w-[40%]">{productName}</TableCell>
 
                     <TableCell className="text-center text-primary font-bold">
-                      {product.price.toLocaleString('uk-UA')} грн.
+                      {product.price.toLocaleString("uk-UA")} грн.
                     </TableCell>
 
                     <TableCell className="text-center">{Math.round(Math.random() * 20)}</TableCell>
@@ -120,22 +115,25 @@ const AdminProductsPage: React.FC<AdminProductsPageProps> = ({}) => {
                     <TableCell className="text-center">Credit Card</TableCell>
 
                     <TableCell className="text-center">
-                      <Button size="icon" variant="outline" className="w-[42] h-[42] mr-[10]">
-                        Edit
-                      </Button>
+                      <Link href={`/admin/products/update/${product.id}`}>
+                        <Button size="icon" variant="outline" className="w-[42] h-[42] mr-[10]">
+                          <Edit2 />
+                        </Button>
+                      </Link>
+
                       <Button size="icon" variant="outline" className="w-[42] h-[42]">
-                        Del
+                        <Trash2 />
                       </Button>
                     </TableCell>
                   </TableRow>
-                )
+                );
               })
             ) : (
               <>
                 {Array(10)
                   .fill(null)
                   .map((_, index) => (
-                    <TableRow>
+                    <TableRow key={index}>
                       <TableCell className="text-center">
                         <Skeleton className="h-[20] w-[20px] rounded-[0]" />
                       </TableCell>
@@ -170,7 +168,7 @@ const AdminProductsPage: React.FC<AdminProductsPageProps> = ({}) => {
             <PaginationItem>
               {/* <PaginationPrevious href="#" /> */}
               <Button variant="link" className="px-[5]">
-                {'< Назад'}
+                {"< Назад"}
               </Button>
             </PaginationItem>
             <PaginationItem>
@@ -190,14 +188,14 @@ const AdminProductsPage: React.FC<AdminProductsPageProps> = ({}) => {
             <PaginationItem>
               {/* <PaginationNext href="#" /> */}
               <Button variant="link" className="px-[5]">
-                {'Вперед >'}
+                {"Вперед >"}
               </Button>
             </PaginationItem>
           </PaginationContent>
         </Pagination>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default AdminProductsPage
+export default AdminProductsPage;

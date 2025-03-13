@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import Link from "next/link";
+import { useParams } from "next/navigation";
 
 import {
   Breadcrumb,
@@ -11,9 +12,16 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/common/Breadcrumb";
 import { Button } from "@/components/ui/common/Button";
+import { useGetProductByIdQuery } from "@/graphql/generated/output";
 import ProductActionsForm from "@/components/features/create-product-form/ProductActionsForm";
 
-const CreateProductPage = ({}) => {
+const UpdateProductPage = () => {
+  const { id } = useParams();
+
+  const { data: product } = useGetProductByIdQuery({
+    variables: { productId: typeof id === "string" ? id : "" },
+  });
+
   return (
     <div className="max-w-[1640] mx-auto px-[16]">
       <Breadcrumb className="mb-[45]">
@@ -38,7 +46,7 @@ const CreateProductPage = ({}) => {
 
       <div className="flex flex-col gap-[46]">
         <div className="flex justify-between items-center">
-          <h1 className="text-3xl font-semibold">Створити новий товар</h1>
+          <h1 className="text-3xl font-semibold">Оновити товар</h1>
 
           <div className="flex gap-[10]">
             <Button variant="outline" className="h-[36]">
@@ -50,10 +58,10 @@ const CreateProductPage = ({}) => {
           </div>
         </div>
 
-        <ProductActionsForm />
+        <ProductActionsForm product={product?.getProductById} />
       </div>
     </div>
   );
 };
 
-export default CreateProductPage;
+export default UpdateProductPage;

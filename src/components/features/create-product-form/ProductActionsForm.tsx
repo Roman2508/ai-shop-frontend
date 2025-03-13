@@ -1,71 +1,127 @@
-'use client'
-import { z } from 'zod'
-import React from 'react'
-import { useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
+"use client";
+import { z } from "zod";
+import React from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 
-import UploadFiles from './UploadFiles'
-import { Input } from '../../ui/common/Input'
-import { Button } from '../../ui/common/Button'
-import { Textarea } from '../../ui/common/Textarea'
-import { PHONE_BRAND_NAMES } from '@/constants/product-filters'
-import { MultiSelect } from '@/components/ui/common/MultiSelect'
-import { useAddProductPhotoMutation, useCreateProductMutation } from '@/graphql/generated/output'
-import { Form, FormItem, FormField, FormMessage, FormControl, FormDescription } from '@/components/ui/common/Form'
-import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '../../ui/common/Select'
-import { formSchema, defaultValues, mainCharacteristicsInputsData, mainCharacteristicsSelectData } from './form-helpers'
+import {
+  formSchema,
+  defaultValues,
+  mainCharacteristicsInputsData,
+  mainCharacteristicsSelectData,
+} from "./form-helpers";
+import {
+  ProductModel,
+  useCreateProductMutation,
+  useUpdateProductMutation,
+  useAddProductPhotoMutation,
+  useRemoveProductPhotoMutation,
+} from "@/graphql/generated/output";
+import UploadFiles from "./UploadFiles";
+import { Input } from "../../ui/common/Input";
+import { Button } from "../../ui/common/Button";
+import { Textarea } from "../../ui/common/Textarea";
+import { PHONE_BRAND_NAMES } from "@/constants/product-filters";
+import { MultiSelect } from "@/components/ui/common/MultiSelect";
+import { Form, FormItem, FormField, FormMessage, FormControl, FormDescription } from "@/components/ui/common/Form";
+import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "../../ui/common/Select";
+import getPhotoUrl from "@/utils/get-photo-url";
 
-/* 
-        price: z.number
-        brand: z.string()
-        ram: z.number
-        builtInMemory: z.number
-        frontCamera: z.number
-        mainCamera: z.number
-        screenDiagonal: z.number
-        simCount: z.number
-        simFormat: z.string()
-        os: z.string()
-        processorName: z.string()
-        processorCores: z.string()
-        battery: z.number
-        materials: z.string()
-        deliverySet: z.string()
-        color: z.string()
-    */
+interface IProductActionsFormProps {
+  product?: ProductModel;
+}
 
-const CreateProductForm = () => {
-  const [files, setFiles] = React.useState<File[]>([])
-  const [isLoading, setIsLoading] = React.useState(false)
+const ProductActionsForm: React.FC<IProductActionsFormProps> = ({ product }) => {
+  const [files, setFiles] = React.useState<File[]>([]);
+  const [isLoading, setIsLoading] = React.useState(false);
 
-  const [uploadFiles] = useAddProductPhotoMutation()
+  const [uploadFile] = useAddProductPhotoMutation();
+  const [removeFile] = useRemoveProductPhotoMutation();
+  const [createProduct] = useCreateProductMutation();
+  const [updateProduct] = useUpdateProductMutation();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues,
-  })
+  });
 
-  const [createProduct] = useCreateProductMutation()
-
-  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+  const onCreateProduct = async (values: z.infer<typeof formSchema>) => {
     try {
-      setIsLoading(true)
-      const deliverySet = values.deliverySet.join(' / ')
-      const product = await createProduct({ variables: { data: { ...values, deliverySet } } })
+      setIsLoading(true);
+      const deliverySet = values.deliverySet.join(" / ");
+      const product = await createProduct({ variables: { data: { ...values, deliverySet } } });
       if (product.data) {
-        const productId = product.data.createProduct.id
+        const productId = product.data.createProduct.id;
         await Promise.all(
           files.map(async (el) => {
-            await uploadFiles({ variables: { productId, file: el } })
+            await uploadFile({ variables: { productId, file: el } });
           })
-        )
+        );
       }
-    } catch (err) {
-      console.error(err)
+    } catch (error) {
+      console.error(error);
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }
+  };
+
+  const onUpdateProduct = async (values: z.infer<typeof formSchema>) => {
+    try {
+      if (!product) return;
+      setIsLoading(true);
+      const deliverySet = values.deliverySet.join(" / ");
+      const data = { ...values, deliverySet, productId: product.id };
+      await updateProduct({ variables: { data } });
+
+      const newImages = files.map((el) => el.name);
+      const oldImages = product.images;
+
+      const addedImages = newImages.filter((img) => !oldImages.includes(img));
+      const removedImages = oldImages.filter((img) => !newImages.includes(img));
+
+      if (addedImages.length) {
+        await Promise.all(
+          addedImages.map(async (el) => {
+            await uploadFile({ variables: { productId: product.id, file: el } });
+          })
+        );
+      }
+
+      if (removedImages.length) {
+        await Promise.all(
+          removedImages.map(async (el) => {
+            await removeFile({ variables: { productId: product.id, filename: el } });
+          })
+        );
+      }
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const onSubmit = (values: z.infer<typeof formSchema>) => {
+    if (product) {
+      onUpdateProduct(values);
+    } else {
+      onCreateProduct(values);
+    }
+  };
+
+  React.useEffect(() => {
+    if (!product) return;
+
+    form.reset({
+      ...product,
+      deliverySet: product.deliverySet ? product.deliverySet.split("/") : [],
+    });
+
+    // const urls = product.images.map((el) => getPhotoUrl(el, "products"));
+    // setFiles(urls);
+
+    console.log(form.getValues());
+  }, [product]);
 
   return (
     <Form {...form}>
@@ -78,7 +134,7 @@ const CreateProductForm = () => {
               name="brand"
               control={form.control}
               render={({ field }) => {
-                const { onChange: onValueChange, ...rest } = field
+                const { onChange: onValueChange, ...rest } = field;
                 return (
                   <FormItem>
                     <FormDescription>Бренд</FormDescription>
@@ -100,7 +156,7 @@ const CreateProductForm = () => {
                     </FormControl>
                     <FormMessage />
                   </FormItem>
-                )
+                );
               }}
             />
 
@@ -169,17 +225,17 @@ const CreateProductForm = () => {
                           placeholder={input.placeholder}
                           className="h-[50] px-[20] w-[280]"
                           onChange={(e) => {
-                            if (input.type === 'number') {
-                              field.onChange(Number(e.target.value))
+                            if (input.type === "number") {
+                              field.onChange(Number(e.target.value));
                             } else {
-                              field.onChange(e.target.value)
+                              field.onChange(e.target.value);
                             }
                           }}
                         />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
-                  )
+                  );
                 }}
               />
             ))}
@@ -196,12 +252,17 @@ const CreateProductForm = () => {
                 control={form.control}
                 name={select.key}
                 render={({ field }) => {
-                  const { onChange: onValueChange, ...rest } = field
+                  const { onChange: onValueChange, ...rest } = field;
 
-                  if (select.key === 'simFormat' || select.key === 'deliverySet') {
-                    const options = select.items.map((el) => ({ value: el.label, label: el.label }))
+                  if (select.key === "simFormat" || select.key === "deliverySet") {
+                    const options = select.items.map((el) => ({
+                      value: el.label.toLowerCase(),
+                      // value: el.key.toLowerCase(),
+                      label: el.label.toLowerCase(),
+                    }));
+
                     return (
-                      <FormItem>
+                      <FormItem key={select.label}>
                         <FormDescription>{select.label}</FormDescription>
                         <FormControl>
                           <MultiSelect
@@ -213,18 +274,21 @@ const CreateProductForm = () => {
                             animation={2}
                             maxCount={3}
                             {...rest}
+                            // value={value}
                           />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
-                    )
+                    );
                   } else {
+                    /*    if (select.key === "color") {
+                      console.log(rest.value, typeof rest.value);
+                    } */
                     return (
-                      <FormItem>
+                      <FormItem key={select.key}>
                         <FormDescription>{select.label}</FormDescription>
                         <FormControl>
-                          {/* @ts-ignore */}
-                          <Select {...rest} onValueChange={onValueChange}>
+                          <Select {...rest} value={String(rest.value)} onValueChange={onValueChange}>
                             <SelectTrigger className="h-[50] px-[20] w-[440]">
                               <SelectValue />
                             </SelectTrigger>
@@ -232,7 +296,7 @@ const CreateProductForm = () => {
                               <SelectGroup>
                                 {select.items.map((item) => (
                                   <SelectItem key={item.key} value={item.key}>
-                                    {item.label}
+                                    {item.label.charAt(0).toUpperCase() + item.label.slice(1)}
                                   </SelectItem>
                                 ))}
                               </SelectGroup>
@@ -241,7 +305,7 @@ const CreateProductForm = () => {
                         </FormControl>
                         <FormMessage />
                       </FormItem>
-                    )
+                    );
                   }
                 }}
               />
@@ -254,7 +318,7 @@ const CreateProductForm = () => {
         </Button>
       </form>
     </Form>
-  )
-}
+  );
+};
 
-export default CreateProductForm
+export default ProductActionsForm;
