@@ -1,21 +1,21 @@
-"use client";
+'use client'
 
-import React from "react";
-import Link from "next/link";
-import { useTranslations } from "next-intl";
+import React from 'react'
+import Link from 'next/link'
+import { useTranslations } from 'next-intl'
 
-import Search from "./Search";
-import LoginButton from "./LoginButton";
-import LangToggler from "./LangToggler";
-import { useAuth } from "@/hooks/useAuth";
-import { ThemeToggler } from "./ThemeToggler";
-import { Button } from "@/components/ui/common/Button";
-import ButtonWithIcon from "@/components/ui/custom/ButtonWithIcon";
+import Search from './Search'
+import LoginButton from './LoginButton'
+import LangToggler from './LangToggler'
+import { useAuth } from '@/hooks/useAuth'
+import { ThemeToggler } from './ThemeToggler'
+import { Button } from '@/components/ui/common/Button'
+import ButtonWithIcon from '@/components/ui/custom/ButtonWithIcon'
 
 const Header = () => {
-  const t = useTranslations("header");
+  const t = useTranslations('header')
 
-  const { isAuthentificated } = useAuth();
+  const { isAuthentificated } = useAuth()
 
   return (
     <header className="fixed w-full flex justify-between items-center gap-[20] py-[20] px-[26] bg-dark text-white z-[1]">
@@ -23,7 +23,7 @@ const Header = () => {
       <div className="flex-1 flex gap-[20] items-center">
         <Link href="/catalog">
           <ButtonWithIcon
-            text={t("catalogBtn")}
+            text={t('catalogBtn')}
             iconSrc="/icons/burger-white.png"
             classNames="text-white h-[36] font-regular"
           />
@@ -52,7 +52,7 @@ const Header = () => {
 
         <div className="hidden 2xl:flex flex-col items-end leading-[1.2] text-[14px]">
           <b>+380 98-888-88-88</b>
-          <span className="opacity-[0.6] text-[12px]">{t("phoneBtn")}</span>
+          <span className="opacity-[0.6] text-[12px]">{t('phoneBtn')}</span>
         </div>
 
         <ThemeToggler />
@@ -63,13 +63,17 @@ const Header = () => {
           <LoginButton />
         ) : (
           <>
+            <Link href="/profile/wishlist">
             <Button size="icon" variant="icon">
               <img width="16px" height="16px" src="/icons/wishlist.png" />
             </Button>
+            </Link>
 
-            <Button size="icon" variant="icon">
-              <img width="16px" height="16px" src="/icons/shopping-bag.png" />
-            </Button>
+            <Link href="/profile/cart">
+              <Button size="icon" variant="icon">
+                <img width="16px" height="16px" src="/icons/shopping-bag.png" />
+              </Button>
+            </Link>
 
             <Link href="/profile/personal-information">
               <Button size="icon" variant="icon">
@@ -80,7 +84,7 @@ const Header = () => {
         )}
       </div>
     </header>
-  );
-};
+  )
+}
 
-export default Header;
+export default Header

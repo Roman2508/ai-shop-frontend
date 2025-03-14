@@ -169,6 +169,10 @@ export const MultiSelect = React.forwardRef<HTMLButtonElement, MultiSelectProps>
       }
     }
 
+    React.useEffect(() => {
+      setSelectedValues(defaultValue)
+    }, [defaultValue])
+
     return (
       <Popover open={isPopoverOpen} onOpenChange={setIsPopoverOpen} modal={modalPopover}>
         <PopoverTrigger asChild>

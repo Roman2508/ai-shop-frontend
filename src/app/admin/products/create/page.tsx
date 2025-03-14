@@ -1,6 +1,6 @@
-"use client";
-import React from "react";
-import Link from "next/link";
+'use client'
+import React from 'react'
+import Link from 'next/link'
 
 import {
   Breadcrumb,
@@ -9,9 +9,9 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from "@/components/ui/common/Breadcrumb";
-import { Button } from "@/components/ui/common/Button";
-import ProductActionsForm from "@/components/features/create-product-form/ProductActionsForm";
+} from '@/components/ui/common/Breadcrumb'
+import { Button } from '@/components/ui/common/Button'
+import ProductActionsForm from '@/components/features/product-actions-form/ProductActionsForm'
 
 const CreateProductPage = ({}) => {
   return (
@@ -53,7 +53,7 @@ const CreateProductPage = ({}) => {
         <ProductActionsForm />
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default CreateProductPage;
+export default CreateProductPage

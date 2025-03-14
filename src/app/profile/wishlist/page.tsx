@@ -6,8 +6,11 @@ import { Button } from '@/components/ui/common/Button'
 import CatalogCard from '@/components/features/CatalogCard'
 import ButtonWithIcon from '@/components/ui/custom/ButtonWithIcon'
 import ProfileLayout from '@/components/layout/profile/ProfileLayout'
+import { useGetAllProductsQuery } from '@/graphql/generated/output'
 
 const WishlistPage = () => {
+  const { data } = useGetAllProductsQuery()
+
   return (
     <ProfileLayout>
       <div className="flex justify-between items-center pb-[40]">
@@ -22,9 +25,11 @@ const WishlistPage = () => {
       </div>
 
       <div className="grid grid-cols-4 gap-[18]">
-        {[...Array(10)].map((_) => (
-          <CatalogCard viewType={'cards'} />
-        ))}
+        {data
+          ? data.getAllProducts.products
+              .slice(0, 5)
+              .map((product) => <CatalogCard viewType={'cards'} product={product} />)
+          : 'Loading...'}
       </div>
     </ProfileLayout>
   )

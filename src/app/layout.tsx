@@ -1,3 +1,4 @@
+// 'use client'
 import type { Metadata } from 'next'
 import { Montserrat } from 'next/font/google'
 import { NextIntlClientProvider } from 'next-intl'
@@ -8,6 +9,7 @@ import Footer from '@/components/layout/footer/Footer'
 import Header from '@/components/layout/header/Header'
 import { ThemeProvider } from '@/providers/ThemeProvider'
 import ApolloClientProvider from '@/providers/ApolloClientProvider'
+import AppProgressBar from '@/components/layout/AppProgressBar'
 
 const montserrat = Montserrat({
   subsets: ['latin'],
@@ -34,9 +36,11 @@ export default async function RootLayout({
         <NextIntlClientProvider messages={messages}>
           <ThemeProvider attribute="class" defaultTheme="system" disableTransitionOnChange>
             <body className={`${montserrat.variable} antialiased min-h-screen flex flex-col`}>
-              <Header />
-              <main className="grow pt-[110] pb-[100]">{children}</main>
-              <Footer />
+              <AppProgressBar>
+                <Header />
+                <main className="grow pt-[110] pb-[100]">{children}</main>
+                <Footer />
+              </AppProgressBar>
             </body>
           </ThemeProvider>
         </NextIntlClientProvider>

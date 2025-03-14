@@ -1,7 +1,7 @@
-"use client";
-import React from "react";
-import Link from "next/link";
-import { useParams } from "next/navigation";
+'use client'
+import React from 'react'
+import Link from 'next/link'
+import { useParams } from 'next/navigation'
 
 import {
   Breadcrumb,
@@ -10,17 +10,17 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from "@/components/ui/common/Breadcrumb";
-import { Button } from "@/components/ui/common/Button";
-import { useGetProductByIdQuery } from "@/graphql/generated/output";
-import ProductActionsForm from "@/components/features/create-product-form/ProductActionsForm";
+} from '@/components/ui/common/Breadcrumb'
+import { Button } from '@/components/ui/common/Button'
+import { useGetProductByIdQuery } from '@/graphql/generated/output'
+import ProductActionsForm from '@/components/features/product-actions-form/ProductActionsForm'
 
 const UpdateProductPage = () => {
-  const { id } = useParams();
+  const { id } = useParams()
 
   const { data: product } = useGetProductByIdQuery({
-    variables: { productId: typeof id === "string" ? id : "" },
-  });
+    variables: { productId: typeof id === 'string' ? id : '' },
+  })
 
   return (
     <div className="max-w-[1640] mx-auto px-[16]">
@@ -48,20 +48,13 @@ const UpdateProductPage = () => {
         <div className="flex justify-between items-center">
           <h1 className="text-3xl font-semibold">Оновити товар</h1>
 
-          <div className="flex gap-[10]">
-            <Button variant="outline" className="h-[36]">
-              Фільтр
-            </Button>
-            <Button variant="default" className="h-[36]">
-              + Додати товар
-            </Button>
-          </div>
+          <div className="flex gap-[10]"></div>
         </div>
 
-        <ProductActionsForm product={product?.getProductById} />
+        <ProductActionsForm product={product?.getProductById} id={id} />
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default UpdateProductPage;
+export default UpdateProductPage
