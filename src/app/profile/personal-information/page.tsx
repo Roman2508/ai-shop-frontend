@@ -1,50 +1,26 @@
-'use client'
+"use client";
 
-import React from 'react'
+import React from "react";
 
-import { Button } from '@/components/ui/common/Button'
-import ViewProfile from '@/components/features/ViewProfile'
-import ButtonWithIcon from '@/components/ui/custom/ButtonWithIcon'
-import EditProfileForm from '@/components/features/EditProfileForm'
-import ProfileLayout from '@/components/layout/profile/ProfileLayout'
-import { useCurrent } from '@/hooks/useCurrent'
-
-const personalInfo = [
-  { name: 'ПІБ', value: 'ПроектСтрой' },
-  { name: 'ИНН', value: '9725012747' },
-  { name: 'КПП', value: '772501001' },
-  { name: 'ОГРН', value: '1197746370524' },
-  { name: 'Имя генерального директора', value: 'Иванов Иван Иванович' },
-  { name: 'Юридический адрес', value: '119530 Москва, Очаковское ш., д.28, корпус 2, офис 38' },
-]
-
-const paymentData = [
-  { name: 'Название банка', value: 'ПАО «Сбербанк»' },
-  { name: 'БИК', value: '044521234' },
-  { name: 'Номер расчетного счета', value: '40702810123450101230' },
-  { name: 'Номер корреспондентского счета', value: '30101234500000000225' },
-]
-
-const deliveryData = [{ name: 'Адрес', value: '119530 Москва, Очаковское ш., д.10, корпус 11,  квартира 12' }]
-
-const profileData = [
-  { title: 'Особисті дані', items: personalInfo },
-  { title: 'Платіжна інформація', items: paymentData },
-  { title: 'Адрес доставки', items: deliveryData },
-]
+import { useCurrent } from "@/hooks/useCurrent";
+import { Button } from "@/components/ui/common/Button";
+import ViewProfile from "@/components/features/ViewProfile";
+import ButtonWithIcon from "@/components/ui/custom/ButtonWithIcon";
+import ProfileLayout from "@/components/layout/profile/ProfileLayout";
+import EditProfileForm from "@/components/features/edit-profile-form/EditProfileForm";
 
 const PersonalInformationPage = () => {
-  const [pageView, setPageView] = React.useState<'view' | 'edit'>('view')
+  const [pageView, setPageView] = React.useState<"view" | "edit">("view");
 
-  const { user } = useCurrent()
+  const { user } = useCurrent();
 
   const handleChangePageView = () => {
-    if (pageView === 'view') {
-      setPageView('edit')
+    if (pageView === "view") {
+      setPageView("edit");
     } else {
-      setPageView('view')
+      setPageView("view");
     }
-  }
+  };
 
   return (
     <ProfileLayout>
@@ -52,7 +28,7 @@ const PersonalInformationPage = () => {
         <div className="flex items-center">
           <h1 className="text-3xl font-semibold">Мій профіль</h1>
           <Button variant="link" className="px-[20]" onClick={handleChangePageView}>
-            {pageView === 'view' ? 'Редагувати' : 'Закінчити редагування'}
+            {pageView === "view" ? "Редагувати" : "Закінчити редагування"}
           </Button>
         </div>
 
@@ -65,11 +41,11 @@ const PersonalInformationPage = () => {
       </div>
 
       <div className="px-[50] py-[40] rounded-[5] border border-border">
-        {pageView === 'view' && <ViewProfile items={profileData} user={user} />}
-        {pageView === 'edit' && <EditProfileForm />}
+        {pageView === "view" && <ViewProfile user={user} />}
+        {pageView === "edit" && <EditProfileForm user={user} />}
       </div>
     </ProfileLayout>
-  )
-}
+  );
+};
 
-export default PersonalInformationPage
+export default PersonalInformationPage;

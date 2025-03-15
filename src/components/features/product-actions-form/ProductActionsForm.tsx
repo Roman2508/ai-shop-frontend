@@ -1,8 +1,8 @@
-'use client'
-import { z } from 'zod'
-import React from 'react'
-import { useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
+"use client";
+import { z } from "zod";
+import React from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 import {
   ProductModel,
@@ -10,113 +10,118 @@ import {
   useUpdateProductMutation,
   useAddProductPhotoMutation,
   useRemoveProductPhotoMutation,
-} from '@/graphql/generated/output'
-import UploadFiles from './UploadFiles'
-import { Input } from '../../ui/common/Input'
-import { Button } from '../../ui/common/Button'
-import getPhotoUrl from '@/utils/get-photo-url'
-import { Textarea } from '../../ui/common/Textarea'
-import { PHONE_BRAND_NAMES } from '@/constants/product-filters'
-import { MultiSelect } from '@/components/ui/common/MultiSelect'
-import { Form, FormItem, FormField, FormMessage, FormControl, FormDescription } from '@/components/ui/common/Form'
-import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '../../ui/common/Select'
-import { formSchema, defaultValues, mainCharacteristicsInputsData, mainCharacteristicsSelectData } from './form-helpers'
+} from "@/graphql/generated/output";
+import UploadFiles from "./UploadFiles";
+import { Input } from "../../ui/common/Input";
+import { Button } from "../../ui/common/Button";
+import getPhotoUrl from "@/utils/get-photo-url";
+import { Textarea } from "../../ui/common/Textarea";
+import { PHONE_BRAND_NAMES } from "@/constants/product-filters";
+import { MultiSelect } from "@/components/ui/common/MultiSelect";
+import { Form, FormItem, FormField, FormMessage, FormControl, FormDescription } from "@/components/ui/common/Form";
+import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "../../ui/common/Select";
+import {
+  formSchema,
+  defaultValues,
+  mainCharacteristicsInputsData,
+  mainCharacteristicsSelectData,
+} from "./form-helpers";
 
 interface IProductActionsFormProps {
-  id?: string | string[]
-  product?: ProductModel
+  id?: string | string[];
+  product?: ProductModel;
 }
 
 const ProductActionsForm: React.FC<IProductActionsFormProps> = ({ id, product }) => {
-  const [files, setFiles] = React.useState<File[]>([])
-  const [isLoading, setIsLoading] = React.useState(false)
+  const [files, setFiles] = React.useState<File[]>([]);
+  const [isLoading, setIsLoading] = React.useState(false);
 
-  const [uploadFile] = useAddProductPhotoMutation()
-  const [removeFile] = useRemoveProductPhotoMutation()
-  const [createProduct] = useCreateProductMutation()
-  const [updateProduct] = useUpdateProductMutation()
+  const [uploadFile] = useAddProductPhotoMutation();
+  const [removeFile] = useRemoveProductPhotoMutation();
+  const [createProduct] = useCreateProductMutation();
+  const [updateProduct] = useUpdateProductMutation();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues,
-  })
+  });
 
   const onCreateProduct = async (values: z.infer<typeof formSchema>) => {
     try {
-      setIsLoading(true)
-      const deliverySet = values.deliverySet.join(' / ')
-      const product = await createProduct({ variables: { data: { ...values, deliverySet } } })
+      setIsLoading(true);
+      const deliverySet = values.deliverySet.join(" / ");
+      const product = await createProduct({ variables: { data: { ...values, deliverySet } } });
       if (product.data) {
-        const productId = product.data.createProduct.id
+        const productId = product.data.createProduct.id;
         await Promise.all(
           files.map(async (el) => {
-            await uploadFile({ variables: { productId, file: el } })
+            await uploadFile({ variables: { productId, file: el } });
           })
-        )
+        );
       }
     } catch (error) {
-      console.error(error)
+      console.error(error);
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }
+  };
 
   const onUpdateProduct = async (values: z.infer<typeof formSchema>) => {
     try {
-      if (!product) return
-      setIsLoading(true)
-      const deliverySet = values.deliverySet.join(' / ')
-      const data = { ...values, deliverySet, productId: product.id }
-      await updateProduct({ variables: { data } })
+      if (!product) return;
+      setIsLoading(true);
+      const deliverySet = values.deliverySet.join(" / ");
+      const data = { ...values, deliverySet, productId: product.id };
+      await updateProduct({ variables: { data } });
 
-      const newImages = files.map((el) => el.name)
-      const oldImages = product.images
+      const newImages = files.map((el) => el.name);
+      const oldImages = product.images;
 
-      const addedImages = newImages.filter((img) => !oldImages.includes(img))
-      const removedImages = oldImages.filter((img) => !newImages.includes(img))
+      const addedImages = newImages.filter((img) => !oldImages.includes(img));
+      const removedImages = oldImages.filter((img) => !newImages.includes(img));
 
       if (addedImages.length) {
         await Promise.all(
           addedImages.map(async (el) => {
-            await uploadFile({ variables: { productId: product.id, file: el } })
+            await uploadFile({ variables: { productId: product.id, file: el } });
           })
-        )
+        );
       }
 
       if (removedImages.length) {
         await Promise.all(
           removedImages.map(async (el) => {
-            await removeFile({ variables: { productId: product.id, filename: el } })
+            await removeFile({ variables: { productId: product.id, filename: el } });
           })
-        )
+        );
       }
     } catch (error) {
-      console.error(error)
+      console.error(error);
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }
+  };
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
     if (product) {
-      onUpdateProduct(values)
+      onUpdateProduct(values);
     } else {
-      onCreateProduct(values)
+      onCreateProduct(values);
     }
-  }
+  };
 
   React.useEffect(() => {
-    if (!product) return
+    if (!product) return;
 
     form.reset({
       ...product,
-      deliverySet: product.deliverySet ? product.deliverySet.split('/') : [],
-    })
+      deliverySet: product.deliverySet ? product.deliverySet.split("/") : [],
+    });
 
-    const urls = product.images.map((el) => getPhotoUrl(el, 'products'))
+    const urls = product.images.map((el) => getPhotoUrl(el, "products"));
     // @ts-ignore
-    setFiles(urls)
-  }, [product])
+    setFiles(urls);
+  }, [product]);
 
   // if (id && !product) {
   //   return <h1>Loading...</h1>
@@ -133,7 +138,7 @@ const ProductActionsForm: React.FC<IProductActionsFormProps> = ({ id, product })
               name="brand"
               control={form.control}
               render={({ field }) => {
-                const { onChange: onValueChange, ...rest } = field
+                const { onChange: onValueChange, ...rest } = field;
                 return (
                   <FormItem>
                     <FormDescription>Бренд</FormDescription>
@@ -155,7 +160,7 @@ const ProductActionsForm: React.FC<IProductActionsFormProps> = ({ id, product })
                     </FormControl>
                     <FormMessage />
                   </FormItem>
-                )
+                );
               }}
             />
 
@@ -201,7 +206,7 @@ const ProductActionsForm: React.FC<IProductActionsFormProps> = ({ id, product })
           </div>
         </div>
 
-        <UploadFiles files={files} setFiles={setFiles} actionType="update" />
+        <UploadFiles files={files} setFiles={setFiles} actionType="create" />
 
         <div className="border-b pb-[40] mb-[30]">
           <h4 className="font-semibold mb-[20]">Головні характеристики</h4>
@@ -224,17 +229,17 @@ const ProductActionsForm: React.FC<IProductActionsFormProps> = ({ id, product })
                           placeholder={input.placeholder}
                           className="h-[50] px-[20] w-[280]"
                           onChange={(e) => {
-                            if (input.type === 'number') {
-                              field.onChange(Number(e.target.value))
+                            if (input.type === "number") {
+                              field.onChange(Number(e.target.value));
                             } else {
-                              field.onChange(e.target.value)
+                              field.onChange(e.target.value);
                             }
                           }}
                         />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
-                  )
+                  );
                 }}
               />
             ))}
@@ -251,13 +256,13 @@ const ProductActionsForm: React.FC<IProductActionsFormProps> = ({ id, product })
                 control={form.control}
                 name={select.key}
                 render={({ field }) => {
-                  const { onChange: onValueChange, ...rest } = field
+                  const { onChange: onValueChange, ...rest } = field;
 
-                  if (select.key === 'simFormat' || select.key === 'deliverySet') {
+                  if (select.key === "simFormat" || select.key === "deliverySet") {
                     const options = select.items.map((el) => ({
                       value: el.label,
                       label: el.label,
-                    }))
+                    }));
 
                     return (
                       <FormItem key={select.label}>
@@ -277,7 +282,7 @@ const ProductActionsForm: React.FC<IProductActionsFormProps> = ({ id, product })
                         </FormControl>
                         <FormMessage />
                       </FormItem>
-                    )
+                    );
                   } else {
                     return (
                       <FormItem key={select.key}>
@@ -300,7 +305,7 @@ const ProductActionsForm: React.FC<IProductActionsFormProps> = ({ id, product })
                         </FormControl>
                         <FormMessage />
                       </FormItem>
-                    )
+                    );
                   }
                 }}
               />
@@ -313,7 +318,7 @@ const ProductActionsForm: React.FC<IProductActionsFormProps> = ({ id, product })
         </Button>
       </form>
     </Form>
-  )
-}
+  );
+};
 
-export default ProductActionsForm
+export default ProductActionsForm;

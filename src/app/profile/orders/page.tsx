@@ -1,100 +1,100 @@
-'use client'
+"use client";
 
-import React from 'react'
+import React from "react";
 
-import { Button } from '@/components/ui/common/Button'
-import ButtonWithIcon from '@/components/ui/custom/ButtonWithIcon'
-import ProfileLayout from '@/components/layout/profile/ProfileLayout'
-import CartItem from '@/components/features/CartItem'
+import { Button } from "@/components/ui/common/Button";
+import ButtonWithIcon from "@/components/ui/custom/ButtonWithIcon";
+import ProfileLayout from "@/components/layout/profile/ProfileLayout";
+import CartItem from "@/components/features/CartItem";
 
 const ordersList = [
   {
     items: [
       {
-        name: 'DS-2CD2423G2-I(2.8мм)',
-        description: 'Профессиональная видеокамера IP компактная DS-2CD2423G2-I(2.8мм)',
-        price: '10 990,00',
-        photo: 'https://www.shutterstock.com/image-vector/no-image-available-icon-template-600nw-1036735678.jpg',
-        count: '1',
+        name: "DS-2CD2423G2-I(2.8мм)",
+        description: "Профессиональная видеокамера IP компактная DS-2CD2423G2-I(2.8мм)",
+        price: "10 990,00",
+        photo: "https://www.shutterstock.com/image-vector/no-image-available-icon-template-600nw-1036735678.jpg",
+        count: "1",
       },
       {
-        name: 'DS-2CD2423G2-I(2.8мм)',
-        description: 'Профессиональная видеокамера IP компактная DS-2CD2423G2-I(2.8мм)',
-        price: '10 990,00',
-        photo: 'https://www.shutterstock.com/image-vector/no-image-available-icon-template-600nw-1036735678.jpg',
-        count: '2',
+        name: "DS-2CD2423G2-I(2.8мм)",
+        description: "Профессиональная видеокамера IP компактная DS-2CD2423G2-I(2.8мм)",
+        price: "10 990,00",
+        photo: "https://www.shutterstock.com/image-vector/no-image-available-icon-template-600nw-1036735678.jpg",
+        count: "2",
       },
       {
-        name: 'DS-2CD2423G2-I(2.8мм)',
-        description: 'Профессиональная видеокамера IP компактная DS-2CD2423G2-I(2.8мм)',
-        price: '10 990,00',
-        photo: 'https://www.shutterstock.com/image-vector/no-image-available-icon-template-600nw-1036735678.jpg',
-        count: '5',
+        name: "DS-2CD2423G2-I(2.8мм)",
+        description: "Профессиональная видеокамера IP компактная DS-2CD2423G2-I(2.8мм)",
+        price: "10 990,00",
+        photo: "https://www.shutterstock.com/image-vector/no-image-available-icon-template-600nw-1036735678.jpg",
+        count: "5",
       },
     ],
     orderNumber: 123456,
-    date: '04.02.2025',
-    status: 'Доставляється',
-    price: '22 068',
-    orderProfile: 'Профіль №1',
+    date: "04.02.2025",
+    status: "Доставляється",
+    price: "22 068",
+    orderProfile: "Профіль №1",
   },
   {
     items: [
       {
-        name: 'DS-2CD2423G2-I(2.8мм)',
-        description: 'Профессиональная видеокамера IP компактная DS-2CD2423G2-I(2.8мм)',
-        price: '10 990,00',
-        photo: 'https://www.shutterstock.com/image-vector/no-image-available-icon-template-600nw-1036735678.jpg',
-        count: '1',
+        name: "DS-2CD2423G2-I(2.8мм)",
+        description: "Профессиональная видеокамера IP компактная DS-2CD2423G2-I(2.8мм)",
+        price: "10 990,00",
+        photo: "https://www.shutterstock.com/image-vector/no-image-available-icon-template-600nw-1036735678.jpg",
+        count: "1",
       },
       {
-        name: 'DS-2CD2423G2-I(2.8мм)',
-        description: 'Профессиональная видеокамера IP компактная DS-2CD2423G2-I(2.8мм)',
-        price: '10 990,00',
-        photo: 'https://www.shutterstock.com/image-vector/no-image-available-icon-template-600nw-1036735678.jpg',
-        count: '3',
+        name: "DS-2CD2423G2-I(2.8мм)",
+        description: "Профессиональная видеокамера IP компактная DS-2CD2423G2-I(2.8мм)",
+        price: "10 990,00",
+        photo: "https://www.shutterstock.com/image-vector/no-image-available-icon-template-600nw-1036735678.jpg",
+        count: "3",
       },
     ],
     orderNumber: 234321,
-    date: '01.02.2025',
-    status: 'Доставляється',
-    price: '10 068',
-    orderProfile: 'Профіль №2',
+    date: "01.02.2025",
+    status: "Доставляється",
+    price: "10 068",
+    orderProfile: "Профіль №2",
   },
   {
     items: [
       {
-        name: 'DS-2CD2423G2-I(2.8мм)',
-        description: 'Профессиональная видеокамера IP компактная DS-2CD2423G2-I(2.8мм)',
-        price: '10 990,00',
-        photo: 'https://www.shutterstock.com/image-vector/no-image-available-icon-template-600nw-1036735678.jpg',
-        count: '2',
+        name: "DS-2CD2423G2-I(2.8мм)",
+        description: "Профессиональная видеокамера IP компактная DS-2CD2423G2-I(2.8мм)",
+        price: "10 990,00",
+        photo: "https://www.shutterstock.com/image-vector/no-image-available-icon-template-600nw-1036735678.jpg",
+        count: "2",
       },
     ],
     orderNumber: 325684,
-    date: '20.01.2025',
-    status: 'Доставляється',
-    price: '50 068',
-    orderProfile: 'Профіль №1',
+    date: "20.01.2025",
+    status: "Доставляється",
+    price: "50 068",
+    orderProfile: "Профіль №1",
   },
-]
+];
 
 const OrdersPage = () => {
-  const [expandedOrders, setExpandedOrders] = React.useState<number[]>([])
+  const [expandedOrders, setExpandedOrders] = React.useState<number[]>([]);
 
   const handleChangeExpandedOrders = (number: number) => {
     setExpandedOrders((prev) => {
-      let orders = [...prev]
+      let orders = [...prev];
 
       if (prev.some((el) => el === number)) {
-        orders = orders.filter((el) => el !== number)
+        orders = orders.filter((el) => el !== number);
       } else {
-        orders.push(number)
+        orders.push(number);
       }
 
-      return orders
-    })
-  }
+      return orders;
+    });
+  };
 
   return (
     <ProfileLayout>
@@ -123,7 +123,7 @@ const OrdersPage = () => {
 
           <div className="flex flex-col gap-[40] px-[40]">
             {ordersList.map((el) => {
-              const isItemExpanded = expandedOrders.some((s) => s === el.orderNumber)
+              const isItemExpanded = expandedOrders.some((s) => s === el.orderNumber);
 
               return (
                 <div className="border border-border px-[40] py-[30] rounded-[5]">
@@ -140,11 +140,11 @@ const OrdersPage = () => {
                   <div
                     className={
                       isItemExpanded
-                        ? 'transition-all grid grid-rows-[1fr] overflow-hidden duration-[1s]'
-                        : 'transition-all grid grid-rows-[0fr] overflow-hidden duration-[1s]'
+                        ? "transition-all grid grid-rows-[1fr] overflow-hidden duration-[1s]"
+                        : "transition-all grid grid-rows-[0fr] overflow-hidden duration-[1s]"
                     }
                   >
-                    <div className={'overflow-hidden'}>
+                    <div className={"overflow-hidden"}>
                       <h6 className="font-semibold text-2xl border-b border-dashed pb-[24] mt-[50]">
                         Позиції ({el.items.length})
                       </h6>
@@ -155,14 +155,14 @@ const OrdersPage = () => {
                   </div>
 
                   <Button
-                    variant={isItemExpanded ? 'default' : 'secondary'}
+                    variant={isItemExpanded ? "default" : "secondary"}
                     className="mt-[20] rounded-[5]"
                     onClick={() => handleChangeExpandedOrders(el.orderNumber)}
                   >
-                    {isItemExpanded ? 'Приховати деталі' : 'Показати деталі'}
+                    {isItemExpanded ? "Приховати деталі" : "Показати деталі"}
                   </Button>
                 </div>
-              )
+              );
             })}
           </div>
         </div>
@@ -180,7 +180,7 @@ const OrdersPage = () => {
 
           <div className="flex flex-col gap-[40] px-[40]">
             {ordersList.map((el) => {
-              const isItemExpanded = expandedOrders.some((s) => s === el.orderNumber)
+              const isItemExpanded = expandedOrders.some((s) => s === el.orderNumber);
 
               return (
                 <div className="border border-border px-[40] py-[30] rounded-[5]">
@@ -197,11 +197,11 @@ const OrdersPage = () => {
                   <div
                     className={
                       isItemExpanded
-                        ? 'transition-all grid grid-rows-[1fr] overflow-hidden duration-[1s]'
-                        : 'transition-all grid grid-rows-[0fr] overflow-hidden duration-[1s]'
+                        ? "transition-all grid grid-rows-[1fr] overflow-hidden duration-[1s]"
+                        : "transition-all grid grid-rows-[0fr] overflow-hidden duration-[1s]"
                     }
                   >
-                    <div className={'overflow-hidden'}>
+                    <div className={"overflow-hidden"}>
                       <h6 className="font-semibold text-2xl border-b border-dashed pb-[24] mt-[50]">
                         Позиції ({el.items.length})
                       </h6>
@@ -224,20 +224,20 @@ const OrdersPage = () => {
                   </div>
 
                   <Button
-                    variant={isItemExpanded ? 'default' : 'secondary'}
+                    variant={isItemExpanded ? "default" : "secondary"}
                     className="mt-[20] rounded-[5]"
                     onClick={() => handleChangeExpandedOrders(el.orderNumber)}
                   >
-                    {isItemExpanded ? 'Приховати деталі' : 'Показати деталі'}
+                    {isItemExpanded ? "Приховати деталі" : "Показати деталі"}
                   </Button>
                 </div>
-              )
+              );
             })}
           </div>
         </div>
       </div>
     </ProfileLayout>
-  )
-}
+  );
+};
 
-export default OrdersPage
+export default OrdersPage;

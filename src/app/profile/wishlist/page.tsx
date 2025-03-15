@@ -1,15 +1,15 @@
-'use client'
+"use client";
 
-import React from 'react'
+import React from "react";
 
-import { Button } from '@/components/ui/common/Button'
-import CatalogCard from '@/components/features/CatalogCard'
-import ButtonWithIcon from '@/components/ui/custom/ButtonWithIcon'
-import ProfileLayout from '@/components/layout/profile/ProfileLayout'
-import { useGetAllProductsQuery } from '@/graphql/generated/output'
+import { useCurrent } from "@/hooks/useCurrent";
+import { Button } from "@/components/ui/common/Button";
+import CatalogCard from "@/components/features/CatalogCard";
+import ButtonWithIcon from "@/components/ui/custom/ButtonWithIcon";
+import ProfileLayout from "@/components/layout/profile/ProfileLayout";
 
 const WishlistPage = () => {
-  const { data } = useGetAllProductsQuery()
+  const { user } = useCurrent();
 
   return (
     <ProfileLayout>
@@ -25,14 +25,12 @@ const WishlistPage = () => {
       </div>
 
       <div className="grid grid-cols-4 gap-[18]">
-        {data
-          ? data.getAllProducts.products
-              .slice(0, 5)
-              .map((product) => <CatalogCard viewType={'cards'} product={product} />)
-          : 'Loading...'}
+        {user
+          ? user.favorites.map((favourite) => <CatalogCard viewType={"cards"} product={favourite.product} />)
+          : "Loading..."}
       </div>
     </ProfileLayout>
-  )
-}
+  );
+};
 
-export default WishlistPage
+export default WishlistPage;

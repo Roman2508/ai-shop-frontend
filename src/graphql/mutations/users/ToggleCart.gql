@@ -1,0 +1,3 @@
+mutation ToggleCart($input: AddToCartInput!) {
+  toggleCart(input: $input)
+}

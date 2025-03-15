@@ -1,37 +1,28 @@
-'use client'
+"use client";
 
-import React from 'react'
+import React from "react";
 
-import { Button } from '@/components/ui/common/Button'
-import ButtonWithIcon from '@/components/ui/custom/ButtonWithIcon'
-import ProfileLayout from '@/components/layout/profile/ProfileLayout'
-import CartItem from '@/components/features/CartItem'
-
-const cartItems = [
-  {
-    name: 'DS-2CD2423G2-I(2.8мм)',
-    description: 'Профессиональная видеокамера IP компактная DS-2CD2423G2-I(2.8мм)',
-    price: '10 990,00',
-    photo: 'https://www.shutterstock.com/image-vector/no-image-available-icon-template-600nw-1036735678.jpg',
-    count: '1',
-  },
-  {
-    name: 'DS-2CD2423G2-I(2.8мм)',
-    description: 'Профессиональная видеокамера IP компактная DS-2CD2423G2-I(2.8мм)',
-    price: '10 990,00',
-    photo: 'https://www.shutterstock.com/image-vector/no-image-available-icon-template-600nw-1036735678.jpg',
-    count: '2',
-  },
-  {
-    name: 'DS-2CD2423G2-I(2.8мм)',
-    description: 'Профессиональная видеокамера IP компактная DS-2CD2423G2-I(2.8мм)',
-    price: '10 990,00',
-    photo: 'https://www.shutterstock.com/image-vector/no-image-available-icon-template-600nw-1036735678.jpg',
-    count: '5',
-  },
-]
+import { useCurrent } from "@/hooks/useCurrent";
+import CartItem from "@/components/features/CartItem";
+import { Button } from "@/components/ui/common/Button";
+import { CartItemModel, ProductModel } from "@/graphql/generated/output";
+import ButtonWithIcon from "@/components/ui/custom/ButtonWithIcon";
+import ProfileLayout from "@/components/layout/profile/ProfileLayout";
 
 const CartPage = () => {
+  const { user } = useCurrent();
+
+  const [cartItems, setCartItems] = React.useState<CartItemModel[]>([]);
+  const [selectedCartItems, setSelectedCartItems] = React.useState<{ item: ProductModel; count: number }[]>([]);
+
+  const totalPrice = selectedCartItems.reduce((acc, curr) => curr.item.price * curr.count + acc, 0);
+
+  React.useEffect(() => {
+    if (!user || !user.cart) return;
+    // @ts-ignore
+    setCartItems(user.cart);
+  }, [user]);
+
   return (
     <ProfileLayout>
       <div className="flex justify-between items-center pb-[40]">
@@ -50,22 +41,35 @@ const CartPage = () => {
           <h4 className="font-semibold text-lg">
             {true ? (
               <div>
-                <p className="leading-none">Вибрано 1 з 3.</p>
-                <p>Загальна сума замовлення: 6 540 грн.</p>
+                <p className="leading-none">
+                  Вибрано {selectedCartItems.length} з {user?.cart.length}.
+                </p>
+                <p>Загальна сума замовлення: {totalPrice.toLocaleString("uk-UA")} грн.</p>
               </div>
             ) : (
-              'Вибрано 0 з 3'
+              "Вибрано 0 з 3"
             )}
           </h4>
           <Button className="hover:bg-secondary border border-primary hover:text-primary">Оформити замовлення</Button>
         </div>
 
-        {cartItems.map((el, index) => (
-          <CartItem {...el} number={index + 1} isEditable />
-        ))}
+        {cartItems &&
+          cartItems.map((el, index) => (
+            <CartItem
+              isEditable
+              id={el.id}
+              key={el.id}
+              number={index + 1}
+              product={el.product}
+              defaultCount={el.count}
+              setCartItems={setCartItems}
+              selectedCartItems={selectedCartItems}
+              setSelectedCartItems={setSelectedCartItems}
+            />
+          ))}
       </div>
     </ProfileLayout>
-  )
-}
+  );
+};
 
-export default CartPage
+export default CartPage;

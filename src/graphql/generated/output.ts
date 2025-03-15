@@ -19,6 +19,26 @@ export type Scalars = {
   Upload: { input: any; output: any; }
 };
 
+export type AddToCartInput = {
+  count: Scalars['Float']['input'];
+  productId: Scalars['String']['input'];
+};
+
+export type CartItemModel = {
+  __typename?: 'CartItemModel';
+  count: Scalars['Float']['output'];
+  id: Scalars['ID']['output'];
+  product: ProductModel;
+  productId: Scalars['String']['output'];
+  user: UserModel;
+  userId: Scalars['String']['output'];
+};
+
+export type ChangeCartItemCountInput = {
+  count: Scalars['Float']['input'];
+  id: Scalars['String']['input'];
+};
+
 export type ChangeEmailInput = {
   email: Scalars['String']['input'];
 };
@@ -72,6 +92,20 @@ export type DeviceModel = {
   type: Scalars['String']['output'];
 };
 
+export enum EnumOrderStatus {
+  Payed = 'PAYED',
+  Pending = 'PENDING'
+}
+
+export type FavoriteItemModel = {
+  __typename?: 'FavoriteItemModel';
+  id: Scalars['ID']['output'];
+  product: ProductModel;
+  productId: Scalars['String']['output'];
+  user: UserModel;
+  userId: Scalars['String']['output'];
+};
+
 export type LocationModel = {
   __typename?: 'LocationModel';
   city: Scalars['String']['output'];
@@ -88,6 +122,7 @@ export type LoginInput = {
 export type Mutation = {
   __typename?: 'Mutation';
   addProductPhoto: Scalars['Boolean']['output'];
+  changeCartItemCount: Scalars['Boolean']['output'];
   changeEmail: Scalars['Boolean']['output'];
   changePassword: Scalars['Boolean']['output'];
   clearSessionCookie: Scalars['Boolean']['output'];
@@ -102,9 +137,12 @@ export type Mutation = {
   logoutUser: Scalars['Boolean']['output'];
   removeProductPhoto: Scalars['Boolean']['output'];
   removeSession: Scalars['Boolean']['output'];
+  toggleCart: Scalars['Boolean']['output'];
   toggleFavorite: Scalars['Boolean']['output'];
   updateProduct: ProductModel;
   updateStatus: Scalars['Boolean']['output'];
+  updateUserData: Scalars['Boolean']['output'];
+  uploadAvatar: Scalars['Boolean']['output'];
   uploadFile: Scalars['String']['output'];
 };
 
@@ -112,6 +150,11 @@ export type Mutation = {
 export type MutationAddProductPhotoArgs = {
   file: Scalars['Upload']['input'];
   productId: Scalars['String']['input'];
+};
+
+
+export type MutationChangeCartItemCountArgs = {
+  input: ChangeCartItemCountInput;
 };
 
 
@@ -171,13 +214,28 @@ export type MutationRemoveSessionArgs = {
 };
 
 
+export type MutationToggleCartArgs = {
+  input: AddToCartInput;
+};
+
+
 export type MutationToggleFavoriteArgs = {
-  data: Scalars['String']['input'];
+  productId: Scalars['String']['input'];
 };
 
 
 export type MutationUpdateProductArgs = {
   data: UpdateProductInput;
+};
+
+
+export type MutationUpdateUserDataArgs = {
+  user: UpdateUserInput;
+};
+
+
+export type MutationUploadAvatarArgs = {
+  file: Scalars['Upload']['input'];
 };
 
 
@@ -189,6 +247,31 @@ export type OrderItemDto = {
   price: Scalars['Float']['input'];
   productId: Scalars['String']['input'];
   quantity: Scalars['Float']['input'];
+};
+
+export type OrderItemModel = {
+  __typename?: 'OrderItemModel';
+  createdAt: Scalars['DateTime']['output'];
+  id: Scalars['ID']['output'];
+  order: OrderModel;
+  orderId: Scalars['String']['output'];
+  price: Scalars['Float']['output'];
+  product: ProductModel;
+  productId: Scalars['String']['output'];
+  quantity: Scalars['Float']['output'];
+  updatedAt: Scalars['DateTime']['output'];
+};
+
+export type OrderModel = {
+  __typename?: 'OrderModel';
+  createdAt: Scalars['DateTime']['output'];
+  id: Scalars['ID']['output'];
+  items: Array<OrderItemModel>;
+  status: EnumOrderStatus;
+  total: Scalars['Float']['output'];
+  updatedAt: Scalars['DateTime']['output'];
+  user: UserModel;
+  userId: Scalars['String']['output'];
 };
 
 export type PaginateAndFilterInput = {
@@ -279,6 +362,17 @@ export type QuerySearchProductArgs = {
   data: Scalars['String']['input'];
 };
 
+export type ReviewModel = {
+  __typename?: 'ReviewModel';
+  createdAt: Scalars['DateTime']['output'];
+  id: Scalars['ID']['output'];
+  productId: Scalars['String']['output'];
+  rating: Scalars['Float']['output'];
+  text: Scalars['String']['output'];
+  updatedAt: Scalars['DateTime']['output'];
+  userId: Scalars['String']['output'];
+};
+
 export type SessionMetadataModel = {
   __typename?: 'SessionMetadataModel';
   device: DeviceModel;
@@ -315,14 +409,31 @@ export type UpdateProductInput = {
   title?: InputMaybe<Scalars['String']['input']>;
 };
 
+export type UpdateUserInput = {
+  city: Scalars['String']['input'];
+  displayName: Scalars['String']['input'];
+  email: Scalars['String']['input'];
+  password?: InputMaybe<Scalars['String']['input']>;
+  postOffice: Scalars['String']['input'];
+  street: Scalars['String']['input'];
+  username: Scalars['String']['input'];
+};
+
 export type UserModel = {
   __typename?: 'UserModel';
   avatar?: Maybe<Scalars['String']['output']>;
+  cart: Array<CartItemModel>;
+  city?: Maybe<Scalars['String']['output']>;
   createdAt: Scalars['DateTime']['output'];
   displayName: Scalars['String']['output'];
   email: Scalars['String']['output'];
+  favorites: Array<FavoriteItemModel>;
   id: Scalars['ID']['output'];
+  orders: Array<OrderModel>;
   password: Scalars['String']['output'];
+  postOffice?: Maybe<Scalars['String']['output']>;
+  reviews: Array<ReviewModel>;
+  street?: Maybe<Scalars['String']['output']>;
   updatedAt: Scalars['DateTime']['output'];
   username: Scalars['String']['output'];
 };
@@ -346,6 +457,13 @@ export type RegisterMutationVariables = Exact<{
 
 export type RegisterMutation = { __typename?: 'Mutation', createUser: boolean };
 
+export type ChangeCartItemCountMutationVariables = Exact<{
+  input: ChangeCartItemCountInput;
+}>;
+
+
+export type ChangeCartItemCountMutation = { __typename?: 'Mutation', changeCartItemCount: boolean };
+
 export type AddProductPhotoMutationVariables = Exact<{
   productId: Scalars['String']['input'];
   file: Scalars['Upload']['input'];
@@ -353,6 +471,13 @@ export type AddProductPhotoMutationVariables = Exact<{
 
 
 export type AddProductPhotoMutation = { __typename?: 'Mutation', addProductPhoto: boolean };
+
+export type UploadAvatarMutationVariables = Exact<{
+  file: Scalars['Upload']['input'];
+}>;
+
+
+export type UploadAvatarMutation = { __typename?: 'Mutation', uploadAvatar: boolean };
 
 export type UploadFileMutationVariables = Exact<{
   file: Scalars['Upload']['input'];
@@ -383,6 +508,27 @@ export type UpdateProductMutationVariables = Exact<{
 
 export type UpdateProductMutation = { __typename?: 'Mutation', updateProduct: { __typename?: 'ProductModel', id: string } };
 
+export type ToggleCartMutationVariables = Exact<{
+  input: AddToCartInput;
+}>;
+
+
+export type ToggleCartMutation = { __typename?: 'Mutation', toggleCart: boolean };
+
+export type ToggleFavoriteMutationVariables = Exact<{
+  productId: Scalars['String']['input'];
+}>;
+
+
+export type ToggleFavoriteMutation = { __typename?: 'Mutation', toggleFavorite: boolean };
+
+export type UpdateUserDataMutationVariables = Exact<{
+  user: UpdateUserInput;
+}>;
+
+
+export type UpdateUserDataMutation = { __typename?: 'Mutation', updateUserData: boolean };
+
 export type FindAllUsersQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -391,7 +537,7 @@ export type FindAllUsersQuery = { __typename?: 'Query', findAllUsers: Array<{ __
 export type GetAllProductsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetAllProductsQuery = { __typename?: 'Query', getAllProducts: { __typename?: 'ProductsAndTotalModel', total: number, products: Array<{ __typename?: 'ProductModel', id: string, title: string, price: number, brand: string, frontCamera: number, mainCamera: number, ram: number, color: string, builtInMemory: number, processorName: string, processorCores: string, os: string, deliverySet: string, materials: string, simCount: number, simFormat: Array<string>, images: Array<string>, battery: number, createdAt: any, screenDiagonal: number, updatedAt: any }> } };
+export type GetAllProductsQuery = { __typename?: 'Query', getAllProducts: { __typename?: 'ProductsAndTotalModel', total: number, products: Array<{ __typename?: 'ProductModel', id: string, title: string, price: number, brand: string, frontCamera: number, mainCamera: number, ram: number, color: string, builtInMemory: number, processorName: string, processorCores: string, os: string, deliverySet: string, materials: string, simCount: number, simFormat: Array<string>, images: Array<string>, battery: number, screenDiagonal: number, createdAt: any, updatedAt: any }> } };
 
 export type GetProductByIdQueryVariables = Exact<{
   productId: Scalars['String']['input'];
@@ -410,7 +556,7 @@ export type PaginateAndFilterProductsQuery = { __typename?: 'Query', paginateAnd
 export type FindProfileQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type FindProfileQuery = { __typename?: 'Query', findProfile: { __typename?: 'UserModel', id: string, username: string, displayName: string, email: string, avatar?: string | null, createdAt: any, updatedAt: any } };
+export type FindProfileQuery = { __typename?: 'Query', findProfile: { __typename?: 'UserModel', id: string, username: string, displayName: string, email: string, avatar?: string | null, city?: string | null, street?: string | null, postOffice?: string | null, createdAt: any, updatedAt: any, favorites: Array<{ __typename?: 'FavoriteItemModel', product: { __typename?: 'ProductModel', id: string, title: string, price: number, brand: string, frontCamera: number, mainCamera: number, ram: number, color: string, builtInMemory: number, processorName: string, processorCores: string, os: string, deliverySet: string, materials: string, simCount: number, simFormat: Array<string>, images: Array<string>, battery: number, screenDiagonal: number } }>, cart: Array<{ __typename?: 'CartItemModel', id: string, count: number, product: { __typename?: 'ProductModel', id: string, title: string, price: number, brand: string, frontCamera: number, mainCamera: number, ram: number, color: string, builtInMemory: number, processorName: string, processorCores: string, os: string, deliverySet: string, materials: string, simCount: number, simFormat: Array<string>, images: Array<string>, battery: number, screenDiagonal: number, createdAt: any, updatedAt: any } }> } };
 
 
 export const ClearSessionCookieDocument = gql`
@@ -509,6 +655,37 @@ export function useRegisterMutation(baseOptions?: Apollo.MutationHookOptions<Reg
 export type RegisterMutationHookResult = ReturnType<typeof useRegisterMutation>;
 export type RegisterMutationResult = Apollo.MutationResult<RegisterMutation>;
 export type RegisterMutationOptions = Apollo.BaseMutationOptions<RegisterMutation, RegisterMutationVariables>;
+export const ChangeCartItemCountDocument = gql`
+    mutation ChangeCartItemCount($input: ChangeCartItemCountInput!) {
+  changeCartItemCount(input: $input)
+}
+    `;
+export type ChangeCartItemCountMutationFn = Apollo.MutationFunction<ChangeCartItemCountMutation, ChangeCartItemCountMutationVariables>;
+
+/**
+ * __useChangeCartItemCountMutation__
+ *
+ * To run a mutation, you first call `useChangeCartItemCountMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useChangeCartItemCountMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [changeCartItemCountMutation, { data, loading, error }] = useChangeCartItemCountMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useChangeCartItemCountMutation(baseOptions?: Apollo.MutationHookOptions<ChangeCartItemCountMutation, ChangeCartItemCountMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<ChangeCartItemCountMutation, ChangeCartItemCountMutationVariables>(ChangeCartItemCountDocument, options);
+      }
+export type ChangeCartItemCountMutationHookResult = ReturnType<typeof useChangeCartItemCountMutation>;
+export type ChangeCartItemCountMutationResult = Apollo.MutationResult<ChangeCartItemCountMutation>;
+export type ChangeCartItemCountMutationOptions = Apollo.BaseMutationOptions<ChangeCartItemCountMutation, ChangeCartItemCountMutationVariables>;
 export const AddProductPhotoDocument = gql`
     mutation AddProductPhoto($productId: String!, $file: Upload!) {
   addProductPhoto(productId: $productId, file: $file)
@@ -541,6 +718,37 @@ export function useAddProductPhotoMutation(baseOptions?: Apollo.MutationHookOpti
 export type AddProductPhotoMutationHookResult = ReturnType<typeof useAddProductPhotoMutation>;
 export type AddProductPhotoMutationResult = Apollo.MutationResult<AddProductPhotoMutation>;
 export type AddProductPhotoMutationOptions = Apollo.BaseMutationOptions<AddProductPhotoMutation, AddProductPhotoMutationVariables>;
+export const UploadAvatarDocument = gql`
+    mutation UploadAvatar($file: Upload!) {
+  uploadAvatar(file: $file)
+}
+    `;
+export type UploadAvatarMutationFn = Apollo.MutationFunction<UploadAvatarMutation, UploadAvatarMutationVariables>;
+
+/**
+ * __useUploadAvatarMutation__
+ *
+ * To run a mutation, you first call `useUploadAvatarMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUploadAvatarMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [uploadAvatarMutation, { data, loading, error }] = useUploadAvatarMutation({
+ *   variables: {
+ *      file: // value for 'file'
+ *   },
+ * });
+ */
+export function useUploadAvatarMutation(baseOptions?: Apollo.MutationHookOptions<UploadAvatarMutation, UploadAvatarMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UploadAvatarMutation, UploadAvatarMutationVariables>(UploadAvatarDocument, options);
+      }
+export type UploadAvatarMutationHookResult = ReturnType<typeof useUploadAvatarMutation>;
+export type UploadAvatarMutationResult = Apollo.MutationResult<UploadAvatarMutation>;
+export type UploadAvatarMutationOptions = Apollo.BaseMutationOptions<UploadAvatarMutation, UploadAvatarMutationVariables>;
 export const UploadFileDocument = gql`
     mutation UploadFile($file: Upload!) {
   uploadFile(file: $file)
@@ -670,6 +878,99 @@ export function useUpdateProductMutation(baseOptions?: Apollo.MutationHookOption
 export type UpdateProductMutationHookResult = ReturnType<typeof useUpdateProductMutation>;
 export type UpdateProductMutationResult = Apollo.MutationResult<UpdateProductMutation>;
 export type UpdateProductMutationOptions = Apollo.BaseMutationOptions<UpdateProductMutation, UpdateProductMutationVariables>;
+export const ToggleCartDocument = gql`
+    mutation ToggleCart($input: AddToCartInput!) {
+  toggleCart(input: $input)
+}
+    `;
+export type ToggleCartMutationFn = Apollo.MutationFunction<ToggleCartMutation, ToggleCartMutationVariables>;
+
+/**
+ * __useToggleCartMutation__
+ *
+ * To run a mutation, you first call `useToggleCartMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useToggleCartMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [toggleCartMutation, { data, loading, error }] = useToggleCartMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useToggleCartMutation(baseOptions?: Apollo.MutationHookOptions<ToggleCartMutation, ToggleCartMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<ToggleCartMutation, ToggleCartMutationVariables>(ToggleCartDocument, options);
+      }
+export type ToggleCartMutationHookResult = ReturnType<typeof useToggleCartMutation>;
+export type ToggleCartMutationResult = Apollo.MutationResult<ToggleCartMutation>;
+export type ToggleCartMutationOptions = Apollo.BaseMutationOptions<ToggleCartMutation, ToggleCartMutationVariables>;
+export const ToggleFavoriteDocument = gql`
+    mutation ToggleFavorite($productId: String!) {
+  toggleFavorite(productId: $productId)
+}
+    `;
+export type ToggleFavoriteMutationFn = Apollo.MutationFunction<ToggleFavoriteMutation, ToggleFavoriteMutationVariables>;
+
+/**
+ * __useToggleFavoriteMutation__
+ *
+ * To run a mutation, you first call `useToggleFavoriteMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useToggleFavoriteMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [toggleFavoriteMutation, { data, loading, error }] = useToggleFavoriteMutation({
+ *   variables: {
+ *      productId: // value for 'productId'
+ *   },
+ * });
+ */
+export function useToggleFavoriteMutation(baseOptions?: Apollo.MutationHookOptions<ToggleFavoriteMutation, ToggleFavoriteMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<ToggleFavoriteMutation, ToggleFavoriteMutationVariables>(ToggleFavoriteDocument, options);
+      }
+export type ToggleFavoriteMutationHookResult = ReturnType<typeof useToggleFavoriteMutation>;
+export type ToggleFavoriteMutationResult = Apollo.MutationResult<ToggleFavoriteMutation>;
+export type ToggleFavoriteMutationOptions = Apollo.BaseMutationOptions<ToggleFavoriteMutation, ToggleFavoriteMutationVariables>;
+export const UpdateUserDataDocument = gql`
+    mutation UpdateUserData($user: UpdateUserInput!) {
+  updateUserData(user: $user)
+}
+    `;
+export type UpdateUserDataMutationFn = Apollo.MutationFunction<UpdateUserDataMutation, UpdateUserDataMutationVariables>;
+
+/**
+ * __useUpdateUserDataMutation__
+ *
+ * To run a mutation, you first call `useUpdateUserDataMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateUserDataMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateUserDataMutation, { data, loading, error }] = useUpdateUserDataMutation({
+ *   variables: {
+ *      user: // value for 'user'
+ *   },
+ * });
+ */
+export function useUpdateUserDataMutation(baseOptions?: Apollo.MutationHookOptions<UpdateUserDataMutation, UpdateUserDataMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateUserDataMutation, UpdateUserDataMutationVariables>(UpdateUserDataDocument, options);
+      }
+export type UpdateUserDataMutationHookResult = ReturnType<typeof useUpdateUserDataMutation>;
+export type UpdateUserDataMutationResult = Apollo.MutationResult<UpdateUserDataMutation>;
+export type UpdateUserDataMutationOptions = Apollo.BaseMutationOptions<UpdateUserDataMutation, UpdateUserDataMutationVariables>;
 export const FindAllUsersDocument = gql`
     query findAllUsers {
   findAllUsers {
@@ -734,8 +1035,8 @@ export const GetAllProductsDocument = gql`
       simFormat
       images
       battery
-      createdAt
       screenDiagonal
+      createdAt
       updatedAt
     }
     total
@@ -905,6 +1206,59 @@ export const FindProfileDocument = gql`
     displayName
     email
     avatar
+    city
+    street
+    postOffice
+    favorites {
+      product {
+        id
+        title
+        price
+        brand
+        frontCamera
+        mainCamera
+        ram
+        color
+        builtInMemory
+        processorName
+        processorCores
+        os
+        deliverySet
+        materials
+        simCount
+        simFormat
+        images
+        battery
+        screenDiagonal
+      }
+    }
+    cart {
+      id
+      count
+      product {
+        id
+        title
+        price
+        brand
+        frontCamera
+        mainCamera
+        ram
+        color
+        builtInMemory
+        processorName
+        processorCores
+        os
+        deliverySet
+        materials
+        simCount
+        simFormat
+        images
+        battery
+        screenDiagonal
+        createdAt
+        updatedAt
+      }
+    }
     createdAt
     updatedAt
   }

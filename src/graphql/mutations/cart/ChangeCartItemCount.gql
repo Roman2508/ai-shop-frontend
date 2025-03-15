@@ -1,0 +1,3 @@
+mutation ChangeCartItemCount($input: ChangeCartItemCountInput!) {
+  changeCartItemCount(input: $input)
+}

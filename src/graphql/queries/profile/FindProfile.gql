@@ -5,6 +5,68 @@ query FindProfile {
     displayName
     email
     avatar
+
+    city
+    street
+    postOffice
+
+    favorites {
+      product {
+        id
+        title
+        price
+        brand
+        frontCamera
+        mainCamera
+        ram
+        color
+        builtInMemory
+        processorName
+        processorCores
+        os
+        deliverySet
+        materials
+        simCount
+        simFormat
+        images
+        battery
+        screenDiagonal
+      }
+    }
+    cart {
+      id
+      count
+      product {
+        id
+        title
+        price
+        brand
+        frontCamera
+        mainCamera
+        ram
+        color
+        builtInMemory
+        processorName
+        processorCores
+        os
+        deliverySet
+        materials
+        simCount
+        simFormat
+        images
+        battery
+        screenDiagonal
+        createdAt
+        updatedAt
+      }
+    }
+    # reviews {
+    #   id
+    # }
+    # orders {
+    #   id
+    # }
+
     createdAt
     updatedAt
   }

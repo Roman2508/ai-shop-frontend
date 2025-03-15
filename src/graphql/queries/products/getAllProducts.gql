@@ -19,8 +19,8 @@ query getAllProducts {
       simFormat
       images
       battery
-      createdAt
       screenDiagonal
+      createdAt
       updatedAt
     }
     total

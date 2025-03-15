@@ -14,7 +14,7 @@ export const useCurrent = () => {
   React.useEffect(() => {
     if (error) {
       if (isAuthentificated) {
-        clear()
+        // clear()
       }
       exit()
     }
