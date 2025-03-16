@@ -1,19 +1,22 @@
-'use client'
+"use client";
 
-import React from 'react'
+import React from "react";
+import { useTranslations } from "next-intl";
 
-import { Button } from '@/components/ui/common/Button'
-import ButtonWithIcon from '@/components/ui/custom/ButtonWithIcon'
-import ProfileLayout from '@/components/layout/profile/ProfileLayout'
+import { Button } from "@/components/ui/common/Button";
+import ButtonWithIcon from "@/components/ui/custom/ButtonWithIcon";
+import ProfileLayout from "@/components/layout/profile/ProfileLayout";
 
 const ReviewsPage = () => {
+  const t = useTranslations("profile");
+
   return (
     <ProfileLayout>
       <div className="flex justify-between items-center pb-[40]">
-        <h1 className="text-3xl font-semibold">Відгуки</h1>
+        <h1 className="text-3xl font-semibold">{t("reviws.title")}</h1>
 
         <div className="flex gap-[10]">
-          <ButtonWithIcon iconSrc="/icons/list.png" text="МОЇ ЗАМОВЛЕННЯ" buttonVariant="secondary" />
+          <ButtonWithIcon iconSrc="/icons/list.png" text={t("orders.ordersButton")} buttonVariant="secondary" />
           <Button size="icon" className="h-[44] w-[44]">
             0
           </Button>
@@ -24,7 +27,7 @@ const ReviewsPage = () => {
         <h1 className="text-3xl text-center py-[50]">Сторінка в розробці.</h1>
       </div>
     </ProfileLayout>
-  )
-}
+  );
+};
 
-export default ReviewsPage
+export default ReviewsPage;

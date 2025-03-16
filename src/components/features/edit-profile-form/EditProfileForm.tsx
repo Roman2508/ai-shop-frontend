@@ -10,12 +10,15 @@ import UploadFiles from "../product-actions-form/UploadFiles";
 import DeliveryButton from "../delivery-button/DeliveryButton";
 import { UserModel, useUpdateUserDataMutation, useUploadAvatarMutation } from "@/graphql/generated/output";
 import { Form, FormItem, FormField, FormMessage, FormControl, FormDescription } from "@/components/ui/common/Form";
+import { useTranslations } from "next-intl";
 
 interface IEditProfileForm {
   user?: Omit<UserModel, "password">;
 }
 
 const EditProfileForm: React.FC<IEditProfileForm> = ({ user }) => {
+  const t = useTranslations("profile.personalInformation.edit");
+
   const [files, setFiles] = React.useState<File[]>([]);
   const [isLoading, setIsLoading] = React.useState(false);
 
@@ -72,7 +75,7 @@ const EditProfileForm: React.FC<IEditProfileForm> = ({ user }) => {
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <div className="border-b pb-[40] mb-[30]">
-          <h4 className="font-semibold mb-[20]">Особисті дані</h4>
+          <h4 className="font-semibold mb-[20]">{t("blockTitle1")}</h4>
 
           <div className="flex flex-wrap gap-[26]">
             <FormField
@@ -82,13 +85,13 @@ const EditProfileForm: React.FC<IEditProfileForm> = ({ user }) => {
                 <FormItem>
                   <FormControl>
                     <Input
-                      placeholder="Вкажіть ім’я профіля"
+                      placeholder={t("userNamePlaceholder")}
                       variant="primary"
                       className="h-[50] px-[20] w-[434]"
                       {...field}
                     />
                   </FormControl>
-                  <FormDescription>Вкажіть своє ім’я профілю</FormDescription>
+                  <FormDescription>{t("userNameLabel")}</FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
@@ -101,13 +104,13 @@ const EditProfileForm: React.FC<IEditProfileForm> = ({ user }) => {
                 <FormItem>
                   <FormControl>
                     <Input
-                      placeholder="Вкажіть публічне ім’я"
+                      placeholder={t("publicNamePlaceholder")}
                       variant="primary"
                       className="h-[50] px-[20] w-[434]"
                       {...field}
                     />
                   </FormControl>
-                  <FormDescription>Вкажіть своє публічне ім’я</FormDescription>
+                  <FormDescription>{t("publicNameLabel")}</FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
@@ -121,13 +124,13 @@ const EditProfileForm: React.FC<IEditProfileForm> = ({ user }) => {
                   <FormControl>
                     <Input
                       type="email"
-                      placeholder="Вкажіть свою електронну пошту"
+                      placeholder={t("emailPlaceholder")}
                       variant="primary"
                       className="h-[50] px-[20] w-[434]"
                       {...field}
                     />
                   </FormControl>
-                  <FormDescription>Ваша електронна пошта</FormDescription>
+                  <FormDescription>{t("emailLabel")}</FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
@@ -140,13 +143,13 @@ const EditProfileForm: React.FC<IEditProfileForm> = ({ user }) => {
                 <FormItem>
                   <FormControl>
                     <Input
-                      placeholder="Вкажіть пароль"
+                      placeholder={t("passwordPlaceholder")}
                       variant="primary"
                       className="h-[50] px-[20] w-[434]"
                       {...field}
                     />
                   </FormControl>
-                  <FormDescription>Заповніть це поле щоб змінити свій пароль</FormDescription>
+                  <FormDescription>{t("passwordLabel")}</FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
@@ -155,31 +158,37 @@ const EditProfileForm: React.FC<IEditProfileForm> = ({ user }) => {
         </div>
 
         <div className="border-b pb-[40] mb-[30]">
-          <h4 className="font-semibold mb-[20]">Фото профілю</h4>
+          <h4 className="font-semibold mb-[20]">{t("blockTitle2")}</h4>
           <div className="flex flex-col flex-wrap gap-[0]">
-            <UploadFiles files={files} setFiles={setFiles} actionType="create" isMulti={false} />
+            <UploadFiles
+              files={files}
+              setFiles={setFiles}
+              actionType="create"
+              isMulti={false}
+              buttonText={t("uploadButton")}
+            />
           </div>
         </div>
 
         <div className="border-b pb-[40] mb-[30]">
-          <h4 className="font-semibold mb-[20]">Адрес доставки</h4>
+          <h4 className="font-semibold mb-[20]">{t("blockTitle3")}</h4>
 
           <div className="flex flex-col flex-wrap gap-[0]">
             <DeliveryButton setDeliveryData={setDeliveryData} />
 
             <div className="pb-[30] max-w-[434]">
               <div className="flex py-[20] border-b border-dashed">
-                <p className="w-[30%]">Місто</p>
+                <p className="w-[30%]">{t("city")}</p>
                 <p className="w-[70%] text-right font-semibold">{form.watch("city") ? form.watch("city") : "-"}</p>
               </div>
 
               <div className="flex py-[20] border-b border-dashed">
-                <p className="w-[30%]">Вулиця</p>
+                <p className="w-[30%]">{t("street")}</p>
                 <p className="w-[70%] text-right font-semibold">{form.watch("street") ? form.watch("street") : "-"}</p>
               </div>
 
               <div className="flex py-[20] border-b border-dashed">
-                <p className="w-[30%]">Відділення</p>
+                <p className="w-[30%]">{t("postOffice")}</p>
                 <p className="w-[70%] text-right font-semibold">
                   {form.watch("postOffice") ? form.watch("postOffice") : "-"}
                 </p>
@@ -189,7 +198,7 @@ const EditProfileForm: React.FC<IEditProfileForm> = ({ user }) => {
         </div>
 
         <Button type="submit" className="w-[260]" disabled={isLoading}>
-          Зберегти
+          {t("saveButton")}
         </Button>
       </form>
     </Form>

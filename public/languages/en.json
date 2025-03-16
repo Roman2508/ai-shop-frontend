@@ -28,7 +28,18 @@
     }
   },
   "footer": {
-    "": ""
+    "callButton": "REQUEST A CALL",
+    "subtitle1": "Company",
+    "about": "About company",
+    "news": "News",
+    "reviews": "Reviews",
+    "vacancies": "Vacancies",
+    "certificates": "Certificates",
+    "contacts": "Contacts",
+    "subtitle2": "Contacts",
+    "privacyPolicy": "Privacy policy",
+    "legalInformation": "Legal Information",
+    "acceptPayment": "Payment Methods:"
   },
   "home": {
     "title": "Home page"
@@ -57,6 +68,106 @@
     "pagination": {
       "next": "Next",
       "prev": "Prev"
+    }
+  },
+  "fullProduct": {
+    "breadcrumbs": {
+      "home": "Home",
+      "catalog": "Catalog"
+    },
+    "article": "Article:",
+    "saveButton": "Save",
+    "savedButton": "Saved",
+    "shortDescription": "Short description",
+    "mainParams": "Technical specifications",
+    "status": "In stock",
+    "price": "Price",
+    "currency": "uah.",
+    "addToCartButton": "Add to cart",
+    "buyIn1ClickButton": "buy in 1 click",
+    "orderInfo": "Free delivery for orders over UAH 10,000, as well as for self-pickup",
+    "tabs": {
+      "description": "Description",
+      "params": "Technical specifications",
+      "reviews": "Reviews"
+    },
+    "popularTitle": "Popular"
+  },
+  "profile": {
+    "links": {
+      "profile": "Profile",
+      "orders": "Orders",
+      "cart": "Cart",
+      "wishlist": "Wishlist",
+      "reviws": "Reviews"
+    },
+    "personalInformation": {
+      "breadcrumbs": {
+        "home": "Home",
+        "profile": "Profile"
+      },
+      "title": "My profile",
+      "editButton": "Edit",
+      "endEditButton": "Finish editing",
+      "view": {
+        "blockTitle1": "Personal information",
+        "publicName": "Public name",
+        "userName": "User name",
+        "email": "E-mail",
+        "updatedAt": "Profile update date",
+        "createdAt": "Profile creation date",
+        "blockTitle2": "Profile photo",
+        "blockTitle3": "Delivery address",
+        "city": "City",
+        "street": "Street",
+        "postOffice": "Post office"
+      },
+      "edit": {
+        "blockTitle1": "Personal data",
+        "userNamePlaceholder": "Enter a profile name",
+        "userNameLabel": "Enter your profile name",
+        "publicNamePlaceholder": "Enter a public name",
+        "publicNameLabel": "Enter your public name",
+        "emailPlaceholder": "Enter your email address.",
+        "emailLabel": "Your email",
+        "passwordPlaceholder": "Enter password",
+        "passwordLabel": "Fill in this field to change your password",
+        "blockTitle2": "Profile photo",
+        "uploadButton": "Upload photo",
+        "blockTitle3": "Delivery address",
+        "city": "City",
+        "street": "Street",
+        "postOffice": "Post office",
+        "saveButton": "Save changes"
+      }
+    },
+    "orders": {
+      "title": "My orders",
+      "ordersButton": "MY ORDERS",
+      "ordersInProcessing": "Orders in processing",
+      "completedOrders": "Completed orders"
+    },
+    "cart": {
+      "title": "Cart",
+      "selected1": "Selected",
+      "selected2": "of",
+      "totalPrice": "Total order amount:",
+      "currency": "uah.",
+      "placeAnOrder": "Place an order"
+    },
+    "wishlist": {
+      "title": "Wishlist"
+    },
+    "reviws": {
+      "title": "Reviews"
+    }
+  },
+  "components": {
+    "catalogCart": {
+      "currency": "uah",
+      "gb": "GB",
+      "goToCartButton": "Go to cart",
+      "addToCartButton": "Add to cart"
     }
   }
 }

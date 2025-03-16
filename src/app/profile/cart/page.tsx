@@ -1,15 +1,18 @@
 "use client";
 
 import React from "react";
+import { useTranslations } from "next-intl";
 
 import { useCurrent } from "@/hooks/useCurrent";
 import CartItem from "@/components/features/CartItem";
 import { Button } from "@/components/ui/common/Button";
-import { CartItemModel, ProductModel } from "@/graphql/generated/output";
 import ButtonWithIcon from "@/components/ui/custom/ButtonWithIcon";
 import ProfileLayout from "@/components/layout/profile/ProfileLayout";
+import { CartItemModel, ProductModel } from "@/graphql/generated/output";
 
 const CartPage = () => {
+  const t = useTranslations("profile");
+
   const { user } = useCurrent();
 
   const [cartItems, setCartItems] = React.useState<CartItemModel[]>([]);
@@ -26,10 +29,15 @@ const CartPage = () => {
   return (
     <ProfileLayout>
       <div className="flex justify-between items-center pb-[40]">
-        <h1 className="text-3xl font-semibold">Кошик</h1>
+        <h1 className="text-3xl font-semibold">{t("cart.title")}</h1>
 
         <div className="flex gap-[10]">
-          <ButtonWithIcon iconSrc="/icons/list.png" text="МОЇ ЗАМОВЛЕННЯ" buttonVariant="secondary" classNames="" />
+          <ButtonWithIcon
+            classNames=""
+            iconSrc="/icons/list.png"
+            buttonVariant="secondary"
+            text={t("orders.ordersButton")}
+          />
           <Button size="icon" className="h-[44] w-[44]">
             0
           </Button>
@@ -39,18 +47,18 @@ const CartPage = () => {
       <div className="px-[50] py-[40] rounded-[5] border border-border">
         <div className="flex items-center justify-between pb-[20] border-b border-dotted">
           <h4 className="font-semibold text-lg">
-            {true ? (
-              <div>
-                <p className="leading-none">
-                  Вибрано {selectedCartItems.length} з {user?.cart.length}.
-                </p>
-                <p>Загальна сума замовлення: {totalPrice.toLocaleString("uk-UA")} грн.</p>
-              </div>
-            ) : (
-              "Вибрано 0 з 3"
-            )}
+            <div>
+              <p className="leading-none">
+                {t("cart.selected1")} {selectedCartItems.length} {t("cart.selected2")} {user?.cart.length}.
+              </p>
+              <p>
+                {t("cart.totalPrice")} {totalPrice.toLocaleString("uk-UA")} {t("cart.currency")}
+              </p>
+            </div>
           </h4>
-          <Button className="hover:bg-secondary border border-primary hover:text-primary">Оформити замовлення</Button>
+          <Button className="hover:bg-secondary border border-primary hover:text-primary">
+            {t("cart.placeAnOrder")}
+          </Button>
         </div>
 
         {cartItems &&

@@ -9,6 +9,7 @@ import getPhotoUrl from "@/utils/get-photo-url";
 import { useCurrent } from "@/hooks/useCurrent";
 import WishlistIcon from "../images/WishlistIcon";
 import { ProductModel, useToggleCartMutation, useToggleFavoriteMutation } from "@/graphql/generated/output";
+import { useTranslations } from "next-intl";
 
 type CatalogCardPropsType = {
   product: ProductModel;
@@ -18,6 +19,8 @@ type CatalogCardPropsType = {
 const EMPTY_IMG = "https://www.shutterstock.com/image-vector/no-image-available-icon-template-600nw-1036735678.jpg";
 
 const CatalogCard: React.FC<CatalogCardPropsType> = ({ product, viewType }) => {
+  const t = useTranslations("components.catalogCart");
+
   const [addToFavorite, { loading: isFavoriteLoading }] = useToggleFavoriteMutation();
   const [addToCart, { loading: isCartLoading }] = useToggleCartMutation();
 
@@ -69,8 +72,6 @@ const CatalogCard: React.FC<CatalogCardPropsType> = ({ product, viewType }) => {
     setIsAddedToCart(!!checkCart);
   }, [product, isAuthentificated, user]);
 
-  React.useEffect(() => {}, [count]);
-
   return (
     <Card className={viewType === "cards" ? "pb-[30] pt-[20] px-[20]" : "flex py-[24] pl-[16] pr-[30] gap-[20]"}>
       <div className={viewType === "cards" ? "flex justify-end gap-[10]" : "hidden"}>
@@ -110,19 +111,21 @@ const CatalogCard: React.FC<CatalogCardPropsType> = ({ product, viewType }) => {
 
           <h3 className="mb-[16] text-primary font-semibold truncate">
             <Link href={`/catalog/${product.id}`}>
-              {`${product.brand}, ${product.ram}/${product.builtInMemory} ГБ, ${product.color}`}
+              {`${product.brand}, ${product.ram}/${product.builtInMemory} ${t("gb")}, ${product.color}`}
             </Link>
           </h3>
           <p className="mb-[16] h-[80] text-sm line-clamp-4">{product.title}</p>
         </div>
 
         <div className={viewType === "cards" ? "" : "flex flex-col justify-center border-l rounded-r-[5] pl-[20]"}>
-          <b className="block mb-[16]">{product.price.toLocaleString("uk-UA")} грн</b>
+          <b className="block mb-[16]">
+            {product.price.toLocaleString("uk-UA")} {t("currency")}
+          </b>
 
           {isAddedToCart ? (
             <Link href="/profile/cart">
               <Button variant="secondary" className={"w-full rounded-[4]"}>
-                Перейти в корзину
+                {t("goToCartButton")}
               </Button>
             </Link>
           ) : (
@@ -163,7 +166,7 @@ const CatalogCard: React.FC<CatalogCardPropsType> = ({ product, viewType }) => {
                   viewType === "cards" ? "rounded-r-[5] rounded-l-[0] w-[50%]" : "rounded-b-[5] rounded-t-[0] w-[100%]"
                 }
               >
-                В корзину
+                {t("addToCartButton")}
               </Button>
             </div>
           )}

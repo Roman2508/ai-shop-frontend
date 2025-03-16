@@ -27,7 +27,18 @@
     }
   },
   "footer": {
-    "": ""
+    "callButton": "ЗАМОВИТИ ДЗВІНОК",
+    "subtitle1": "Компанія",
+    "about": "Про компанію",
+    "news": "Новини",
+    "reviews": "Відгуки",
+    "vacancies": "Вакансії",
+    "certificates": "Сертифікати",
+    "contacts": "Контакти",
+    "subtitle2": "Контакти",
+    "privacyPolicy": "Політика конфіденційності",
+    "legalInformation": "Правова інформація",
+    "acceptPayment": "Приймаємо до оплати:"
   },
   "home": {
     "title": "Головна сторінка"
@@ -56,6 +67,106 @@
     "pagination": {
       "next": "Назад",
       "prev": "Вперед"
+    }
+  },
+  "fullProduct": {
+    "breadcrumbs": {
+      "home": "Головна",
+      "catalog": "Каталог"
+    },
+    "article": "Артикул:",
+    "saveButton": "Зберегти",
+    "savedButton": "Збережено",
+    "shortDescription": "Короткий опис",
+    "mainParams": "Головні характеристики",
+    "status": "Є в наявності",
+    "price": "Ціна",
+    "currency": "грн.",
+    "addToCartButton": "В корзину",
+    "buyIn1ClickButton": "Купити в 1 клік",
+    "orderInfo": "Безкоштовна доставка при замовленні від 10 000 грн., а також при самовивозі",
+    "tabs": {
+      "description": "Опис",
+      "params": "Технічні характеристики",
+      "reviews": "Відгуки"
+    },
+    "popularTitle": "Популярні товари"
+  },
+  "profile": {
+    "links": {
+      "profile": "Профіль",
+      "orders": "Замовлення",
+      "cart": "Кошик",
+      "wishlist": "Списки бажань",
+      "reviws": "Відгуки"
+    },
+    "personalInformation": {
+      "breadcrumbs": {
+        "home": "Головна",
+        "profile": "Профіль"
+      },
+      "title": "Мій профіль",
+      "editButton": "Редагувати",
+      "endEditButton": "Завершити редагувати",
+      "view": {
+        "blockTitle1": "Особисті дані",
+        "publicName": "Публічне ім’я",
+        "userName": "Ім’я профілю",
+        "email": "Електронна пошта",
+        "updatedAt": "Дата оновлення профілю",
+        "createdAt": "Дата створення профілю",
+        "blockTitle2": "Фото профілю",
+        "blockTitle3": "Адрес доставки",
+        "city": "Місто",
+        "street": "Вулиця",
+        "postOffice": "Відділення"
+      },
+      "edit": {
+        "blockTitle1": "Особисті дані",
+        "userNamePlaceholder": "Вкажіть ім’я профілю",
+        "userNameLabel": "Вкажіть своє ім’я профілю",
+        "publicNamePlaceholder": "Вкажіть публічне ім’я",
+        "publicNameLabel": "Вкажіть своє публічне ім’я",
+        "emailPlaceholder": "Вкажіть свою електронну пошту",
+        "emailLabel": "Ваша електронна пошта",
+        "passwordPlaceholder": "Вкажіть пароль",
+        "passwordLabel": "Заповніть це поле щоб змінити свій пароль",
+        "blockTitle2": "Фото профілю",
+        "uploadButton": "Завантажити фото",
+        "blockTitle3": "Адрес доставки",
+        "city": "Місто",
+        "street": "Вулиця",
+        "postOffice": "Відділення",
+        "saveButton": "Зберегти"
+      }
+    },
+    "orders": {
+      "title": "Мої замовлення",
+      "ordersButton": "МОЇ ЗАМОВЛЕННЯ",
+      "ordersInProcessing": "Замовлення в обробці",
+      "completedOrders": "Виконані замовлення"
+    },
+    "cart": {
+      "title": "Кошик",
+      "selected1": "Вибрано",
+      "selected2": "з",
+      "totalPrice": "Загальна сума замовлення:",
+      "currency": "грн.",
+      "placeAnOrder": "Оформити замовлення"
+    },
+    "wishlist": {
+      "title": "Список бажань"
+    },
+    "reviws": {
+      "title": "Відгуки"
+    }
+  },
+  "components": {
+    "catalogCart": {
+      "currency": "грн",
+      "gb": "ГБ",
+      "goToCartButton": "Перейти в корзину",
+      "addToCartButton": "В корзину"
     }
   }
 }

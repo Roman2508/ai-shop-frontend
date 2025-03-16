@@ -1,8 +1,12 @@
-import { Button } from '@/components/ui/common/Button'
-import Image from 'next/image'
-import React from 'react'
+import React from "react";
+import Image from "next/image";
+import { useTranslations } from "next-intl";
+
+import { Button } from "@/components/ui/common/Button";
 
 const Footer = () => {
+  const t = useTranslations("footer");
+
   return (
     <footer className="flex flex-col justify-between pt-[65] pb-[20] px-[26] bg-dark text-white">
       <div className="flex justify-between items-end grow mb-[50]">
@@ -13,7 +17,7 @@ const Footer = () => {
           </div>
 
           <div className="flex gap-[15]">
-            <Button>ЗАМОВИТИ ДЗВІНОК</Button>
+            <Button>{t("callButton")}</Button>
             <Button size="icon" variant="icon" className="w-[44] h-[44]">
               <Image width={20} height={20} src="/icons/telegram.png" alt="telegram icon" />
             </Button>
@@ -24,24 +28,24 @@ const Footer = () => {
         </div>
 
         <div className="flex flex-col gap-[26]">
-          <b className="">Компанія</b>
+          <b className="">{t("subtitle1")}</b>
 
           <div className="flex gap-[60]">
             <ul className="flex flex-col gap-[12]">
-              <li>Про компанію</li>
-              <li>Новини</li>
-              <li>Відгуки</li>
+              <li>{t("about")}</li>
+              <li>{t("news")}</li>
+              <li>{t("reviews")}</li>
             </ul>
             <ul className="flex flex-col gap-[12]">
-              <li>Вакансії</li>
-              <li>Сертифікати</li>
-              <li>Контакти</li>
+              <li>{t("vacancies")}</li>
+              <li>{t("certificates")}</li>
+              <li>{t("contacts")}</li>
             </ul>
           </div>
         </div>
 
         <div className="flex flex-col gap-[26]">
-          <b className="block">Контакти</b>
+          <b className="block">{t("subtitle2")}</b>
 
           <div className="flex flex-col gap-[16]">
             <div className="flex items-center gap-[12]">
@@ -62,25 +66,25 @@ const Footer = () => {
         {/*  */}
       </div>
 
-      <div className="border-t-[1px] border-muted-foreground grow flex justify-between pt-[25]">
+      <div className="border-t-[1px] border-muted-foreground grow flex justify-between items-center pt-[25]">
         <div className="flex gap-[20]">
           <p>© 2025 «AI Phone Shop»</p>
-          <p className="cursor-pointer">Політика конфіденційності</p>
-          <p className="cursor-pointer">Правова інформація</p>
+          <p className="cursor-pointer">{t("privacyPolicy")}</p>
+          <p className="cursor-pointer">{t("legalInformation")}</p>
         </div>
 
         <div className="flex items-center gap-[10]">
-          <p>Приймаємо до оплати:</p>
-          <p className="flex items-center rounded-[5] p-[10]" style={{ background: 'rgba(255, 255, 255, .1)' }}>
+          <p>{t("acceptPayment")}</p>
+          <p className="flex items-center rounded-[5] p-[10]" style={{ background: "rgba(255, 255, 255, .1)" }}>
             <Image width={38} height={15} src="/icons/visa.png" alt="visa icon" />
           </p>
-          <p className="flex items-center rounded-[5] p-[10]" style={{ background: 'rgba(255, 255, 255, .1)' }}>
+          <p className="flex items-center rounded-[5] p-[10]" style={{ background: "rgba(255, 255, 255, .1)" }}>
             <Image width={30} height={15} src="/icons/mastercard.png" alt="mastercard icon" />
           </p>
         </div>
       </div>
     </footer>
-  )
-}
+  );
+};
 
-export default Footer
+export default Footer;

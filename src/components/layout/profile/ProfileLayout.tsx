@@ -2,7 +2,9 @@
 
 import React from "react";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
+import { Heart, ListOrdered, MessageCircle, ShoppingCart, User } from "lucide-react";
 
 import {
   Breadcrumb,
@@ -13,47 +15,44 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/common/Breadcrumb";
 import { Card } from "@/components/ui/common/Card";
-import { Heart, ListOrdered, MessageCircle, ShoppingCart, User } from "lucide-react";
 
-const linksList = [
-  {
-    label: "Профіль",
-    icon: <User className="p-[2]" />,
-    iconActive: <User className="p-[2] text-primary" />,
-    link: "/profile/personal-information",
-  },
-  {
-    label: "Замовлення",
-    icon: <ListOrdered className="p-[2]" />,
-    iconActive: <ListOrdered className="p-[2] text-primary" />,
-    link: "/profile/orders",
-  },
-  {
-    label: "Кошик",
-    icon: <ShoppingCart className="p-[2]" />,
-    iconActive: <ShoppingCart className="p-[2] text-primary" />,
-    link: "/profile/cart",
-  },
-  {
-    label: "Список бажань",
-    icon: <Heart className="p-[2]" />,
-    iconActive: <Heart className="p-[2] text-primary" />,
-    link: "/profile/wishlist",
-  },
-  {
-    label: "Відгуки",
-    icon: <MessageCircle className="p-[2]" />,
-    iconActive: <MessageCircle className="p-[2] text-primary" />,
-    link: "/profile/reviws",
-  },
-];
-
-const ProfileLayout = ({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) => {
+const ProfileLayout = ({ children }: Readonly<{ children: React.ReactNode }>) => {
   const pathname = usePathname();
+
+  const t = useTranslations("profile");
+
+  const linksList = [
+    {
+      label: t("links.profile"),
+      icon: <User className="p-[2]" />,
+      iconActive: <User className="p-[2] text-primary" />,
+      link: "/profile/personal-information",
+    },
+    {
+      label: t("links.orders"),
+      icon: <ListOrdered className="p-[2]" />,
+      iconActive: <ListOrdered className="p-[2] text-primary" />,
+      link: "/profile/orders",
+    },
+    {
+      label: t("links.cart"),
+      icon: <ShoppingCart className="p-[2]" />,
+      iconActive: <ShoppingCart className="p-[2] text-primary" />,
+      link: "/profile/cart",
+    },
+    {
+      label: t("links.wishlist"),
+      icon: <Heart className="p-[2]" />,
+      iconActive: <Heart className="p-[2] text-primary" />,
+      link: "/profile/wishlist",
+    },
+    {
+      label: t("links.reviws"),
+      icon: <MessageCircle className="p-[2]" />,
+      iconActive: <MessageCircle className="p-[2] text-primary" />,
+      link: "/profile/reviws",
+    },
+  ];
 
   return (
     <div className="max-w-[1640] mx-auto px-[16]">
@@ -61,18 +60,13 @@ const ProfileLayout = ({
         <BreadcrumbList>
           <BreadcrumbItem>
             <BreadcrumbLink>
-              <Link href="/">Home</Link>
+              <Link href="/">{t("personalInformation.breadcrumbs.home")}</Link>
             </BreadcrumbLink>
           </BreadcrumbItem>
           <BreadcrumbSeparator />
+
           <BreadcrumbItem>
-            <BreadcrumbLink>
-              <Link href="/components">Components</Link>
-            </BreadcrumbLink>
-          </BreadcrumbItem>
-          <BreadcrumbSeparator />
-          <BreadcrumbItem>
-            <BreadcrumbPage>Breadcrumb</BreadcrumbPage>
+            <BreadcrumbPage>{t("personalInformation.breadcrumbs.profile")}</BreadcrumbPage>
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>

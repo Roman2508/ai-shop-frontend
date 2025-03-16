@@ -1,17 +1,24 @@
 import React from "react";
 import { Trash2 } from "lucide-react";
 
-import { Button } from "@/components/ui/common/Button";
 import getPhotoUrl from "@/utils/get-photo-url";
+import { Button } from "@/components/ui/common/Button";
 
 interface IUploadFilesProps {
   files: File[];
   isMulti?: boolean;
+  buttonText: string;
   actionType: "create" | "update";
   setFiles: React.Dispatch<React.SetStateAction<File[]>>;
 }
 
-const UploadFiles: React.FC<IUploadFilesProps> = ({ files, actionType, isMulti = true, setFiles }) => {
+const UploadFiles: React.FC<IUploadFilesProps> = ({
+  files,
+  setFiles,
+  actionType,
+  isMulti = true,
+  buttonText = "Завантажити фото",
+}) => {
   const fileRef = React.useRef<HTMLInputElement>(null);
 
   const handleChangeUpload = async (event: any) => {
@@ -46,10 +53,8 @@ const UploadFiles: React.FC<IUploadFilesProps> = ({ files, actionType, isMulti =
     });
   };
 
-  console.log(typeof files[0], files[0]);
-
   return (
-    <div className="border-b pb-[40] mb-[30]">
+    <div className="mb-[30]">
       {isMulti && <h4 className="font-semibold mb-[20]">Фото</h4>}
 
       <div className={`flex flex-col flex-wrap gap-[26] ${isMulti ? "w-full" : "w-[150]"}`}>
@@ -97,7 +102,7 @@ const UploadFiles: React.FC<IUploadFilesProps> = ({ files, actionType, isMulti =
             fileRef.current.click();
           }}
         >
-          Завантажити фото
+          {buttonText}
         </Button>
 
         <input ref={fileRef} onChange={handleChangeUpload} type="file" className="hidden" multiple={isMulti} />

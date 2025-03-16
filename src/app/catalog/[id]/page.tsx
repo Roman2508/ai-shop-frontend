@@ -2,7 +2,7 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { useParams } from "next/navigation";
 
 import {
@@ -36,8 +36,9 @@ const mainCharacteristicsKeys = [
 ];
 
 const ProductPage = () => {
-  const { id } = useParams();
+  const t = useTranslations("fullProduct");
 
+  const { id } = useParams();
   const locale = useLocale();
 
   const [mainPhotoName, setMainPhotoName] = React.useState("");
@@ -66,13 +67,13 @@ const ProductPage = () => {
         <BreadcrumbList>
           <BreadcrumbItem>
             <BreadcrumbLink>
-              <Link href="/">Головна</Link>
+              <Link href="/">{t("breadcrumbs.home")}</Link>
             </BreadcrumbLink>
           </BreadcrumbItem>
           <BreadcrumbSeparator />
           <BreadcrumbItem>
             <BreadcrumbLink>
-              <Link href="/catalog">Каталог</Link>
+              <Link href="/catalog">{t("breadcrumbs.catalog")}</Link>
             </BreadcrumbLink>
           </BreadcrumbItem>
           <BreadcrumbSeparator />
@@ -84,7 +85,7 @@ const ProductPage = () => {
 
       <div>
         <p className="text-right mb-[20] opacity-[60%]">
-          {product ? `Артикул: ${product.getProductById.id.slice(2, 8)}` : "..."}
+          {product ? `${t("article")} ${product.getProductById.id.slice(2, 8)}` : "..."}
         </p>
 
         {/* main */}
@@ -94,11 +95,7 @@ const ProductPage = () => {
               {product?.getProductById ? (
                 <div className="flex flex-col h-full">
                   <div className="h-[80%]">
-                    <img
-                      className="w-full h-full block"
-                      src={getPhotoUrl(mainPhotoName, "products")}
-                      // src="https://www.shutterstock.com/image-vector/no-image-available-icon-template-600nw-1036735678.jpg"
-                    />
+                    <img className="w-full h-full block" src={getPhotoUrl(mainPhotoName, "products")} />
                   </div>
 
                   <div className="h-[20%] flex gap-[10] mt-[10] overflow-y-auto">
@@ -130,16 +127,16 @@ const ProductPage = () => {
               <>
                 {false ? (
                   <ButtonWithIcon
-                    text="Зберегти"
                     VectorIcon={SaveIcon}
+                    text={t("saveButton")}
                     wrapperClassNames="w-[140]"
                     iconClassNames="!text-border fill-current text-inherit stroke-current"
                     classNames="w-full bg-border text-text-muted-foreground rounded-[5] justify-end pr-5"
                   />
                 ) : (
                   <ButtonWithIcon
-                    text="Збережено"
                     VectorIcon={SaveIcon}
+                    text={t("savedButton")}
                     buttonVariant="outline"
                     wrapperClassNames="w-[150]"
                     classNames="w-full text-primary rounded-[5] justify-end px-4"
@@ -154,7 +151,7 @@ const ProductPage = () => {
             <div className="flex gap-[30]">
               <Card className="p-[30] w-[60%]">
                 {product?.getProductById ? (
-                  <b className="mb-[10] block">Короткий опис</b>
+                  <b className="mb-[10] block">{t("shortDescription")}</b>
                 ) : (
                   <Skeleton className="mb-10 w-[120] h-[20]" />
                 )}
@@ -171,7 +168,7 @@ const ProductPage = () => {
                 )}
 
                 {product?.getProductById ? (
-                  <b className="mb-[10] block">Головні характеристики</b>
+                  <b className="mb-[10] block">{t("mainParams")}</b>
                 ) : (
                   <Skeleton className="mb-10 w-[180] h-[20]" />
                 )}
@@ -215,7 +212,7 @@ const ProductPage = () => {
                   {product?.getProductById ? (
                     <p className="flex items-center gap-[6] pb-[15] mb-[30] border-b border-dashed text-sm">
                       <Image src="/icons/check.png" width={13} height={10} alt="check icon" />
-                      <span>Є в наявності</span>
+                      <span>{t("status")}</span>
                     </p>
                   ) : (
                     <Skeleton className="w-[40%] h-[20] pb-[15] mb-[30] border-b border-dashed text-sm" />
@@ -224,8 +221,10 @@ const ProductPage = () => {
                   <div className="flex flex-col items-center gap-[15]">
                     {product?.getProductById ? (
                       <div className="text-center">
-                        <p className="text-sm opacity-[70%]">Ціна</p>
-                        <b className="text-xl">{product.getProductById.price.toLocaleString("uk-UA")} грн.</b>
+                        <p className="text-sm opacity-[70%]">{t("price")}</p>
+                        <b className="text-xl">
+                          {product.getProductById.price.toLocaleString("uk-UA")} {t("currency")}
+                        </b>
                       </div>
                     ) : (
                       <div className="flex flex-col items-center">
@@ -243,21 +242,21 @@ const ProductPage = () => {
                         </div>
 
                         <ButtonWithIcon
-                          text="В корзину"
                           iconVariant="left"
                           classNames="w-full"
                           buttonVariant="default"
                           wrapperClassNames="w-full"
+                          text={t("addToCartButton")}
                           iconSrc="/icons/shopping-bag.png"
                         />
 
                         <ButtonWithIcon
                           iconVariant="left"
                           classNames="w-full"
-                          text="Купити в 1 клік"
                           buttonVariant="secondary"
                           wrapperClassNames="w-full"
                           iconSrc="/icons/wallet.png"
+                          text={t("buyIn1ClickButton")}
                         />
                       </>
                     ) : (
@@ -272,7 +271,7 @@ const ProductPage = () => {
 
                 <div className="flex items-center gap-[15] bg-secondary mt-auto px-[35] py-[30] rounded-t-[10]">
                   <Image src="/images/box.png" alt="box icon" width={47} height={47} className="w-[47] h-[47]" />
-                  <p className="text-sm">Безкоштовна доставка при замовленні від 10 000 грн., а також при самовивозі</p>
+                  <p className="text-sm">{t("orderInfo")}</p>
                 </div>
               </Card>
             </div>
@@ -288,7 +287,7 @@ const ProductPage = () => {
         {/* popular */}
         <div>
           <div className="flex justify-between mb-[50]">
-            <h2 className="text-2xl font-semibold">Популярні товари</h2>
+            <h2 className="text-2xl font-semibold">{t("popularTitle")}</h2>
             <div className="flex gap-[10]">
               <Button size="icon" variant="outline" className="border-destructive text-destructive">
                 {"<"}

@@ -1,29 +1,31 @@
-'use-client'
-import React from 'react'
-import { Trash2 } from 'lucide-react'
-import { useLocale } from 'next-intl'
+"use-client";
+import React from "react";
+import { Trash2 } from "lucide-react";
+import { useLocale, useTranslations } from "next-intl";
 
-import { Button } from '@/components/ui/common/Button'
-import { ProductModel } from '@/graphql/generated/output'
-import { Textarea } from '@/components/ui/common/Textarea'
-import { getProductAttributeLabel } from '@/utils/get-product-attribute-label'
-import { Tabs, TabsList, TabsContent, TabsTrigger } from '@/components/ui/common/Tabs'
+import { Button } from "@/components/ui/common/Button";
+import { ProductModel } from "@/graphql/generated/output";
+import { Textarea } from "@/components/ui/common/Textarea";
+import { getProductAttributeLabel } from "@/utils/get-product-attribute-label";
+import { Tabs, TabsList, TabsContent, TabsTrigger } from "@/components/ui/common/Tabs";
 
 interface IProductTabsProps {
-  product?: ProductModel
+  product?: ProductModel;
 }
 
 const ProductTabs: React.FC<IProductTabsProps> = ({ product }) => {
-  const locale = useLocale()
+  const t = useTranslations("fullProduct");
 
-  if (!product) return
+  const locale = useLocale();
+
+  if (!product) return;
 
   return (
     <Tabs defaultValue="description">
       <TabsList>
-        <TabsTrigger value="description">Опис</TabsTrigger>
-        <TabsTrigger value="technical-specifications">Технічні характеристики</TabsTrigger>
-        <TabsTrigger value="reviews">Відгуки (10)</TabsTrigger>
+        <TabsTrigger value="description">{t("tabs.description")}</TabsTrigger>
+        <TabsTrigger value="technical-specifications">{t("tabs.params")}</TabsTrigger>
+        <TabsTrigger value="reviews">{t("tabs.reviews")} (10)</TabsTrigger>
       </TabsList>
 
       {/* description */}
@@ -33,15 +35,15 @@ const ProductTabs: React.FC<IProductTabsProps> = ({ product }) => {
       <TabsContent value="technical-specifications">
         {product &&
           (Object.keys(product) as Array<keyof ProductModel>).map((key: keyof ProductModel) => {
-            const excludedKeys = ['id', 'title', 'price', 'images', 'createdAt', 'updatedAt', '__typename']
+            const excludedKeys = ["id", "title", "price", "images", "createdAt", "updatedAt", "__typename"];
 
             if (!excludedKeys.includes(key)) {
               return (
                 <div className="flex py-[10] border-t border-dashed">
-                  <p className="w-[20%]">{getProductAttributeLabel(key, locale as 'ua' | 'en')}</p>
+                  <p className="w-[20%]">{getProductAttributeLabel(key, locale as "ua" | "en")}</p>
                   <p className="w-[80%]">{product[key]}</p>
                 </div>
-              )
+              );
             }
           })}
       </TabsContent>
@@ -83,7 +85,7 @@ const ProductTabs: React.FC<IProductTabsProps> = ({ product }) => {
         </div>
       </TabsContent>
     </Tabs>
-  )
-}
+  );
+};
 
-export default ProductTabs
+export default ProductTabs;
