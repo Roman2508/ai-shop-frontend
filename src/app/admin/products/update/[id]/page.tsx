@@ -11,7 +11,6 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from '@/components/ui/common/Breadcrumb'
-import { Button } from '@/components/ui/common/Button'
 import { useGetProductByIdQuery } from '@/graphql/generated/output'
 import ProductActionsForm from '@/components/features/product-actions-form/ProductActionsForm'
 

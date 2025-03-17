@@ -556,7 +556,7 @@ export type PaginateAndFilterProductsQuery = { __typename?: 'Query', paginateAnd
 export type FindProfileQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type FindProfileQuery = { __typename?: 'Query', findProfile: { __typename?: 'UserModel', id: string, username: string, displayName: string, email: string, avatar?: string | null, city?: string | null, street?: string | null, postOffice?: string | null, createdAt: any, updatedAt: any, favorites: Array<{ __typename?: 'FavoriteItemModel', product: { __typename?: 'ProductModel', id: string, title: string, price: number, brand: string, frontCamera: number, mainCamera: number, ram: number, color: string, builtInMemory: number, processorName: string, processorCores: string, os: string, deliverySet: string, materials: string, simCount: number, simFormat: Array<string>, images: Array<string>, battery: number, screenDiagonal: number } }>, cart: Array<{ __typename?: 'CartItemModel', id: string, count: number, product: { __typename?: 'ProductModel', id: string, title: string, price: number, brand: string, frontCamera: number, mainCamera: number, ram: number, color: string, builtInMemory: number, processorName: string, processorCores: string, os: string, deliverySet: string, materials: string, simCount: number, simFormat: Array<string>, images: Array<string>, battery: number, screenDiagonal: number, createdAt: any, updatedAt: any } }> } };
+export type FindProfileQuery = { __typename?: 'Query', findProfile: { __typename?: 'UserModel', id: string, username: string, displayName: string, email: string, avatar?: string | null, city?: string | null, street?: string | null, postOffice?: string | null, createdAt: any, updatedAt: any, favorites: Array<{ __typename?: 'FavoriteItemModel', product: { __typename?: 'ProductModel', id: string, title: string, price: number, brand: string, frontCamera: number, mainCamera: number, ram: number, color: string, builtInMemory: number, processorName: string, processorCores: string, os: string, deliverySet: string, materials: string, simCount: number, simFormat: Array<string>, images: Array<string>, battery: number, screenDiagonal: number, createdAt: any, updatedAt: any } }>, cart: Array<{ __typename?: 'CartItemModel', id: string, count: number, product: { __typename?: 'ProductModel', id: string, title: string, price: number, brand: string, frontCamera: number, mainCamera: number, ram: number, color: string, builtInMemory: number, processorName: string, processorCores: string, os: string, deliverySet: string, materials: string, simCount: number, simFormat: Array<string>, images: Array<string>, battery: number, screenDiagonal: number, createdAt: any, updatedAt: any } }> } };
 
 
 export const ClearSessionCookieDocument = gql`
@@ -1230,6 +1230,8 @@ export const FindProfileDocument = gql`
         images
         battery
         screenDiagonal
+        createdAt
+        updatedAt
       }
     }
     cart {
