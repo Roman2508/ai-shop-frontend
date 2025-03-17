@@ -29,22 +29,28 @@ import {
   SelectContent,
 } from "@/components/ui/common/Select";
 import {
+  Drawer,
+  DrawerClose,
+  DrawerTitle,
+  DrawerHeader,
+  DrawerContent,
+  DrawerTrigger,
+  DrawerDescription,
+} from "@/components/ui/common/Drawer";
+import {
   ProductModel,
   useGetAllProductsQuery,
   PaginateAndFilterInput,
   usePaginateAndFilterProductsQuery,
 } from "@/graphql/generated/output";
 import { Card } from "@/components/ui/common/Card";
-import { Label } from "@/components/ui/common/Label";
 import { Button } from "@/components/ui/common/Button";
-import { Slider } from "@/components/ui/common/Slider";
-import { Checkbox } from "@/components/ui/common/Checkbox";
-import PriceInput from "@/components/ui/custom/PriceInput";
 import CatalogCard from "@/components/features/CatalogCard";
 import ViewCardIcon from "@/components/images/ViewCardIcon";
 import ViewRowsIcon from "@/components/images/ViewRowsIcon";
-import { productInputFilters } from "@/constants/product-filters";
 import CatalogCardSkeleton from "@/components/features/CatalogCardSkeleton";
+import ProductFilter from "@/components/features/product-filter/ProductFilter";
+import CatalogFilters from "@/components/features/catalog-filters/CatalogFilters";
 
 const CatalogPage = () => {
   const locale = useLocale();
@@ -168,242 +174,107 @@ const CatalogPage = () => {
 
       <div className="flex items-baseline gap-[40]">
         {/* filters */}
-        <Card className="px-[20] py-[28] w-[300] min-w-[300]">
-          {productInputFilters.map((filter) => (
-            <div className="pb-[28] mb-[28] border-b-2" key={filter.key}>
-              <b className="block mb-[20]">{locale === "ua" ? filter.label_ua : filter.label_en}</b>
-
-              <div className="max-h-[230] overflow-y-auto">
-                {filter.items.map((el) => (
-                  <div className="flex items-center space-x-2 mt-[12]" key={el.key}>
-                    <Label
-                      className="flex items-center gap-[12]"
-                      onClick={() => handleChangeFilter(filter.key, el.key)}
-                    >
-                      <Checkbox />
-                      <p className={filter.key === "color" ? "first-letter:uppercase" : ""}>
-                        {locale === "ua" ? el.label_ua : el.label_en}
-                      </p>
-                    </Label>
-                  </div>
-                ))}
-              </div>
-            </div>
-          ))}
-
-          <div className="pb-[28] mb-[28] border-b-2">
-            <b className="block mb-[20]">{t("filter.price")}</b>
-
-            <Slider
-              min={0}
-              step={100}
-              max={maxPrice}
-              defaultValue={[0, maxPrice]}
-              value={[filter.priceFrom || 0, filter.priceTo || maxPrice]}
-              onValueChange={(e) => {
-                // debouncedChangePriceFrom(e[0])
-                // debouncedChangePriceTo(e[1])
-                handleChangeFilter("priceFrom", String(e[0]));
-                handleChangeFilter("priceTo", String(e[1]));
-              }}
-            />
-            <div className="mt-[30] flex gap-[10] align-center">
-              <PriceInput
-                variant="from"
-                locale={locale}
-                maxPrice={maxPrice}
-                price={filter.priceFrom}
-                handleChangeFilter={handleChangeFilter}
-              />
-              <span className="flex align-center"> - </span>
-              <PriceInput
-                variant="to"
-                locale={locale}
-                maxPrice={maxPrice}
-                price={filter.priceTo}
-                handleChangeFilter={handleChangeFilter}
-              />
-            </div>
-          </div>
-
-          <Button
-            variant="default"
-            className="w-full mb-[10]"
-            onClick={() => {
-              window.scrollTo({ top: 0, behavior: "smooth" });
-              fetchFilteredData();
-            }}
-          >
-            {t("filter.applyFilters")}
-          </Button>
-          <Button
-            variant="link"
-            className="w-full"
-            onClick={() => {
-              alert("FIX");
-              setFilter({});
-            }}
-          >
-            {t("filter.resetFilters")}
-          </Button>
+        <Card className="px-[20] py-[28] w-[300] min-w-[300] hidden xl:block">
+          <ProductFilter
+            filter={filter}
+            setFilter={setFilter}
+            maxPrice={maxPrice}
+            handleChangeFilter={handleChangeFilter}
+            fetchFilteredData={fetchFilteredData}
+          />
         </Card>
 
         <div className="flex flex-col gap-[34] grow">
           {/* catalog filters */}
-          <div className="flex justify-between items-center">
-            <div>
-              {`${t("filter.totalItems")} `}
-              <b>{products.length}</b>
-            </div>
-
-            <div className="flex items-center gap-[50]">
-              <div className="flex items-center gap-[10]">
-                <p className="text-nowrap">{t("filter.sort.title")}</p>
-
-                <Select onValueChange={(value) => fetchFilteredData({ sortBy: value })}>
-                  <SelectTrigger>
-                    <SelectValue placeholder={t("filter.sort.byDefault")} />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectGroup>
-                      <SelectItem value="default">{t("filter.sort.byDefault")}</SelectItem>
-                      <SelectItem value="rating">{t("filter.sort.byRating")}</SelectItem>
-                      <SelectItem value="new">{t("filter.sort.byNew")}</SelectItem>
-                      <SelectItem value="price:asc">{t("filter.sort.byPrice:asc")}</SelectItem>
-                      <SelectItem value="price:desc">{t("filter.sort.byPrice:desc")}</SelectItem>
-                    </SelectGroup>
-                  </SelectContent>
-                </Select>
-              </div>
-
-              <div className="flex items-center gap-[30]">
-                <div className="flex items-center gap-[10]">
-                  <div className="">{t("filter.itemsPerPage")}</div>
-                  <Select onValueChange={(value) => fetchFilteredData({ limit: Number(value) })}>
-                    <SelectTrigger className="w-[75]">
-                      <SelectValue placeholder="24" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectGroup>
-                        <SelectItem value="24">24</SelectItem>
-                        <SelectItem value="48">48</SelectItem>
-                        <SelectItem value="72">72</SelectItem>
-                        <SelectItem value="94">94</SelectItem>
-                      </SelectGroup>
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                <div>
-                  <Button
-                    size="icon"
-                    variant="icon"
-                    className="border-none w-[44] h-[44]"
-                    onClick={() => setViewType("cards")}
-                  >
-                    <ViewCardIcon className={viewType === "cards" ? "fill-primary" : "fill-accent-foreground"} />
-                  </Button>
-
-                  <Button
-                    size="icon"
-                    variant="icon"
-                    className="border-none w-[44] h-[44]"
-                    onClick={() => setViewType("rows")}
-                  >
-                    <ViewRowsIcon className={viewType === "rows" ? "fill-primary" : "fill-accent-foreground"} />
-                  </Button>
-                </div>
-              </div>
-            </div>
-          </div>
+          <CatalogFilters
+            filter={filter}
+            maxPrice={maxPrice}
+            viewType={viewType}
+            setFilter={setFilter}
+            setViewType={setViewType}
+            handleChangeFilter={handleChangeFilter}
+            fetchFilteredData={fetchFilteredData}
+          />
 
           {/* catalog cards */}
-          <div>
-            <div
-              className={
-                viewType === "cards"
-                  ? "grid md:grid-cols-2 2xl:grid-cols-3 3xl:grid-cols-4 gap-[18]"
-                  : "grid grid-cols-1 gap-[18]"
-              }
-            >
-              {!isLoading && data
-                ? products.map((product) => <CatalogCard product={product} viewType={viewType} />)
-                : Array(12)
-                    .fill(null)
-                    .map((_, index) => <CatalogCardSkeleton key={index} viewType={viewType} />)}
-            </div>
-
-            <Pagination className="mt-[40]">
-              <PaginationContent>
-                <PaginationItem
-                  onClick={() => {
-                    setCurrentPage((prev) => {
-                      if (prev - 1 > 0) {
-                        const skip = (filter.limit || 24) * (prev - 1);
-                        fetchFilteredData({ skip: skip - 1 });
-                        return prev - 1;
-                      } else {
-                        return prev;
-                      }
-                    });
-                  }}
-                >
-                  {/* <PaginationPrevious href="#" /> */}
-                  <PaginationLink href="#" className="px-[5] w-[100]">
-                    <Button variant="link">{`< ${t("pagination.prev")}`}</Button>
-                  </PaginationLink>
-                </PaginationItem>
-                {/* <PaginationItem>
-                  <PaginationLink href="#">1</PaginationLink>
-                </PaginationItem> */}
-
-                {Array(Math.ceil(total / (filter.limit || 24)))
-                  .fill(null)
-                  .map((_, index) => (
-                    <PaginationItem
-                      key={index}
-                      onClick={() => {
-                        const skip = (filter.limit || 24) * index + 1;
-                        fetchFilteredData({ skip: skip - 1 });
-                        setCurrentPage(index + 1);
-                      }}
-                    >
-                      <PaginationLink href="#" isActive={index + 1 === currentPage}>
-                        {index + 1}
-                      </PaginationLink>
-                    </PaginationItem>
-                  ))}
-
-                <PaginationItem>
-                  <PaginationEllipsis />
-                </PaginationItem>
-
-                <PaginationItem
-                  onClick={() => {
-                    setCurrentPage((prev) => {
-                      alert(111);
-                      const pagesCount = Math.ceil(total / (filter.limit || 24));
-                      if (prev + 1 <= pagesCount) {
-                        const skip = (filter.limit || 24) * (prev + 1);
-                        fetchFilteredData({ skip: skip + 1 });
-                        return prev + 1;
-                      } else {
-                        return prev;
-                      }
-                    });
-                  }}
-                >
-                  {/* <PaginationNext href="#" /> */}
-                  <PaginationLink href="#" className="px-[5] w-[100]">
-                    <Button variant="link" className="px-[5]">
-                      {`${t("pagination.next")} >`}
-                    </Button>
-                  </PaginationLink>
-                  {/*  */}
-                </PaginationItem>
-              </PaginationContent>
-            </Pagination>
+          <div
+            className={
+              viewType === "cards"
+                ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-2 2xl:grid-cols-3 3xl:grid-cols-4 gap-[18]"
+                : "grid grid-cols-1 gap-[18]"
+            }
+          >
+            {!isLoading && data
+              ? products.map((product) => <CatalogCard product={product} viewType={viewType} />)
+              : [...Array(12)].map((_, index) => <CatalogCardSkeleton key={index} viewType={viewType} />)}
           </div>
+
+          <Pagination className="mt-[40]">
+            <PaginationContent>
+              <PaginationItem
+                className="hidden sm:inline-flex"
+                onClick={() => {
+                  setCurrentPage((prev) => {
+                    if (prev - 1 > 0) {
+                      const skip = (filter.limit || 24) * (prev - 1);
+                      fetchFilteredData({ skip: skip - 1 });
+                      return prev - 1;
+                    } else {
+                      return prev;
+                    }
+                  });
+                }}
+              >
+                <PaginationLink href="#" className="px-[5] w-[100]">
+                  <Button variant="link">{`< ${t("pagination.prev")}`}</Button>
+                </PaginationLink>
+              </PaginationItem>
+
+              {Array(Math.ceil(total / (filter.limit || 24)))
+                .fill(null)
+                .map((_, index) => (
+                  <PaginationItem
+                    key={index}
+                    onClick={() => {
+                      const skip = (filter.limit || 24) * index + 1;
+                      fetchFilteredData({ skip: skip - 1 });
+                      setCurrentPage(index + 1);
+                    }}
+                  >
+                    <PaginationLink href="#" isActive={index + 1 === currentPage}>
+                      {index + 1}
+                    </PaginationLink>
+                  </PaginationItem>
+                ))}
+
+              {/* <PaginationItem>
+                <PaginationEllipsis />
+              </PaginationItem> */}
+
+              <PaginationItem
+                className="hidden sm:inline-flex"
+                onClick={() => {
+                  setCurrentPage((prev) => {
+                    alert(111);
+                    const pagesCount = Math.ceil(total / (filter.limit || 24));
+                    if (prev + 1 <= pagesCount) {
+                      const skip = (filter.limit || 24) * (prev + 1);
+                      fetchFilteredData({ skip: skip + 1 });
+                      return prev + 1;
+                    } else {
+                      return prev;
+                    }
+                  });
+                }}
+              >
+                <PaginationLink href="#" className="px-[5] w-[100]">
+                  <Button variant="link" className="px-[5]">
+                    {`${t("pagination.next")} >`}
+                  </Button>
+                </PaginationLink>
+              </PaginationItem>
+            </PaginationContent>
+          </Pagination>
         </div>
       </div>
     </div>

@@ -4,25 +4,38 @@ import { useTranslations } from "next-intl";
 import { Dialog, DialogTitle, DialogHeader, DialogTrigger, DialogContent } from "@/components/ui/common/Dialog";
 import { Input } from "@/components/ui/common/Input";
 import SearchIcon from "@/components/images/SearchIcon";
+import { Button } from "@/components/ui/common/Button";
 
-const Search = () => {
+interface ISearchProps {
+  isMobile?: boolean;
+}
+
+const Search: React.FC<ISearchProps> = ({ isMobile = false }) => {
   const t = useTranslations("header");
 
   return (
     <>
       <Dialog>
         <DialogTrigger asChild>
-          <div className="relative cursor-pointer">
-            <span className="absolute inset-y-0 right-0 flex items-center pr-4">
-              <SearchIcon />
-            </span>
+          <div>
+            {!isMobile ? (
+              <div className="relative cursor-pointer hidden 2xs:block">
+                <span className="absolute inset-y-0 right-0 flex items-center pr-4">
+                  <SearchIcon />
+                </span>
 
-            <Input
-              variant="static"
-              placeholder={`${t("searchBtn")}...`}
-              className="cursor-pointer pr-10 w-[128] lg:w-[200] xl:w-[340]"
-              readOnly
-            />
+                <Input
+                  variant="static"
+                  placeholder={`${t("searchBtn")}...`}
+                  className="cursor-pointer pr-10 w-[128] lg:w-[200] xl:w-[340]"
+                  readOnly
+                />
+              </div>
+            ) : (
+              <Button size="icon" variant="icon" className="flex 2xs:hidden">
+                <SearchIcon />
+              </Button>
+            )}
           </div>
         </DialogTrigger>
 

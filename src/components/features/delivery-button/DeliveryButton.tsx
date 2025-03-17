@@ -1,10 +1,11 @@
 import React from "react";
 
 interface IDeliveryButtonProps {
+  classNames?: string;
   setDeliveryData: (data: { city: string; street: string; postOffice: string }) => void;
 }
 
-const DeliveryButton: React.FC<IDeliveryButtonProps> = ({ setDeliveryData }) => {
+const DeliveryButton: React.FC<IDeliveryButtonProps> = ({ setDeliveryData, classNames = "" }) => {
   const novaPoshtaButton = React.useRef<HTMLDivElement | null>(null);
   const modalOverlayElement = React.useRef<HTMLDivElement | null>(null);
   const modalIframe = React.useRef<HTMLIFrameElement | null>(null);
@@ -130,7 +131,7 @@ const DeliveryButton: React.FC<IDeliveryButtonProps> = ({ setDeliveryData }) => 
       <div
         ref={novaPoshtaButton}
         onClick={() => openFrame()}
-        className="flex py-[11] pl-[16] pr-[40] h-[50] border border-border cursor-pointer w-full max-w-[434] relative mb-[20] items-center gap-[10] flex-row rounded-md"
+        className={`flex py-[11] pl-[16] pr-[40] h-[50] border border-border cursor-pointer w-full max-w-[434] relative mb-[20] items-center gap-[10] flex-row rounded-md ${classNames}`}
       >
         <div className="flex items-center">
           <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">

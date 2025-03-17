@@ -60,7 +60,7 @@
         "byPrice:asc": "From cheap to expensive",
         "byPrice:desc": "From expensive to cheap"
       },
-      "itemsPerPage": "Items per page",
+      "itemsPerPage": "Per page:",
       "price": "Price",
       "applyFilters": "Apply filters",
       "resetFilters": "Reset filters"

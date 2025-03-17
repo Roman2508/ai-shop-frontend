@@ -1,39 +1,42 @@
-'use client'
+"use client";
 
-import React from 'react'
-import { useTranslations } from 'next-intl'
+import React from "react";
+import { useTranslations } from "next-intl";
 
-import { useCart } from '@/hooks/useCart'
-import { useCurrent } from '@/hooks/useCurrent'
-import CartItem from '@/components/features/CartItem'
-import { Button } from '@/components/ui/common/Button'
-import ButtonWithIcon from '@/components/ui/custom/ButtonWithIcon'
-import ProfileLayout from '@/components/layout/profile/ProfileLayout'
+import { useCart } from "@/hooks/useCart";
+import { useRouter } from "next/navigation";
+import { useCurrent } from "@/hooks/useCurrent";
+import CartItem from "@/components/features/CartItem";
+import { Button } from "@/components/ui/common/Button";
+import ButtonWithIcon from "@/components/ui/custom/ButtonWithIcon";
+import ProfileLayout from "@/components/layout/profile/ProfileLayout";
 
 const CartPage = () => {
-  const t = useTranslations('profile')
+  const router = useRouter();
 
-  const { user } = useCurrent()
-  const { cartItems, setCartItems, selectedCartItems } = useCart()
+  const t = useTranslations("profile");
 
-  const totalPrice = selectedCartItems.reduce((acc, curr) => curr.product.price * curr.count + acc, 0)
+  const { user } = useCurrent();
+  const { cartItems, setCartItems, selectedCartItems } = useCart();
+
+  const totalPrice = selectedCartItems.reduce((acc, curr) => curr.product.price * curr.count + acc, 0);
 
   React.useEffect(() => {
-    if (!user || !user.cart) return
-    setCartItems(user.cart)
-  }, [user])
+    if (!user || !user.cart) return;
+    setCartItems(user.cart);
+  }, [user]);
 
   return (
     <ProfileLayout>
       <div className="flex justify-between items-center pb-[40]">
-        <h1 className="text-3xl font-semibold">{t('cart.title')}</h1>
+        <h1 className="text-3xl font-semibold">{t("cart.title")}</h1>
 
         <div className="flex gap-[10]">
           <ButtonWithIcon
             classNames=""
             iconSrc="/icons/list.png"
             buttonVariant="secondary"
-            text={t('orders.ordersButton')}
+            text={t("orders.ordersButton")}
           />
           <Button size="icon" className="h-[44] w-[44]">
             0
@@ -46,18 +49,19 @@ const CartPage = () => {
           <h4 className="font-semibold text-lg">
             <div>
               <p className="leading-none">
-                {t('cart.selected1')} {selectedCartItems.length} {t('cart.selected2')} {cartItems.length}.
+                {t("cart.selected1")} {selectedCartItems.length} {t("cart.selected2")} {cartItems.length}.
               </p>
               <p>
-                {t('cart.totalPrice')} {totalPrice.toLocaleString('uk-UA')} {t('cart.currency')}
+                {t("cart.totalPrice")} {totalPrice.toLocaleString("uk-UA")} {t("cart.currency")}
               </p>
             </div>
           </h4>
           <Button
             disabled={!selectedCartItems.length}
+            onClick={() => router.push("/checkout")}
             className="hover:bg-secondary border border-primary hover:text-primary"
           >
-            {t('cart.placeAnOrder')}
+            {t("cart.placeAnOrder")}
           </Button>
         </div>
 
@@ -70,7 +74,7 @@ const CartPage = () => {
         )}
       </div>
     </ProfileLayout>
-  )
-}
+  );
+};
 
-export default CartPage
+export default CartPage;

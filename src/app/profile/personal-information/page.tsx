@@ -49,7 +49,9 @@ const PersonalInformationPage = () => {
       </div>
 
       <div className="px-[50] py-[40] rounded-[5] border border-border">
+        {/* @ts-ignore  */}
         {pageView === "view" && <ViewProfile user={user} />}
+        {/* @ts-ignore  */}
         {pageView === "edit" && <EditProfileForm user={user} />}
       </div>
     </ProfileLayout>

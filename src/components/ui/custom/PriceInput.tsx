@@ -4,7 +4,6 @@ import React from "react";
 import { Input } from "../common/Input";
 import UahIcon from "@/components/images/UahIcon";
 import { InputMaybe, PaginateAndFilterInput } from "@/graphql/generated/output";
-// import { FilterType } from "@/app/catalog/page";
 
 type PriceInputPropsType = {
   price?: InputMaybe<number>;
@@ -51,9 +50,7 @@ const PriceInput: React.FC<PriceInputPropsType> = ({
         }}
       />
 
-      <span className="absolute inset-y-0 right-0 flex items-center pr-2">
-        <UahIcon />
-      </span>
+      <span className="absolute inset-y-0 right-0 flex items-center pr-2">₴</span>
     </div>
   );
 };

@@ -1,15 +1,18 @@
 import React from "react";
+import { useLocale } from "next-intl";
 
 import {
   DropdownMenu,
-  DropdownMenuItem,
   DropdownMenuTrigger,
   DropdownMenuContent,
+  DropdownMenuCheckboxItem,
 } from "@/components/ui/common/DropdownMenu";
 import { setLanguage } from "@/libs/i18n/language";
 import { Button } from "@/components/ui/common/Button";
 
 const LangToggler = () => {
+  const locale = useLocale();
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -19,8 +22,13 @@ const LangToggler = () => {
       </DropdownMenuTrigger>
 
       <DropdownMenuContent align="center">
-        <DropdownMenuItem onClick={() => setLanguage("ua")}>Українська</DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setLanguage("en")}>English</DropdownMenuItem>
+        <DropdownMenuCheckboxItem checked={locale === "ua"} onClick={() => setLanguage("ua")}>
+          Українська
+        </DropdownMenuCheckboxItem>
+
+        <DropdownMenuCheckboxItem checked={locale === "en"} onClick={() => setLanguage("en")}>
+          English
+        </DropdownMenuCheckboxItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );

@@ -9,11 +9,11 @@ const Footer = () => {
 
   return (
     <footer className="flex flex-col justify-between pt-[65] pb-[20] px-[26] bg-dark text-white">
-      <div className="flex justify-between items-end grow mb-[50]">
-        <div className="">
+      <div className="flex justify-between items-end flex-wrap grow mb-[50]">
+        <div className="w-full xl:w-auto mb-[60] xl:mb-[0]">
           <div className="grow flex gap-[10] items-center mb-[50]">
             <img src="logo.png" width="30px" height="30px" />
-            <b className="text-[16px]">AI-PhoneShop</b>
+            <b className="text-[16px]">PhoneShop</b>
           </div>
 
           <div className="flex gap-[15]">
@@ -27,7 +27,7 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="flex flex-col gap-[26]">
+        <div className="flex flex-col gap-[26] w-full sm:w-auto mb-[60] sm:mb-[0]">
           <b className="">{t("subtitle1")}</b>
 
           <div className="flex gap-[60]">
@@ -63,11 +63,10 @@ const Footer = () => {
             </div>
           </div>
         </div>
-        {/*  */}
       </div>
 
-      <div className="border-t-[1px] border-muted-foreground grow flex justify-between items-center pt-[25]">
-        <div className="flex gap-[20]">
+      <div className="border-t-[1px] border-muted-foreground grow flex justify-between items-center pt-[25] flex-col xl:flex-row gap-[20] xl:gap-[0]">
+        <div className="flex gap-[20] flex-col-reverse items-center md:flex-row">
           <p>© 2025 «AI Phone Shop»</p>
           <p className="cursor-pointer">{t("privacyPolicy")}</p>
           <p className="cursor-pointer">{t("legalInformation")}</p>
@@ -75,10 +74,16 @@ const Footer = () => {
 
         <div className="flex items-center gap-[10]">
           <p>{t("acceptPayment")}</p>
-          <p className="flex items-center rounded-[5] p-[10]" style={{ background: "rgba(255, 255, 255, .1)" }}>
+          <p
+            className="flex items-center rounded-[5] p-[12] w-[50] h-[30]"
+            style={{ background: "rgba(255, 255, 255, .1)" }}
+          >
             <Image width={38} height={15} src="/icons/visa.png" alt="visa icon" />
           </p>
-          <p className="flex items-center rounded-[5] p-[10]" style={{ background: "rgba(255, 255, 255, .1)" }}>
+          <p
+            className="flex items-center rounded-[5] p-[12] w-[50] h-[30]"
+            style={{ background: "rgba(255, 255, 255, .1)" }}
+          >
             <Image width={30} height={15} src="/icons/mastercard.png" alt="mastercard icon" />
           </p>
         </div>

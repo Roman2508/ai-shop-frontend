@@ -59,7 +59,7 @@
         "byPrice:asc": "Від дешевих до дорогих",
         "byPrice:desc": "Від дорогих до дешевих"
       },
-      "itemsPerPage": "Показати на сторінці",
+      "itemsPerPage": "На сторінці:",
       "price": "Ціна",
       "applyFilters": "Застосувати фільтри",
       "resetFilters": "Скинути фільтри"
@@ -107,7 +107,7 @@
       },
       "title": "Мій профіль",
       "editButton": "Редагувати",
-      "endEditButton": "Завершити редагувати",
+      "endEditButton": "Завершити редагування",
       "view": {
         "blockTitle1": "Особисті дані",
         "publicName": "Публічне ім’я",
