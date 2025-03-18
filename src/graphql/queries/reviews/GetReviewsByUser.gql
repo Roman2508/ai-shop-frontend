@@ -1,0 +1,22 @@
+query GetReviewsByUser {
+  getReviewByUserId {
+    id
+    text
+    rating
+    createdAt
+    product {
+      id
+      price
+      images
+      brand
+      ram
+      builtInMemory
+      color
+    }
+    user {
+      id
+      displayName
+      avatar
+    }
+  }
+}

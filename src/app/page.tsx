@@ -1,21 +1,34 @@
-import Link from "next/link";
-import Image from "next/image";
-import { useTranslations, useLocale } from "next-intl";
+import Link from 'next/link'
+import Image from 'next/image'
+import { useTranslations, useLocale } from 'next-intl'
 
-import CatalogCard from "@/components/features/CatalogCard";
-import ButtonWithIcon from "@/components/ui/custom/ButtonWithIcon";
-import { Button } from "@/components/ui/common/Button";
+import { Button } from '@/components/ui/common/Button'
+import ButtonWithIcon from '@/components/ui/custom/ButtonWithIcon'
 
-const categories = ["Apple", "Samsung", "Xiaomi", "Google Pixel", "One Plus", "Motorola", "Nokia", "Кнопкові телефони"];
+const categories = ['Apple', 'Samsung', 'Xiaomi', 'Google Pixel', 'One Plus', 'Motorola', 'Nokia', 'Кнопкові телефони']
+
+// tido:
+// 1.  Comments !!!DONE
+// 2.  Payment
+// 3.  Orders (change status cron)
+// 4.  localization
+// 5.  mobile adaptation
+// 6.  filters (url query params)
+// 7.  homepage
+// 8.  search (AI)
+// 9.  recommendation (FAIS vectors)
+// 10. administration (products CRUD)
+// 11. Купити в 1 клік (full product page)
+// 12. Toast
 
 export default function Home() {
-  const translations = useTranslations("home");
-  const locale = useLocale();
+  const translations = useTranslations('home')
+  const locale = useLocale()
 
   return (
     <div className="font-[family-name:var(--font-geist-sans)]">
       <div className="max-w-[1640] mx-auto px-[16]">
-        <h1>{translations("title")}</h1>
+        <h1>{translations('title')}</h1>
 
         <div className="flex gap-[30] mb-[70]">
           <div className="w-[320] min-w-[320] border rounded-[20]">
@@ -44,7 +57,7 @@ export default function Home() {
           <div
             className="w-full flex-1 rounded-[20] p-[40]"
             style={{
-              background: "radial-gradient(circle, rgba(215, 228, 215, 0.8) 30%, rgba(180, 200, 180, 1) 100%)",
+              background: 'radial-gradient(circle, rgba(215, 228, 215, 0.8) 30%, rgba(180, 200, 180, 1) 100%)',
             }}
             // style={{ background: 'radial-gradient(circle,  #3c4d3c 0%, #2d3e2d 70%, #263626 100%)' }}
           >
@@ -127,5 +140,5 @@ export default function Home() {
         </div>
       </div>
     </div>
-  );
+  )
 }

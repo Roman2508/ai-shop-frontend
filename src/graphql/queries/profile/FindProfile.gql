@@ -10,6 +10,9 @@ query FindProfile {
     street
     postOffice
 
+    createdAt
+    updatedAt
+
     favorites {
       product {
         id
@@ -62,14 +65,27 @@ query FindProfile {
         updatedAt
       }
     }
-    # reviews {
-    #   id
-    # }
+    reviews {
+      id
+      text
+      rating
+      createdAt
+      product {
+        id
+        images
+        brand
+        ram
+        builtInMemory
+        color
+      }
+      user {
+        id
+        displayName
+        avatar
+      }
+    }
     # orders {
     #   id
     # }
-
-    createdAt
-    updatedAt
   }
 }

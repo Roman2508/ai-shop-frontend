@@ -21,5 +21,26 @@ query GetProductById($productId: String!) {
     createdAt
     screenDiagonal
     updatedAt
+
+    reviews {
+      id
+      text
+      rating
+      createdAt
+      product {
+        id
+        price
+        images
+        brand
+        ram
+        builtInMemory
+        color
+      }
+      user {
+        id
+        displayName
+        avatar
+      }
+    }
   }
 }

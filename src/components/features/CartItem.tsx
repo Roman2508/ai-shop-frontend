@@ -1,25 +1,26 @@
-import React from "react";
-import { Trash2 } from "lucide-react";
-import { useDebouncedCallback } from "use-debounce";
+import React from 'react'
+import { Trash2 } from 'lucide-react'
+import { useDebouncedCallback } from 'use-debounce'
 
-import { useCart } from "@/hooks/useCart";
-import { Input } from "../ui/common/Input";
-import { Button } from "../ui/common/Button";
-import getPhotoUrl from "@/utils/get-photo-url";
-import { Checkbox } from "../ui/common/Checkbox";
-import { ProductModel, useChangeCartItemCountMutation, useToggleCartMutation } from "@/graphql/generated/output";
+import { useCart } from '@/hooks/useCart'
+import { Input } from '../ui/common/Input'
+import { Button } from '../ui/common/Button'
+import getPhotoUrl from '@/utils/get-photo-url'
+import { Checkbox } from '../ui/common/Checkbox'
+import { ProductModel, useChangeCartItemCountMutation, useToggleCartMutation } from '@/graphql/generated/output'
+import getProductTitle from '@/utils/getProductTitle'
 
 type CartItemPropsType = {
-  id: string;
-  number: number;
-  count: number;
-  isEditable?: boolean;
-  product: ProductModel;
-};
+  id: string
+  number: number
+  count: number
+  isEditable?: boolean
+  product: ProductModel
+}
 
 const CartItem: React.FC<CartItemPropsType> = ({ id, number, product, count, isEditable = false }) => {
-  const [changeCartItemCount] = useChangeCartItemCountMutation();
-  const [toggleCart, { loading }] = useToggleCartMutation();
+  const [changeCartItemCount] = useChangeCartItemCountMutation()
+  const [toggleCart, { loading }] = useToggleCartMutation()
 
   const {
     selectedCartItems,
@@ -27,29 +28,29 @@ const CartItem: React.FC<CartItemPropsType> = ({ id, number, product, count, isE
     changeCartItemsCount,
     toggleSelectedCartItems,
     changeSelectedCartItemsCount,
-  } = useCart();
+  } = useCart()
 
-  const isChecked = selectedCartItems.some((el) => el.id === id);
+  const isChecked = selectedCartItems.some((el) => el.id === id)
 
   const debouncedCountChange = useDebouncedCallback(() => {
-    changeCartItemCount({ variables: { input: { id, count } } });
-  }, 1000);
+    changeCartItemCount({ variables: { input: { id, count } } })
+  }, 1000)
 
-  const handleCountChange = (action: "increment" | "decrement", id: string) => {
-    let currentCount = count;
-    if (action === "increment") currentCount = count + 1;
-    else if (count - 1 !== 0) currentCount = count - 1;
+  const handleCountChange = (action: 'increment' | 'decrement', id: string) => {
+    let currentCount = count
+    if (action === 'increment') currentCount = count + 1
+    else if (count - 1 !== 0) currentCount = count - 1
 
-    changeSelectedCartItemsCount(id, currentCount);
-    changeCartItemsCount(id, currentCount);
-    debouncedCountChange();
-  };
+    changeSelectedCartItemsCount(id, currentCount)
+    changeCartItemsCount(id, currentCount)
+    debouncedCountChange()
+  }
 
   const onDeleteItemFromCart = async (productId: string, count: number) => {
-    if (!window.confirm("Ви дійсно хочете видалити товар з корзини:?")) return;
-    await toggleCart({ variables: { input: { productId, count } } });
-    removeItemFromCart(productId);
-  };
+    if (!window.confirm('Ви дійсно хочете видалити товар з корзини:?')) return
+    await toggleCart({ variables: { input: { productId, count } } })
+    removeItemFromCart(productId)
+  }
 
   return (
     <div className="flex items-center gap-[30] py-[20] border-b border-dashed">
@@ -66,24 +67,24 @@ const CartItem: React.FC<CartItemPropsType> = ({ id, number, product, count, isE
       <div className="border border-border w-[110] min-w-[110] h-[110] p-[2]">
         <img
           className="h-[100%] object-cover"
-          src={product.images.length ? getPhotoUrl(product.images[0], "products") : ""}
+          src={product.images.length ? getPhotoUrl(product.images[0], 'products') : ''}
         />
       </div>
 
       <div className="grow">
         <p className="text-primary font-semibold">
-          {`${product.brand}, ${product.ram}/${product.builtInMemory} ГБ, ${product.color}`}
+          {getProductTitle(product)}
         </p>
         <p className="line-clamp-[2]">{product.title}</p>
-        <b className="text-xl">{product.price.toLocaleString("uk-UA")} / шт.</b>
+        <b className="text-xl">{product.price.toLocaleString('uk-UA')} / шт.</b>
       </div>
 
       <div className="flex gap-[15]">
         {isEditable ? (
-          <div className={"flex items-center border border-border rounded-full w-[120]"}>
+          <div className={'flex items-center border border-border rounded-full w-[120]'}>
             <Button
               disabled={loading}
-              onClick={() => handleCountChange("decrement", id)}
+              onClick={() => handleCountChange('decrement', id)}
               className="p-[10] pl-[15] bg-transparent text-text"
             >
               -
@@ -91,7 +92,7 @@ const CartItem: React.FC<CartItemPropsType> = ({ id, number, product, count, isE
             <Input value={count} className="border-[0] grow text-center" />
             <Button
               disabled={loading}
-              onClick={() => handleCountChange("increment", id)}
+              onClick={() => handleCountChange('increment', id)}
               className="p-[10] pr-[15] bg-transparent text-text"
             >
               +
@@ -114,7 +115,7 @@ const CartItem: React.FC<CartItemPropsType> = ({ id, number, product, count, isE
         )}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default CartItem;
+export default CartItem

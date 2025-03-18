@@ -1,9 +1,9 @@
-"use client";
-import React from "react";
-import Link from "next/link";
-import Image from "next/image";
-import { useLocale, useTranslations } from "next-intl";
-import { useParams } from "next/navigation";
+'use client'
+import React from 'react'
+import Link from 'next/link'
+import Image from 'next/image'
+import { useParams } from 'next/navigation'
+import { useLocale, useTranslations } from 'next-intl'
 
 import {
   Breadcrumb,
@@ -12,54 +12,51 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from "@/components/ui/common/Breadcrumb";
-import { Card } from "@/components/ui/common/Card";
-import SaveIcon from "@/components/images/SaveIcon";
-import { Input } from "@/components/ui/common/Input";
-import { Button } from "@/components/ui/common/Button";
-import { Skeleton } from "@/components/ui/common/Skeleton";
-import CatalogCard from "@/components/features/CatalogCard";
-import ButtonWithIcon from "@/components/ui/custom/ButtonWithIcon";
-import ProductTabs from "@/components/features/product/ProductTabs";
-import CatalogCardSkeleton from "@/components/features/CatalogCardSkeleton";
-import { getProductAttributeLabel } from "@/utils/get-product-attribute-label";
-import { ProductModel, useGetAllProductsQuery, useGetProductByIdQuery } from "@/graphql/generated/output";
-import getPhotoUrl from "@/utils/get-photo-url";
+} from '@/components/ui/common/Breadcrumb'
+import getPhotoUrl from '@/utils/get-photo-url'
+import { Card } from '@/components/ui/common/Card'
+import SaveIcon from '@/components/images/SaveIcon'
+import { Input } from '@/components/ui/common/Input'
+import getProductTitle from '@/utils/getProductTitle'
+import { Button } from '@/components/ui/common/Button'
+import { Skeleton } from '@/components/ui/common/Skeleton'
+import CatalogCard from '@/components/features/CatalogCard'
+import ButtonWithIcon from '@/components/ui/custom/ButtonWithIcon'
+import ProductTabs from '@/components/features/product/ProductTabs'
+import CatalogCardSkeleton from '@/components/features/CatalogCardSkeleton'
+import { getProductAttributeLabel } from '@/utils/get-product-attribute-label'
+import { ProductModel, useGetAllProductsQuery, useGetProductByIdQuery } from '@/graphql/generated/output'
 
 const mainCharacteristicsKeys = [
-  { key: "screenDiagonal", label_ua: "Діагональ екрану", label_en: "Screen diagonal" },
-  { key: "os", label_ua: "Операційна система", label_en: "OS" },
-  { key: "frontCamera", label_ua: "Фронтальна камера", label_en: "Front camera" },
-  { key: "mainCamera", label_ua: "Головна камера", label_en: "Main camera" },
-  { key: "proccessorName", label_ua: "Назва процесора", label_en: "Processor name" },
-  { key: "processorCores", label_ua: "Кількість ядер процесора", label_en: "Processor cores" },
-];
+  { key: 'screenDiagonal', label_ua: 'Діагональ екрану', label_en: 'Screen diagonal' },
+  { key: 'os', label_ua: 'Операційна система', label_en: 'OS' },
+  { key: 'frontCamera', label_ua: 'Фронтальна камера', label_en: 'Front camera' },
+  { key: 'mainCamera', label_ua: 'Головна камера', label_en: 'Main camera' },
+  { key: 'proccessorName', label_ua: 'Назва процесора', label_en: 'Processor name' },
+  { key: 'processorCores', label_ua: 'Кількість ядер процесора', label_en: 'Processor cores' },
+]
 
 const ProductPage = () => {
-  const t = useTranslations("fullProduct");
+  const t = useTranslations('fullProduct')
 
-  const { id } = useParams();
-  const locale = useLocale();
+  const { id } = useParams()
+  const locale = useLocale()
 
-  const [mainPhotoName, setMainPhotoName] = React.useState("");
+  const [mainPhotoName, setMainPhotoName] = React.useState('')
 
-  const { data } = useGetAllProductsQuery();
+  const { data } = useGetAllProductsQuery()
   const { data: product } = useGetProductByIdQuery({
-    variables: { productId: typeof id === "string" ? id : "" },
-  });
-
-  const productName = product
-    ? `${product.getProductById.brand}, ${product.getProductById.ram}/${product.getProductById.builtInMemory} ГБ, ${product.getProductById.color}`
-    : "";
+    variables: { productId: typeof id === 'string' ? id : '' },
+  })
 
   React.useEffect(() => {
     if (product) {
       if (product.getProductById.images.length) {
-        const firstPhotoName = product.getProductById.images[0];
-        setMainPhotoName(firstPhotoName);
+        const firstPhotoName = product.getProductById.images[0]
+        setMainPhotoName(firstPhotoName)
       }
     }
-  }, [product]);
+  }, [product])
 
   return (
     <div className="max-w-[1640] mx-auto px-[16]">
@@ -67,25 +64,25 @@ const ProductPage = () => {
         <BreadcrumbList>
           <BreadcrumbItem>
             <BreadcrumbLink>
-              <Link href="/">{t("breadcrumbs.home")}</Link>
+              <Link href="/">{t('breadcrumbs.home')}</Link>
             </BreadcrumbLink>
           </BreadcrumbItem>
           <BreadcrumbSeparator />
           <BreadcrumbItem>
             <BreadcrumbLink>
-              <Link href="/catalog">{t("breadcrumbs.catalog")}</Link>
+              <Link href="/catalog">{t('breadcrumbs.catalog')}</Link>
             </BreadcrumbLink>
           </BreadcrumbItem>
           <BreadcrumbSeparator />
           <BreadcrumbItem>
-            <BreadcrumbPage>{product ? productName : ""}</BreadcrumbPage>
+            <BreadcrumbPage>{product ? getProductTitle(product.getProductById) : ''}</BreadcrumbPage>
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>
 
       <div>
         <p className="text-right mb-[20] opacity-[60%]">
-          {product ? `${t("article")} ${product.getProductById.id.slice(2, 8)}` : "..."}
+          {product ? `${t('article')} ${product.getProductById.id.slice(2, 8)}` : '...'}
         </p>
 
         {/* main */}
@@ -95,18 +92,18 @@ const ProductPage = () => {
               {product?.getProductById ? (
                 <div className="flex flex-col h-full">
                   <div className="h-[80%]">
-                    <img className="w-full h-full block" src={getPhotoUrl(mainPhotoName, "products")} />
+                    <img className="w-full h-full block" src={getPhotoUrl(mainPhotoName, 'products')} />
                   </div>
 
                   <div className="h-[20%] flex gap-[10] mt-[10] overflow-y-auto">
                     {product.getProductById.images.map((imgName) => {
                       return (
                         <img
-                          src={getPhotoUrl(imgName, "products")}
+                          src={getPhotoUrl(imgName, 'products')}
                           onClick={() => setMainPhotoName(imgName)}
                           className="w-[100] h-[100] block cursor-pointer"
                         />
-                      );
+                      )
                     })}
                   </div>
                 </div>
@@ -118,7 +115,7 @@ const ProductPage = () => {
 
           <div className="flex flex-col justify-between items-start gap-[20] w-[60%]">
             {product?.getProductById ? (
-              <h1 className="text-3xl font-semibold">{productName}</h1>
+              <h1 className="text-3xl font-semibold">{getProductTitle(product.getProductById)}</h1>
             ) : (
               <Skeleton className="w-[70%] h-[36]" />
             )}
@@ -128,7 +125,7 @@ const ProductPage = () => {
                 {false ? (
                   <ButtonWithIcon
                     VectorIcon={SaveIcon}
-                    text={t("saveButton")}
+                    text={t('saveButton')}
                     wrapperClassNames="w-[140]"
                     iconClassNames="!text-border fill-current text-inherit stroke-current"
                     classNames="w-full bg-border text-text-muted-foreground rounded-[5] justify-end pr-5"
@@ -136,7 +133,7 @@ const ProductPage = () => {
                 ) : (
                   <ButtonWithIcon
                     VectorIcon={SaveIcon}
-                    text={t("savedButton")}
+                    text={t('savedButton')}
                     buttonVariant="outline"
                     wrapperClassNames="w-[150]"
                     classNames="w-full text-primary rounded-[5] justify-end px-4"
@@ -151,7 +148,7 @@ const ProductPage = () => {
             <div className="flex gap-[30]">
               <Card className="p-[30] w-[60%]">
                 {product?.getProductById ? (
-                  <b className="mb-[10] block">{t("shortDescription")}</b>
+                  <b className="mb-[10] block">{t('shortDescription')}</b>
                 ) : (
                   <Skeleton className="mb-10 w-[120] h-[20]" />
                 )}
@@ -168,7 +165,7 @@ const ProductPage = () => {
                 )}
 
                 {product?.getProductById ? (
-                  <b className="mb-[10] block">{t("mainParams")}</b>
+                  <b className="mb-[10] block">{t('mainParams')}</b>
                 ) : (
                   <Skeleton className="mb-10 w-[180] h-[20]" />
                 )}
@@ -177,15 +174,15 @@ const ProductPage = () => {
                   <>
                     {(Object.keys(product.getProductById) as Array<keyof ProductModel>).map(
                       (key: keyof ProductModel) => {
-                        const keys = mainCharacteristicsKeys.map((el) => el.key);
+                        const keys = mainCharacteristicsKeys.map((el) => el.key)
 
                         if (keys.includes(key)) {
                           return (
                             <div className="flex py-[10] border-t border-dashed">
-                              <p className="w-[60%]">{getProductAttributeLabel(key, locale as "ua" | "en")}</p>
+                              <p className="w-[60%]">{getProductAttributeLabel(key, locale as 'ua' | 'en')}</p>
                               <p className="w-[40%]">{product.getProductById[key]}</p>
                             </div>
-                          );
+                          )
                         }
                       }
                     )}
@@ -212,7 +209,7 @@ const ProductPage = () => {
                   {product?.getProductById ? (
                     <p className="flex items-center gap-[6] pb-[15] mb-[30] border-b border-dashed text-sm">
                       <Image src="/icons/check.png" width={13} height={10} alt="check icon" />
-                      <span>{t("status")}</span>
+                      <span>{t('status')}</span>
                     </p>
                   ) : (
                     <Skeleton className="w-[40%] h-[20] pb-[15] mb-[30] border-b border-dashed text-sm" />
@@ -221,9 +218,9 @@ const ProductPage = () => {
                   <div className="flex flex-col items-center gap-[15]">
                     {product?.getProductById ? (
                       <div className="text-center">
-                        <p className="text-sm opacity-[70%]">{t("price")}</p>
+                        <p className="text-sm opacity-[70%]">{t('price')}</p>
                         <b className="text-xl">
-                          {product.getProductById.price.toLocaleString("uk-UA")} {t("currency")}
+                          {product.getProductById.price.toLocaleString('uk-UA')} {t('currency')}
                         </b>
                       </div>
                     ) : (
@@ -235,7 +232,7 @@ const ProductPage = () => {
 
                     {product?.getProductById ? (
                       <>
-                        <div className={"flex items-center border border-border rounded-full w-[100%]"}>
+                        <div className={'flex items-center border border-border rounded-full w-[100%]'}>
                           <Button className="p-[10] pl-[40] bg-transparent text-text">-</Button>
                           <Input value={1} className="border-[0] grow text-center" />
                           <Button className="p-[10] pr-[40] bg-transparent text-text">+</Button>
@@ -246,7 +243,7 @@ const ProductPage = () => {
                           classNames="w-full"
                           buttonVariant="default"
                           wrapperClassNames="w-full"
-                          text={t("addToCartButton")}
+                          text={t('addToCartButton')}
                           iconSrc="/icons/shopping-bag.png"
                         />
 
@@ -256,7 +253,7 @@ const ProductPage = () => {
                           buttonVariant="secondary"
                           wrapperClassNames="w-full"
                           iconSrc="/icons/wallet.png"
-                          text={t("buyIn1ClickButton")}
+                          text={t('buyIn1ClickButton')}
                         />
                       </>
                     ) : (
@@ -271,7 +268,7 @@ const ProductPage = () => {
 
                 <div className="flex items-center gap-[15] bg-secondary mt-auto px-[35] py-[30] rounded-t-[10]">
                   <Image src="/images/box.png" alt="box icon" width={47} height={47} className="w-[47] h-[47]" />
-                  <p className="text-sm">{t("orderInfo")}</p>
+                  <p className="text-sm">{t('orderInfo')}</p>
                 </div>
               </Card>
             </div>
@@ -281,20 +278,20 @@ const ProductPage = () => {
         {/* more info */}
         <div className="mb-[75]">
           {/* tabs */}
-          <ProductTabs product={product?.getProductById} />
+          <ProductTabs product={product?.getProductById as ProductModel} />
         </div>
 
         {/* popular */}
         <div>
           <div className="flex justify-between mb-[50]">
-            <h2 className="text-2xl font-semibold">{t("popularTitle")}</h2>
+            <h2 className="text-2xl font-semibold">{t('popularTitle')}</h2>
             <div className="flex gap-[10]">
               <Button size="icon" variant="outline" className="border-destructive text-destructive">
-                {"<"}
+                {'<'}
               </Button>
 
               <Button size="icon" variant="outline">
-                {">"}
+                {'>'}
               </Button>
             </div>
           </div>
@@ -303,7 +300,7 @@ const ProductPage = () => {
             {data
               ? data.getAllProducts.products
                   .slice(0, 5)
-                  .map((product) => <CatalogCard product={product} viewType="cards" />)
+                  .map((product) => <CatalogCard product={product as ProductModel} viewType="cards" />)
               : [
                   ...Array(5)
                     .fill(null)
@@ -313,7 +310,7 @@ const ProductPage = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default ProductPage;
+export default ProductPage

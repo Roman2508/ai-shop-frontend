@@ -1,7 +1,7 @@
-"use client";
-import React from "react";
-import Link from "next/link";
-import { Trash2, Edit2 } from "lucide-react";
+'use client'
+import React from 'react'
+import Link from 'next/link'
+import { Trash2, Edit2 } from 'lucide-react'
 
 import {
   Pagination,
@@ -9,7 +9,7 @@ import {
   PaginationItem,
   PaginationContent,
   PaginationEllipsis,
-} from "@/components/ui/common/Pagination";
+} from '@/components/ui/common/Pagination'
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -17,18 +17,19 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from "@/components/ui/common/Breadcrumb";
-import getPhotoUrl from "@/utils/get-photo-url";
-import { Button } from "@/components/ui/common/Button";
-import { Checkbox } from "@/components/ui/common/Checkbox";
-import { Skeleton } from "@/components/ui/common/Skeleton";
-import { useGetAllProductsQuery } from "@/graphql/generated/output";
-import { Table, TableRow, TableBody, TableCell, TableHead, TableHeader } from "@/components/ui/common/Table";
+} from '@/components/ui/common/Breadcrumb'
+import getPhotoUrl from '@/utils/get-photo-url'
+import { Button } from '@/components/ui/common/Button'
+import { Checkbox } from '@/components/ui/common/Checkbox'
+import { Skeleton } from '@/components/ui/common/Skeleton'
+import { ProductModel, useGetAllProductsQuery } from '@/graphql/generated/output'
+import { Table, TableRow, TableBody, TableCell, TableHead, TableHeader } from '@/components/ui/common/Table'
+import getProductTitle from '@/utils/getProductTitle'
 
-const EMPTY_IMAGE = "https://www.shutterstock.com/image-vector/no-image-available-icon-template-600nw-1036735678.jpg";
+const EMPTY_IMAGE = 'https://www.shutterstock.com/image-vector/no-image-available-icon-template-600nw-1036735678.jpg'
 
 const AdminProductsPage = () => {
-  const { data } = useGetAllProductsQuery();
+  const { data } = useGetAllProductsQuery()
 
   return (
     <div className="max-w-[1640] mx-auto px-[16]">
@@ -84,10 +85,8 @@ const AdminProductsPage = () => {
           </TableHeader>
           <TableBody>
             {data ? (
-              data.getAllProducts.products.map((product) => {
-                const productName = product
-                  ? `${product.brand}, ${product.ram}/${product.builtInMemory} ГБ, ${product.color}`
-                  : "";
+              data.getAllProducts.products.map((product: ProductModel) => {
+                const productName = getProductTitle(product)
 
                 return (
                   <TableRow key={product.id}>
@@ -99,7 +98,7 @@ const AdminProductsPage = () => {
                       <div>
                         <img
                           className="h-[50] w-[50] object-cover"
-                          src={product.images.length ? getPhotoUrl(product.images[0], "products") : EMPTY_IMAGE}
+                          src={product.images.length ? getPhotoUrl(product.images[0], 'products') : EMPTY_IMAGE}
                         />
                       </div>
                     </TableCell>
@@ -107,7 +106,7 @@ const AdminProductsPage = () => {
                     <TableCell className="w-full max-w-[40%]">{productName}</TableCell>
 
                     <TableCell className="text-center text-primary font-bold">
-                      {product.price.toLocaleString("uk-UA")} грн.
+                      {product.price.toLocaleString('uk-UA')} грн.
                     </TableCell>
 
                     <TableCell className="text-center">{Math.round(Math.random() * 20)}</TableCell>
@@ -126,7 +125,7 @@ const AdminProductsPage = () => {
                       </Button>
                     </TableCell>
                   </TableRow>
-                );
+                )
               })
             ) : (
               <>
@@ -168,7 +167,7 @@ const AdminProductsPage = () => {
             <PaginationItem>
               {/* <PaginationPrevious href="#" /> */}
               <Button variant="link" className="px-[5]">
-                {"< Назад"}
+                {'< Назад'}
               </Button>
             </PaginationItem>
             <PaginationItem>
@@ -188,14 +187,14 @@ const AdminProductsPage = () => {
             <PaginationItem>
               {/* <PaginationNext href="#" /> */}
               <Button variant="link" className="px-[5]">
-                {"Вперед >"}
+                {'Вперед >'}
               </Button>
             </PaginationItem>
           </PaginationContent>
         </Pagination>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default AdminProductsPage;
+export default AdminProductsPage
