@@ -1,9 +1,9 @@
-'use client'
+"use client";
 
-import React from 'react'
-import Link from 'next/link'
-import { useDebouncedCallback } from 'use-debounce'
-import { useLocale, useTranslations } from 'next-intl'
+import React from "react";
+import Link from "next/link";
+import { useDebouncedCallback } from "use-debounce";
+import { useLocale, useTranslations } from "next-intl";
 
 import {
   Breadcrumb,
@@ -12,146 +12,122 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from '@/components/ui/common/Breadcrumb'
-import {
-  Pagination,
-  PaginationItem,
-  PaginationLink,
-  PaginationContent,
-  PaginationEllipsis,
-} from '@/components/ui/common/Pagination'
-import {
-  Select,
-  SelectItem,
-  SelectGroup,
-  SelectValue,
-  SelectTrigger,
-  SelectContent,
-} from '@/components/ui/common/Select'
-import {
-  Drawer,
-  DrawerClose,
-  DrawerTitle,
-  DrawerHeader,
-  DrawerContent,
-  DrawerTrigger,
-  DrawerDescription,
-} from '@/components/ui/common/Drawer'
+} from "@/components/ui/common/Breadcrumb";
 import {
   ProductModel,
   useGetAllProductsQuery,
   PaginateAndFilterInput,
   usePaginateAndFilterProductsQuery,
-} from '@/graphql/generated/output'
-import { Card } from '@/components/ui/common/Card'
-import { Button } from '@/components/ui/common/Button'
-import CatalogCard from '@/components/features/CatalogCard'
-import ViewCardIcon from '@/components/images/ViewCardIcon'
-import ViewRowsIcon from '@/components/images/ViewRowsIcon'
-import CatalogCardSkeleton from '@/components/features/CatalogCardSkeleton'
-import ProductFilter from '@/components/features/product-filter/ProductFilter'
-import CatalogFilters from '@/components/features/catalog-filters/CatalogFilters'
-import ProductsPagination from '@/components/features/ProductsPagination'
+} from "@/graphql/generated/output";
+import { Card } from "@/components/ui/common/Card";
+import { Button } from "@/components/ui/common/Button";
+import CatalogCard from "@/components/features/CatalogCard";
+import ViewCardIcon from "@/components/images/ViewCardIcon";
+import ViewRowsIcon from "@/components/images/ViewRowsIcon";
+import CatalogCardSkeleton from "@/components/features/CatalogCardSkeleton";
+import ProductFilter from "@/components/features/product-filter/ProductFilter";
+import CatalogFilters from "@/components/features/catalog-filters/CatalogFilters";
+import ProductsPagination from "@/components/features/ProductsPagination";
 
 const CatalogPage = () => {
-  const locale = useLocale()
-  const t = useTranslations('catalog')
+  const locale = useLocale();
+  const t = useTranslations("catalog");
 
-  const [isLoading, setIsLoading] = React.useState(false)
-  const [maxPrice, setMaxPrice] = React.useState(100000)
-  const [total, setTotal] = React.useState(0)
-  const [currentPage, setCurrentPage] = React.useState(1)
-  const [filter, setFilter] = React.useState<PaginateAndFilterInput>({})
-  const [viewType, setViewType] = React.useState<'cards' | 'rows'>('cards')
+  const [isLoading, setIsLoading] = React.useState(false);
+  const [maxPrice, setMaxPrice] = React.useState(100000);
+  const [total, setTotal] = React.useState(0);
+  const [currentPage, setCurrentPage] = React.useState(1);
+  const [filter, setFilter] = React.useState<PaginateAndFilterInput>({});
+  const [viewType, setViewType] = React.useState<"cards" | "rows">("cards");
 
-  const [products, setProducts] = React.useState<ProductModel[]>([])
+  const [products, setProducts] = React.useState<ProductModel[]>([]);
 
-  const { data } = useGetAllProductsQuery()
+  const { data } = useGetAllProductsQuery();
   const { refetch: refetchFilteredData } = usePaginateAndFilterProductsQuery({
     variables: { query: filter },
     skip: true,
-  })
+  });
 
   const debouncedChangePriceFrom = useDebouncedCallback((value) => {
-    handleChangeFilter('priceFrom', String(value))
-  }, 100)
+    handleChangeFilter("priceFrom", String(value));
+  }, 100);
   const debouncedChangePriceTo = useDebouncedCallback((value) => {
-    handleChangeFilter('priceTo', String(value))
-  }, 100)
+    handleChangeFilter("priceTo", String(value));
+  }, 100);
 
   const handleChangeFilter = (key: keyof PaginateAndFilterInput, value: string) => {
     setFilter((prev: PaginateAndFilterInput) => {
-      let newFilters: PaginateAndFilterInput = {}
-      const filterKeys = ['priceFrom', 'priceTo', 'sortBy', 'limit', 'skip']
+      let newFilters: PaginateAndFilterInput = {};
+      const filterKeys = ["priceFrom", "priceTo", "sortBy", "limit", "skip"];
 
       if (filterKeys.some((el) => el === key)) {
-        return { ...prev, [key]: Number(value) }
+        return { ...prev, [key]: Number(value) };
       }
 
       if (!prev[key]) {
-        newFilters = { ...prev, [key]: value }
+        newFilters = { ...prev, [key]: value };
       }
 
-      if (key in prev && typeof prev[key] === 'string') {
-        const prevSelected = prev[key].split(';')
+      if (key in prev && typeof prev[key] === "string") {
+        const prevSelected = prev[key].split(";");
 
         if (!prevSelected.length) {
-          newFilters = { ...prev, [key]: value }
+          newFilters = { ...prev, [key]: value };
         }
 
         if (prevSelected.some((el) => el === value)) {
-          const filterSelected = prevSelected.filter((el) => el !== value).join(';')
-          newFilters = { ...prev, [key]: filterSelected }
+          const filterSelected = prevSelected.filter((el) => el !== value).join(";");
+          newFilters = { ...prev, [key]: filterSelected };
         } else {
-          newFilters = { ...prev, [key]: `${prev[key]};${value}` }
+          newFilters = { ...prev, [key]: `${prev[key]};${value}` };
         }
       }
 
-      const withoutEmpty: PaginateAndFilterInput = {}
+      const withoutEmpty: PaginateAndFilterInput = {};
 
       for (const key in newFilters) {
         if (!!newFilters[key as keyof PaginateAndFilterInput]) {
           // @ts-ignore
-          withoutEmpty[key] = newFilters[key as keyof PaginateAndFilterInput]
+          withoutEmpty[key] = newFilters[key as keyof PaginateAndFilterInput];
         }
       }
 
-      return withoutEmpty
-    })
-  }
+      return withoutEmpty;
+    });
+  };
 
   const fetchFilteredData = async (additionalFilter: PaginateAndFilterInput | undefined = {}) => {
     try {
-      setIsLoading(true)
-      const { data: filteredData } = await refetchFilteredData({ query: { ...filter, ...additionalFilter } })
+      setIsLoading(true);
+      const { data: filteredData } = await refetchFilteredData({ query: { ...filter, ...additionalFilter } });
 
-      const items = filteredData?.paginateAndFilter ? filteredData.paginateAndFilter.products : []
-      setProducts(items as ProductModel[])
-      const total = filteredData?.paginateAndFilter ? filteredData.paginateAndFilter.total : 0
-      setTotal(total)
+      const items = filteredData?.paginateAndFilter ? filteredData.paginateAndFilter.products : [];
+      setProducts(items as ProductModel[]);
+      const total = filteredData?.paginateAndFilter ? filteredData.paginateAndFilter.total : 0;
+      setTotal(total);
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }
+  };
 
   React.useEffect(() => {
     if (!products.length) {
-      const items = data?.getAllProducts ? data.getAllProducts.products : []
-      setProducts(items as ProductModel[])
-      const total = data?.getAllProducts ? data.getAllProducts.total : 0
-      setTotal(total)
+      const items = data?.getAllProducts ? data.getAllProducts.products : [];
+      setProducts(items as ProductModel[]);
+      const total = data?.getAllProducts ? data.getAllProducts.total : 0;
+      setTotal(total);
     }
 
-    if (!data?.getAllProducts.products.length) return
-    let maxPrice = 0
+    if (!data?.getAllProducts.products.length) return;
+    let maxPrice = 0;
 
     data.getAllProducts.products.forEach((el) => {
       if (el.price > maxPrice) {
-        maxPrice = el.price
+        maxPrice = el.price;
       }
-    })
-    setMaxPrice(maxPrice)
-  }, [data])
+    });
+    setMaxPrice(maxPrice);
+  }, [data]);
 
   return (
     <div className="max-w-[1640] mx-auto px-[16]">
@@ -159,19 +135,19 @@ const CatalogPage = () => {
         <BreadcrumbList>
           <BreadcrumbItem>
             <BreadcrumbLink>
-              <Link href="/">{t('breadcrumbs.home')}</Link>
+              <Link href="/">{t("breadcrumbs.home")}</Link>
             </BreadcrumbLink>
           </BreadcrumbItem>
 
           <BreadcrumbSeparator />
 
           <BreadcrumbItem>
-            <BreadcrumbPage>{t('breadcrumbs.catalog')}</BreadcrumbPage>
+            <BreadcrumbPage>{t("breadcrumbs.catalog")}</BreadcrumbPage>
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>
 
-      <h1 className="text-xl font-semibold mb-[45]">{t('title')}</h1>
+      <h1 className="text-xl font-semibold mb-[45]">{t("title")}</h1>
 
       <div className="flex items-baseline gap-[40]">
         {/* filters */}
@@ -200,9 +176,9 @@ const CatalogPage = () => {
           {/* catalog cards */}
           <div
             className={
-              viewType === 'cards'
-                ? 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-2 2xl:grid-cols-3 3xl:grid-cols-4 gap-[18]'
-                : 'grid grid-cols-1 gap-[18]'
+              viewType === "cards"
+                ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-2 2xl:grid-cols-3 3xl:grid-cols-4 gap-[18]"
+                : "grid grid-cols-1 gap-[18]"
             }
           >
             {!isLoading && data
@@ -220,7 +196,7 @@ const CatalogPage = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default CatalogPage
+export default CatalogPage;
