@@ -1,3 +1,4 @@
+'use client'
 import Link from 'next/link'
 import Image from 'next/image'
 import { useTranslations, useLocale } from 'next-intl'
@@ -5,21 +6,42 @@ import { useTranslations, useLocale } from 'next-intl'
 import { Button } from '@/components/ui/common/Button'
 import ButtonWithIcon from '@/components/ui/custom/ButtonWithIcon'
 
-const categories = ['Apple', 'Samsung', 'Xiaomi', 'Google Pixel', 'One Plus', 'Motorola', 'Nokia', 'Кнопкові телефони']
+const categories = ['Apple', 'Samsung', 'Xiaomi', 'Google Pixel', 'One Plus', 'Motorola', 'Nokia', 'Sony']
+
+const advantages = [
+  {
+    title: 'Широкий асортимент',
+    text: 'Ми володіємо досвідом і всіма необхідними знаннями, що дозволяє нам ефективно аналізувати потреби клієнтів і пропонувати найбільш відповідні рішення.',
+  },
+  {
+    title: 'Швидка доставка',
+    text: 'Ми забезпечуємо швидку доставку товарів клієнтам, що допомагає заощадити час і зручно отримати бажаний товар.',
+  },
+  {
+    title: 'Знижки та акції',
+    text: 'Ми регулярно проводимо акції та пропонуємо знижки на різні товари, роблячи покупки у нас ще вигіднішими для клієнтів.',
+  },
+]
 
 // tido:
-// 1.  Comments !!!DONE
 // 2.  Payment
 // 3.  Orders (change status cron)
 // 4.  localization
 // 5.  mobile adaptation
 // 6.  filters (url query params)
-// 7.  homepage
 // 8.  search (AI)
 // 9.  recommendation (FAIS vectors)
-// 10. administration (products CRUD)
 // 11. Купити в 1 клік (full product page)
-// 12. Toast
+// 13. Roles
+// 14. Активні сесії
+
+// 7.  homepage !!!ALMOST_DONE
+// 10. administration (products CRUD) !!!ALMOST_DONE
+// 12. Toast !!!ALMOST_DONE
+// 15. Авторизація !!!ALMOST_DONE
+// 16. Admin page (/admin) !!!ALMOST_DONE
+
+// 1.  Comments !!!DONE
 
 export default function Home() {
   const translations = useTranslations('home')
@@ -28,8 +50,6 @@ export default function Home() {
   return (
     <div className="font-[family-name:var(--font-geist-sans)]">
       <div className="max-w-[1640] mx-auto px-[16]">
-        <h1>{translations('title')}</h1>
-
         <div className="flex gap-[30] mb-[70]">
           <div className="w-[320] min-w-[320] border rounded-[20]">
             <div className="pt-[20] px-[25]">
@@ -55,40 +75,47 @@ export default function Home() {
           </div>
 
           <div
-            className="w-full flex-1 rounded-[20] p-[40]"
+            className="w-full flex-1 rounded-[20] relative overflow-hidden"
+            // className="w-full flex-1 rounded-[20] p-[40] relative"
             style={{
               background: 'radial-gradient(circle, rgba(215, 228, 215, 0.8) 30%, rgba(180, 200, 180, 1) 100%)',
             }}
             // style={{ background: 'radial-gradient(circle,  #3c4d3c 0%, #2d3e2d 70%, #263626 100%)' }}
           >
-            2
+            <div
+              className="absolute top-[0] left-[0] w-full h-full w-[910px] h-[500px] "
+              style={{ backgroundImage: 'url(/images/homapage-image.jpg)', backgroundSize: 'cover' }}
+            ></div>
           </div>
 
           <div className="flex flex-col gap-[20] w-[320] min-w-[320]">
-            <div className="h-[150] w-full bg-border rounded-[20] p-[20]">Подбор решения</div>
-            <div className="h-[150] w-full bg-border rounded-[20] p-[20]">Проектирование</div>
-            <div className="h-[150] w-full bg-border rounded-[20] p-[20]">Монтажные работы</div>
+            <div className="h-[150] w-full bg-border rounded-[20] p-[20] flex flex-col justify-between">
+              <Image src="/images/homepage-filter.svg" width={60} height={60} alt="" />
+              <b>Вибір ідеального смартфона</b>
+            </div>
+            <div className="h-[150] w-full bg-border rounded-[20] p-[20] flex flex-col justify-between">
+              <Image src="/images/homepage-accessories.svg" width={60} height={60} alt="" />
+              <b>Комплектація та аксесуари</b>
+            </div>
+            <div className="h-[150] w-full bg-border rounded-[20] p-[20] flex flex-col justify-between">
+              <Image src="/images/homepage-services.svg" width={60} height={60} alt="" />
+              <b>Налаштування та сервіс</b>
+            </div>
           </div>
         </div>
 
         <div className="flex gap-[30] mb-[140]">
-          {Array(3)
-            .fill(null)
-            .map((_, index) => (
-              <div key={index}>
-                <div className="flex items-center gap-[15] mb-[15]">
-                  <div className="flex items-center justify-center bg-secondary rounded-full w-[55] h-[55]">
-                    <Image src="/icons/phone.png" width={30} height={20} alt="icon" />
-                  </div>
-                  <h4 className="font-semibold text-xl">Большой ассортимент</h4>
+          {advantages.map((el, index) => (
+            <div key={el.title} className="flex-[1]">
+              <div className="flex items-center gap-[15] mb-[15]">
+                <div className="flex items-center justify-center bg-secondary rounded-full w-[55] h-[55]">
+                  <Image src={`/images/homapage-advantage-${index + 1}.svg`} width={30} height={30} alt="icon" />
                 </div>
-
-                <p>
-                  Обладаем опытом и всеми знаниями, что позволяет нам эффективно анализировать потребности клиента и
-                  предлагать наиболее подходящие решения.
-                </p>
+                <h4 className="font-semibold text-xl">{el.title}</h4>
               </div>
-            ))}
+              <p>{el.text}</p>
+            </div>
+          ))}
         </div>
 
         <div className="mb-[120]">
@@ -133,8 +160,10 @@ export default function Home() {
           <div className="grid grid-cols-6 gap-[20]">
             {Array(12)
               .fill(null)
-              .map((el) => (
-                <div className="h-[150] w-full bg-border rounded-[20] p-[20]">123</div>
+              .map((el, index) => (
+                <div className="h-[150] w-full bg-border rounded-[20] p-[20] flex justify-center items-center">
+                  <img src={`images/partners/${index + 1}.png`} className="max-h-[70%]" />
+                </div>
               ))}
           </div>
         </div>

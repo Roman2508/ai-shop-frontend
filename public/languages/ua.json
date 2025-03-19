@@ -19,6 +19,8 @@
         "title": "Реєстрація",
         "loginLabel": "Логін",
         "loginPlaceholder": "Вкажіть назву профіля",
+        "emailLabel": "Пошта",
+        "emailPlaceholder": "Вкажіть вашу пошту",
         "passLabel": "Пароль",
         "passPlaceholder": "Введіть свій пароль",
         "repeatPassLabel": "Повторіть пароль",
@@ -97,8 +99,9 @@
       "profile": "Профіль",
       "orders": "Замовлення",
       "cart": "Кошик",
-      "wishlist": "Списки бажань",
-      "reviws": "Відгуки"
+      "wishlist": "Збережене",
+      "reviws": "Відгуки",
+      "admin": "Адміністрування"
     },
     "personalInformation": {
       "breadcrumbs": {
@@ -155,10 +158,41 @@
       "placeAnOrder": "Оформити замовлення"
     },
     "wishlist": {
-      "title": "Список бажань"
+      "title": "Збережене"
     },
     "reviws": {
       "title": "Відгуки"
+    }
+  },
+  "admin": {
+    "main": {
+      "breadcrumbs": {
+        "home": "Головна",
+        "admin": "Адміністрування"
+      },
+      "title": "Адміністрування",
+      "editUsersButton": "Користувачі",
+      "editProductsButton": "Товари",
+      "income": "Виручка",
+      "products": "Товари",
+      "brands": "Бренди",
+      "rating": "Середній рейтинг",
+      "income_stat": "Прибуток",
+      "buyers": "Покупці"
+    },
+    "users": {
+      "breadcrumbs": {
+        "home": "Головна",
+        "admin": "Адміністрування",
+        "users": "Користувачі"
+      }
+    },
+    "products": {
+      "breadcrumbs": {
+        "home": "Головна",
+        "admin": "Адміністрування",
+        "products": "Товари"
+      }
     }
   },
   "components": {

@@ -1,20 +1,56 @@
 'use client'
 
-import { zodResolver } from '@hookform/resolvers/zod'
-import React from 'react'
-import { useForm } from 'react-hook-form'
 import { z } from 'zod'
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '../ui/common/Form'
-import { Input } from '../ui/common/Input'
-import { Button } from '../ui/common/Button'
-import { Checkbox } from '../ui/common/Checkbox'
+import React from 'react'
+import { toast } from 'sonner'
+import { useForm } from 'react-hook-form'
 import { useTranslations } from 'next-intl'
 
-const formSchema = z.object({
-  username: z.string().min(2, {
-    message: 'Username must be at least 2 characters.',
-  }),
-})
+import { Input } from '../ui/common/Input'
+import { Button } from '../ui/common/Button'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useRegisterMutation } from '@/graphql/generated/output'
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '../ui/common/Form'
+import { useAuth } from '@/hooks/useAuth'
+
+const formSchema = z
+  .object({
+    username: z
+      .string({
+        message: "Це поле є обов'язковим",
+      })
+      .min(2, {
+        message: 'Мінімальна довжина поля - 2 символа',
+      }),
+    email: z
+      .string({
+        message: "Це поле є обов'язковим",
+      })
+      .min(2, {
+        message: 'Мінімальна довжина поля - 2 символа',
+      })
+      .email({
+        message: 'Не вірний формат пошти',
+      }),
+    password: z
+      .string({
+        message: "Це поле є обов'язковим",
+      })
+      .min(8, {
+        message: 'Мінімальна довжина поля - 8 символів',
+      }),
+    password2: z
+      .string({
+        message: "Це поле є обов'язковим",
+      })
+      .min(8, {
+        message: 'Мінімальна довжина поля - 8 символів',
+      }),
+  })
+  .refine((data) => data.password === data.password2, {
+    message: 'Паролі не співпадають',
+    path: ['password2'],
+  })
 
 interface IRegisterFormProps {
   setFromType: React.Dispatch<React.SetStateAction<'login' | 'register'>>
@@ -23,15 +59,25 @@ interface IRegisterFormProps {
 const RegisterForm: React.FC<IRegisterFormProps> = ({ setFromType }) => {
   const t = useTranslations('header')
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      username: '',
+  const { auth } = useAuth()
+
+  const [register, { loading: isLoading }] = useRegisterMutation({
+    onCompleted() {
+      toast.success('Ви успішно зареєструвались')
+      auth()
+    },
+    onError(error) {
+      toast.error(error.message)
     },
   })
 
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+  })
+
   const onSubmit = (values: z.infer<typeof formSchema>) => {
-    console.log(values)
+    const { password2, ...data } = values
+    register({ variables: { data } })
   }
 
   const handleChangeFormType = () => {
@@ -50,7 +96,6 @@ const RegisterForm: React.FC<IRegisterFormProps> = ({ setFromType }) => {
               <FormControl>
                 <Input placeholder={t('auth.registerForm.loginLabel')} className="h-[50] px-[20] w-full" {...field} />
               </FormControl>
-              {/* <FormDescription>This is your public display name.</FormDescription> */}
               <FormMessage />
             </FormItem>
           )}
@@ -58,7 +103,26 @@ const RegisterForm: React.FC<IRegisterFormProps> = ({ setFromType }) => {
 
         <FormField
           control={form.control}
-          name="username"
+          name="email"
+          render={({ field }) => (
+            <FormItem className="pb-[30]">
+              <FormLabel>{t('auth.registerForm.emailLabel')}</FormLabel>
+              <FormControl>
+                <Input
+                  placeholder={t('auth.registerForm.emailPlaceholder')}
+                  className="h-[50] px-[20] w-full"
+                  type="email"
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="password"
           render={({ field }) => (
             <FormItem className="pb-[30]">
               <FormLabel>{t('auth.registerForm.passLabel')}</FormLabel>
@@ -66,10 +130,10 @@ const RegisterForm: React.FC<IRegisterFormProps> = ({ setFromType }) => {
                 <Input
                   placeholder={t('auth.registerForm.passPlaceholder')}
                   className="h-[50] px-[20] w-full"
+                  type="password"
                   {...field}
                 />
               </FormControl>
-              {/* <FormDescription>This is your public display name.</FormDescription> */}
               <FormMessage />
             </FormItem>
           )}
@@ -77,7 +141,7 @@ const RegisterForm: React.FC<IRegisterFormProps> = ({ setFromType }) => {
 
         <FormField
           control={form.control}
-          name="username"
+          name="password2"
           render={({ field }) => (
             <FormItem className="pb-[30]">
               <FormLabel>{t('auth.registerForm.repeatPassLabel')}</FormLabel>
@@ -85,16 +149,16 @@ const RegisterForm: React.FC<IRegisterFormProps> = ({ setFromType }) => {
                 <Input
                   placeholder={t('auth.registerForm.repeatPassPlaceholder')}
                   className="h-[50] px-[20] w-full"
+                  type="password"
                   {...field}
                 />
               </FormControl>
-              {/* <FormDescription>This is your public display name.</FormDescription> */}
               <FormMessage />
             </FormItem>
           )}
         />
 
-        <Button type="submit" className="w-full">
+        <Button type="submit" className="w-full" disabled={isLoading}>
           {t('auth.registerBtn')}
         </Button>
 

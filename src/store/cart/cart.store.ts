@@ -30,10 +30,11 @@ export const cartStore = create(
         // })
       },
       addItemToCart: (item: ICartItem) => {
+        console.log('Add')
         set({ cartItems: [...get().cartItems, item] })
       },
       removeItemFromCart: (id: string) => {
-        const cartItems = get().cartItems.filter((el) => el.id !== id)
+        const cartItems = get().cartItems.filter((el) => el.product.id !== id)
         set({ cartItems })
       },
 
@@ -50,9 +51,9 @@ export const cartStore = create(
         set({ selectedCartItems })
       },
       toggleSelectedCartItems: (id: string, count: number, product: ProductModel) => {
-        const isAdded = get().selectedCartItems.some((el) => el.id === id)
+        const isAdded = get().selectedCartItems.some((el) => el.product.id === id)
         if (isAdded) {
-          const selectedCartItems = get().selectedCartItems.filter((el) => el.id !== id)
+          const selectedCartItems = get().selectedCartItems.filter((el) => el.product.id !== id)
           set({ selectedCartItems })
         } else {
           const selectedCartItems = [...get().selectedCartItems, { id, count, product }]

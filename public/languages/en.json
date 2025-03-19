@@ -19,6 +19,8 @@
         "title": "Registration",
         "loginLabel": "Your login",
         "loginPlaceholder": "Entyr your login",
+        "emailLabel": "Email",
+        "emailPlaceholder": "Your email",
         "passLabel": "Your password",
         "passPlaceholder": "Enter your password",
         "rememberBtn": "Remember me",
@@ -99,7 +101,8 @@
       "orders": "Orders",
       "cart": "Cart",
       "wishlist": "Wishlist",
-      "reviws": "Reviews"
+      "reviws": "Reviews",
+      "admin": "Administration"
     },
     "personalInformation": {
       "breadcrumbs": {
@@ -160,6 +163,37 @@
     },
     "reviws": {
       "title": "Reviews"
+    }
+  },
+  "admin": {
+    "main": {
+      "breadcrumbs": {
+        "home": "Home",
+        "admin": "Administration"
+      },
+      "title": "Administration",
+      "editUsersButton": "Edit users",
+      "editProductsButton": "Edit products",
+      "income": "Income",
+      "products": "Products",
+      "brands": "Brands",
+      "rating": "Average rating",
+      "income_stat": "Profit",
+      "buyers": "Buyers"
+    },
+    "users": {
+      "breadcrumbs": {
+        "home": "Home",
+        "admin": "Administration",
+        "users": "Users"
+      }
+    },
+    "products": {
+      "breadcrumbs": {
+        "home": "Home",
+        "admin": "Administration",
+        "products": "Products"
+      }
     }
   },
   "components": {

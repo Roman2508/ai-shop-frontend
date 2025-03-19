@@ -12,6 +12,7 @@ import { Button } from '../ui/common/Button'
 import { Checkbox } from '../ui/common/Checkbox'
 import { useLoginMutation } from '@/graphql/generated/output'
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '../ui/common/Form'
+import { toast } from 'sonner'
 
 const formSchema = z.object({
   login: z.string().min(3, {
@@ -32,12 +33,12 @@ const LoginForm: React.FC<ILoginFormProps> = ({ setFromType }) => {
   const { auth } = useAuth()
 
   const [login, { loading: isLoading }] = useLoginMutation({
-    onCompleted(data, clientOptions) {
-      console.log(data, clientOptions)
+    onCompleted() {
+      toast.success('Ви успішно увійшли')
       auth()
     },
-    onError(error, clientOptions) {
-      console.log(error, clientOptions)
+    onError(error) {
+      toast.error(error.message)
     },
   })
 
@@ -50,7 +51,6 @@ const LoginForm: React.FC<ILoginFormProps> = ({ setFromType }) => {
   })
 
   const onSubmit = (data: z.infer<typeof formSchema>) => {
-    console.log(data)
     login({ variables: { data } })
   }
 
@@ -86,7 +86,12 @@ const LoginForm: React.FC<ILoginFormProps> = ({ setFromType }) => {
             <FormItem className="pb-[30]">
               <FormLabel>{t('auth.loginForm.passLabel')}</FormLabel>
               <FormControl>
-                <Input placeholder={t('auth.loginForm.passPlaceholder')} className="h-[50] px-[20] w-full" {...field} />
+                <Input
+                  placeholder={t('auth.loginForm.passPlaceholder')}
+                  className="h-[50] px-[20] w-full"
+                  type="password"
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>

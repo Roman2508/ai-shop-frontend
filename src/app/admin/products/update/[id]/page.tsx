@@ -11,14 +11,21 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from '@/components/ui/common/Breadcrumb'
-import { useGetProductByIdQuery } from '@/graphql/generated/output'
+import { ProductModel, useGetProductByIdQuery } from '@/graphql/generated/output'
 import ProductActionsForm from '@/components/features/product-actions-form/ProductActionsForm'
+import { toast } from 'sonner'
 
 const UpdateProductPage = () => {
   const { id } = useParams()
 
   const { data: product } = useGetProductByIdQuery({
     variables: { productId: typeof id === 'string' ? id : '' },
+    onCompleted() {
+      toast.success('Завантажено')
+    },
+    onError() {
+      toast.error('Помилка при завантаженні товару')
+    },
   })
 
   return (
@@ -50,7 +57,7 @@ const UpdateProductPage = () => {
           <div className="flex gap-[10]"></div>
         </div>
 
-        <ProductActionsForm product={product?.getProductById} id={id} />
+        <ProductActionsForm product={product?.getProductById as ProductModel} id={id} />
       </div>
     </div>
   )

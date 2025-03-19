@@ -1,6 +1,8 @@
 // 'use client'
 import type { Metadata } from 'next'
+import { useTheme } from 'next-themes'
 import { Montserrat } from 'next/font/google'
+import { Toaster, ToasterProps } from 'sonner'
 import { NextIntlClientProvider } from 'next-intl'
 import { getLocale, getMessages } from 'next-intl/server'
 
@@ -8,8 +10,9 @@ import '../styles/global.css'
 import Footer from '@/components/layout/footer/Footer'
 import Header from '@/components/layout/header/Header'
 import { ThemeProvider } from '@/providers/ThemeProvider'
-import ApolloClientProvider from '@/providers/ApolloClientProvider'
 import AppProgressBar from '@/components/layout/AppProgressBar'
+import ApolloClientProvider from '@/providers/ApolloClientProvider'
+import ToasterProvider from '@/providers/ToasterProvider'
 
 const montserrat = Montserrat({
   subsets: ['latin'],
@@ -36,11 +39,13 @@ export default async function RootLayout({
         <NextIntlClientProvider messages={messages}>
           <ThemeProvider attribute="class" defaultTheme="system" disableTransitionOnChange>
             <body className={`${montserrat.variable} antialiased min-h-screen flex flex-col`}>
-              <AppProgressBar>
-                <Header />
-                <main className="grow pt-[110] pb-[100]">{children}</main>
-                <Footer />
-              </AppProgressBar>
+              <ToasterProvider>
+                <AppProgressBar>
+                  <Header />
+                  <main className="grow pt-[110] pb-[100]">{children}</main>
+                  <Footer />
+                </AppProgressBar>
+              </ToasterProvider>
             </body>
           </ThemeProvider>
         </NextIntlClientProvider>

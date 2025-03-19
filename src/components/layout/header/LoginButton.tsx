@@ -1,16 +1,10 @@
 import React from 'react'
-import {
-  Dialog,
-  DialogTitle,
-  DialogHeader,
-  DialogTrigger,
-  DialogContent,
-  DialogDescription,
-} from '@/components/ui/common/Dialog'
+import { useTranslations } from 'next-intl'
+
 import LoginForm from '@/components/features/LoginForm'
 import RegisterForm from '@/components/features/RegisterForm'
 import ButtonWithIcon from '@/components/ui/custom/ButtonWithIcon'
-import { useTranslations } from 'next-intl'
+import { Dialog, DialogTitle, DialogHeader, DialogTrigger, DialogContent } from '@/components/ui/common/Dialog'
 
 const LoginButton = () => {
   const t = useTranslations('header')

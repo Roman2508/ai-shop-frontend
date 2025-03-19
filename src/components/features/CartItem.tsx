@@ -9,6 +9,7 @@ import getPhotoUrl from '@/utils/get-photo-url'
 import { Checkbox } from '../ui/common/Checkbox'
 import { ProductModel, useChangeCartItemCountMutation, useToggleCartMutation } from '@/graphql/generated/output'
 import getProductTitle from '@/utils/getProductTitle'
+import { toast } from 'sonner'
 
 type CartItemPropsType = {
   id: string
@@ -20,7 +21,15 @@ type CartItemPropsType = {
 
 const CartItem: React.FC<CartItemPropsType> = ({ id, number, product, count, isEditable = false }) => {
   const [changeCartItemCount] = useChangeCartItemCountMutation()
-  const [toggleCart, { loading }] = useToggleCartMutation()
+  const [toggleCart, { loading }] = useToggleCartMutation({
+    onCompleted() {
+      toast.success('Товар було видалено з корзини')
+    },
+    onError(error, clientOptions) {
+      toast.error('Помилка при видаленні товару з корзини')
+      console.log(error, clientOptions)
+    },
+  })
 
   const {
     selectedCartItems,
@@ -67,14 +76,12 @@ const CartItem: React.FC<CartItemPropsType> = ({ id, number, product, count, isE
       <div className="border border-border w-[110] min-w-[110] h-[110] p-[2]">
         <img
           className="h-[100%] object-cover"
-          src={product.images.length ? getPhotoUrl(product.images[0], 'products') : ''}
+          src={product.images.length ? getPhotoUrl(product.images[0], 'products') : '/images/empty-image.webp'}
         />
       </div>
 
       <div className="grow">
-        <p className="text-primary font-semibold">
-          {getProductTitle(product)}
-        </p>
+        <p className="text-primary font-semibold">{getProductTitle(product)}</p>
         <p className="line-clamp-[2]">{product.title}</p>
         <b className="text-xl">{product.price.toLocaleString('uk-UA')} / шт.</b>
       </div>

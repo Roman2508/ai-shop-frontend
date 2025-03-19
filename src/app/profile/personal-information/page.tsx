@@ -52,7 +52,7 @@ const PersonalInformationPage = () => {
         {/* @ts-ignore  */}
         {pageView === "view" && <ViewProfile user={user} />}
         {/* @ts-ignore  */}
-        {pageView === "edit" && <EditProfileForm user={user} />}
+        {pageView === "edit" && <EditProfileForm user={user} setPageView={setPageView} />}
       </div>
     </ProfileLayout>
   );
