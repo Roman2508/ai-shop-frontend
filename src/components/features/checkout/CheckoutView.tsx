@@ -8,8 +8,10 @@ import React from "react";
 
 interface ICheckoutViewProps {
   user: UserModel;
+  isLoading: boolean;
   pageView: "view" | "edit";
   handleChangePageView: () => void;
+  createPayment: () => Promise<void>;
 }
 
 const BackIcon = () => {
@@ -19,6 +21,8 @@ const BackIcon = () => {
 const CheckoutView: React.FC<React.PropsWithChildren<ICheckoutViewProps>> = ({
   user,
   pageView,
+  isLoading,
+  createPayment,
   handleChangePageView,
 }) => {
   const router = useRouter();
@@ -74,13 +78,20 @@ const CheckoutView: React.FC<React.PropsWithChildren<ICheckoutViewProps>> = ({
 
       <div className="flex justify-between gap-[20]">
         <ButtonWithIcon
+          disabled={isLoading}
           VectorIcon={BackIcon}
           buttonVariant="secondary"
           text="Повернутись назад"
           onClick={() => router.back()}
         />
 
-        <Button className="hover:bg-secondary border border-primary hover:text-primary">Перейти до оплати</Button>
+        <Button
+          disabled={isLoading}
+          onClick={createPayment}
+          className="hover:bg-secondary border border-primary hover:text-primary"
+        >
+          Перейти до оплати
+        </Button>
       </div>
     </>
   );

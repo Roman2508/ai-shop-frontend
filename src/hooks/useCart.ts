@@ -1,6 +1,6 @@
-import { useShallow } from 'zustand/react/shallow'
+import { useShallow } from "zustand/react/shallow";
 
-import { cartStore } from '@/store/cart/cart.store'
+import { cartStore } from "@/store/cart/cart.store";
 
 export const useCart = () => {
   //   const cartItems = cartStore((state) => state.cartItems)
@@ -13,6 +13,7 @@ export const useCart = () => {
     removeItemFromCart,
     changeSelectedCartItemsCount,
     toggleSelectedCartItems,
+    clearSelectedItems,
   } = cartStore(
     useShallow((state) => ({
       cartItems: state.cartItems,
@@ -23,8 +24,9 @@ export const useCart = () => {
       removeItemFromCart: state.removeItemFromCart,
       changeSelectedCartItemsCount: state.changeSelectedCartItemsCount,
       toggleSelectedCartItems: state.toggleSelectedCartItems,
+      clearSelectedItems: state.clearSelectedItems,
     }))
-  )
+  );
 
   return {
     cartItems,
@@ -35,5 +37,6 @@ export const useCart = () => {
     removeItemFromCart,
     changeSelectedCartItemsCount,
     toggleSelectedCartItems,
-  }
-}
+    clearSelectedItems,
+  };
+};

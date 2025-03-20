@@ -24,10 +24,10 @@ import { Button } from "@/components/ui/common/Button";
 import CatalogCard from "@/components/features/CatalogCard";
 import ViewCardIcon from "@/components/images/ViewCardIcon";
 import ViewRowsIcon from "@/components/images/ViewRowsIcon";
+import ProductsPagination from "@/components/features/ProductsPagination";
 import CatalogCardSkeleton from "@/components/features/CatalogCardSkeleton";
 import ProductFilter from "@/components/features/product-filter/ProductFilter";
 import CatalogFilters from "@/components/features/catalog-filters/CatalogFilters";
-import ProductsPagination from "@/components/features/ProductsPagination";
 
 const CatalogPage = () => {
   const locale = useLocale();

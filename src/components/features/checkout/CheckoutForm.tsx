@@ -1,30 +1,38 @@
+import { z } from "zod";
 import React from "react";
+import { ArrowLeft } from "lucide-react";
+import { useForm } from "react-hook-form";
+import { useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
 
+import { formSchema } from "./form-helpers";
+import { Input } from "@/components/ui/common/Input";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { UserModel } from "@/graphql/generated/output";
 import { Button } from "@/components/ui/common/Button";
-import { useTranslations } from "next-intl";
-import ButtonWithIcon from "@/components/ui/custom/ButtonWithIcon";
-import { ArrowLeft } from "lucide-react";
-import { useRouter } from "next/navigation";
-import { z } from "zod";
-import { formSchema } from "./form-helpers";
-import { zodResolver } from "@hookform/resolvers/zod";
 import DeliveryButton from "../delivery-button/DeliveryButton";
+import ButtonWithIcon from "@/components/ui/custom/ButtonWithIcon";
 import { FormControl, FormDescription, FormField, FormItem, FormMessage, Form } from "@/components/ui/common/Form";
-import { Input } from "@/components/ui/common/Input";
-import { useForm } from "react-hook-form";
 
 interface ICheckoutFormProps {
   user: UserModel;
+  isLoading: boolean;
   pageView: "view" | "edit";
   handleChangePageView: () => void;
+  createPayment: () => Promise<void>;
 }
 
 const BackIcon = () => {
   return <ArrowLeft className="stroke-primary" />;
 };
 
-const CheckoutForm: React.FC<ICheckoutFormProps> = ({ user, pageView, handleChangePageView }) => {
+const CheckoutForm: React.FC<ICheckoutFormProps> = ({
+  user,
+  pageView,
+  isLoading,
+  createPayment,
+  handleChangePageView,
+}) => {
   const router = useRouter();
 
   const t = useTranslations("profile.personalInformation.edit");
@@ -146,13 +154,20 @@ const CheckoutForm: React.FC<ICheckoutFormProps> = ({ user, pageView, handleChan
 
         <div className="flex justify-between gap-[20]">
           <ButtonWithIcon
+            disabled={isLoading}
             VectorIcon={BackIcon}
-            buttonVariant="secondary"
             text="Повернутись назад"
+            buttonVariant="secondary"
             onClick={() => router.back()}
           />
 
-          <Button className="hover:bg-secondary border border-primary hover:text-primary">Перейти до оплати</Button>
+          <Button
+            disabled={isLoading}
+            onClick={createPayment}
+            className="hover:bg-secondary border border-primary hover:text-primary"
+          >
+            Перейти до оплати
+          </Button>
         </div>
       </form>
     </Form>
