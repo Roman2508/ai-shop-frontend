@@ -1,0 +1,9 @@
+mutation CreatePayment {
+  createFondyPayment {
+    response {
+      checkout_url
+      payment_id
+      response_status
+    }
+  }
+}

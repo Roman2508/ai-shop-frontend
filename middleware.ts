@@ -1,3 +1,4 @@
+import React from 'react'
 import { NextRequest, NextResponse } from 'next/server'
 
 const middleware = (request: NextRequest) => {
@@ -17,10 +18,24 @@ const middleware = (request: NextRequest) => {
   // if (!session) {
   //   return NextResponse.redirect(new URL('/catalog', request.url))
   // }
+
+  //
+  //
+  //
+
+  // const url = request.nextUrl.clone()
+
+  // // Разрешаем POST-запросы и конвертируем их в GET
+  // if (request.method === 'POST' && url.pathname === '/catalog') {
+  //   url.pathname = '/catalog'
+  //   return NextResponse.redirect(url)
+  // }
+
+  // return NextResponse.next()
 }
 
-export const config = {
+const config = {
   matcher: ['/profile', '/profile/:path*', '/admin', '/admin/:path*', '/catalog', '/catalog/:path*'],
 }
 
-export default middleware
+export { middleware, config }

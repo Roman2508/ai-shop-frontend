@@ -126,6 +126,8 @@ export type Mutation = {
   changeEmail: Scalars['Boolean']['output'];
   changePassword: Scalars['Boolean']['output'];
   clearSessionCookie: Scalars['Boolean']['output'];
+  confirmFondyPayment: Scalars['Boolean']['output'];
+  createFondyPayment: PaymentResponseModel;
   createManyProducts: Scalars['Boolean']['output'];
   createPayment: Scalars['Boolean']['output'];
   createProduct: ProductModel;
@@ -295,6 +297,18 @@ export type PaginateAndFilterInput = {
   simFormat?: InputMaybe<Scalars['String']['input']>;
   skip?: InputMaybe<Scalars['Int']['input']>;
   sortBy?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type PaymentModel = {
+  __typename?: 'PaymentModel';
+  checkout_url: Scalars['String']['output'];
+  payment_id: Scalars['String']['output'];
+  response_status: Scalars['String']['output'];
+};
+
+export type PaymentResponseModel = {
+  __typename?: 'PaymentResponseModel';
+  response: PaymentModel;
 };
 
 export type ProductModel = {
@@ -489,6 +503,11 @@ export type UploadFileMutationVariables = Exact<{
 
 
 export type UploadFileMutation = { __typename?: 'Mutation', uploadFile: string };
+
+export type CreatePaymentMutationVariables = Exact<{ [key: string]: never; }>;
+
+
+export type CreatePaymentMutation = { __typename?: 'Mutation', createFondyPayment: { __typename?: 'PaymentResponseModel', response: { __typename?: 'PaymentModel', checkout_url: string, payment_id: string, response_status: string } } };
 
 export type CreateProductMutationVariables = Exact<{
   data: CreateProductInput;
@@ -810,6 +829,42 @@ export function useUploadFileMutation(baseOptions?: Apollo.MutationHookOptions<U
 export type UploadFileMutationHookResult = ReturnType<typeof useUploadFileMutation>;
 export type UploadFileMutationResult = Apollo.MutationResult<UploadFileMutation>;
 export type UploadFileMutationOptions = Apollo.BaseMutationOptions<UploadFileMutation, UploadFileMutationVariables>;
+export const CreatePaymentDocument = gql`
+    mutation CreatePayment {
+  createFondyPayment {
+    response {
+      checkout_url
+      payment_id
+      response_status
+    }
+  }
+}
+    `;
+export type CreatePaymentMutationFn = Apollo.MutationFunction<CreatePaymentMutation, CreatePaymentMutationVariables>;
+
+/**
+ * __useCreatePaymentMutation__
+ *
+ * To run a mutation, you first call `useCreatePaymentMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreatePaymentMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createPaymentMutation, { data, loading, error }] = useCreatePaymentMutation({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useCreatePaymentMutation(baseOptions?: Apollo.MutationHookOptions<CreatePaymentMutation, CreatePaymentMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreatePaymentMutation, CreatePaymentMutationVariables>(CreatePaymentDocument, options);
+      }
+export type CreatePaymentMutationHookResult = ReturnType<typeof useCreatePaymentMutation>;
+export type CreatePaymentMutationResult = Apollo.MutationResult<CreatePaymentMutation>;
+export type CreatePaymentMutationOptions = Apollo.BaseMutationOptions<CreatePaymentMutation, CreatePaymentMutationVariables>;
 export const CreateProductDocument = gql`
     mutation CreateProduct($data: CreateProductInput!) {
   createProduct(data: $data) {

@@ -5,6 +5,8 @@ import { useTranslations, useLocale } from 'next-intl'
 
 import { Button } from '@/components/ui/common/Button'
 import ButtonWithIcon from '@/components/ui/custom/ButtonWithIcon'
+import React from 'react'
+import { useRouter } from 'next/navigation'
 
 const categories = ['Apple', 'Samsung', 'Xiaomi', 'Google Pixel', 'One Plus', 'Motorola', 'Nokia', 'Sony']
 
@@ -47,6 +49,20 @@ export default function Home() {
   const translations = useTranslations('home')
   const locale = useLocale()
 
+  // const router = useRouter()
+
+  // React.useEffect(() => {
+  //   if (window.history.replaceState) {
+  //     // Заменяем URL без перезагрузки страницы
+  //     window.history.replaceState(null, '', '/catalog')
+  //   }
+
+  //   // Если запрос пришёл с POST — делаем редирект на GET
+  //   if (window.location.search || window.location.hash) {
+  //     router.replace('/catalog')
+  //   }
+  // }, [])
+
   return (
     <div className="font-[family-name:var(--font-geist-sans)]">
       <div className="max-w-[1640] mx-auto px-[16]">
@@ -84,7 +100,11 @@ export default function Home() {
           >
             <div
               className="absolute top-[0] left-[0] w-full h-full w-[910px] h-[500px] "
-              style={{ backgroundImage: 'url(/images/homapage-image.jpg)', backgroundSize: 'cover' }}
+              style={{
+                backgroundImage: 'url(/images/homapage-image.jpg)',
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+              }}
             ></div>
           </div>
 
