@@ -15,54 +15,14 @@ query FindProfile {
 
     favorites {
       product {
-        id
-        title
-        price
-        brand
-        frontCamera
-        mainCamera
-        ram
-        color
-        builtInMemory
-        processorName
-        processorCores
-        os
-        deliverySet
-        materials
-        simCount
-        simFormat
-        images
-        battery
-        screenDiagonal
-        createdAt
-        updatedAt
+        ...ProductFragment
       }
     }
     cart {
       id
       count
       product {
-        id
-        title
-        price
-        brand
-        frontCamera
-        mainCamera
-        ram
-        color
-        builtInMemory
-        processorName
-        processorCores
-        os
-        deliverySet
-        materials
-        simCount
-        simFormat
-        images
-        battery
-        screenDiagonal
-        createdAt
-        updatedAt
+        ...ProductFragment
       }
     }
     reviews {
@@ -84,8 +44,19 @@ query FindProfile {
         avatar
       }
     }
-    # orders {
-    #   id
-    # }
+    orders {
+      id
+      status
+      total
+      createdAt
+      items {
+        id
+        price
+        quantity
+        product {
+          ...ProductFragment
+        }
+      }
+    }
   }
 }

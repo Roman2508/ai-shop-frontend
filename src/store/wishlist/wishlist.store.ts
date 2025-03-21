@@ -13,7 +13,7 @@ export const wishlistStore = create(
         set((store) => ({ ...store, wishlistItems: [...store.wishlistItems, item] }))
       },
       removeItemFromWishlist: (id: string) => {
-        const wishlistItems = get().wishlistItems.filter((el) => el.id !== id)
+        const wishlistItems = get().wishlistItems.filter((el) => el.product.id !== id)
         set({ wishlistItems })
       },
     }),

@@ -50,7 +50,8 @@ export type ChangePasswordInput = {
 
 export type CreateOrderInput = {
   items: Array<OrderItemDto>;
-  status: Scalars['String']['input'];
+  orderId: Scalars['String']['input'];
+  userId: Scalars['String']['input'];
 };
 
 export type CreateProductInput = {
@@ -93,6 +94,7 @@ export type DeviceModel = {
 };
 
 export enum EnumOrderStatus {
+  Delivered = 'DELIVERED',
   Payed = 'PAYED',
   Pending = 'PENDING'
 }
@@ -126,10 +128,8 @@ export type Mutation = {
   changeEmail: Scalars['Boolean']['output'];
   changePassword: Scalars['Boolean']['output'];
   clearSessionCookie: Scalars['Boolean']['output'];
-  confirmFondyPayment: Scalars['Boolean']['output'];
-  createFondyPayment: PaymentResponseModel;
   createManyProducts: Scalars['Boolean']['output'];
-  createPayment: Scalars['Boolean']['output'];
+  createOrder: OrderModel;
   createProduct: ProductModel;
   createReview: Scalars['Boolean']['output'];
   createUser: Scalars['Boolean']['output'];
@@ -170,7 +170,7 @@ export type MutationChangePasswordArgs = {
 };
 
 
-export type MutationCreatePaymentArgs = {
+export type MutationCreateOrderArgs = {
   data: CreateOrderInput;
 };
 
@@ -269,6 +269,7 @@ export type OrderModel = {
   createdAt: Scalars['DateTime']['output'];
   id: Scalars['ID']['output'];
   items: Array<OrderItemModel>;
+  orderId: Scalars['String']['output'];
   status: EnumOrderStatus;
   total: Scalars['Float']['output'];
   updatedAt: Scalars['DateTime']['output'];
@@ -297,18 +298,6 @@ export type PaginateAndFilterInput = {
   simFormat?: InputMaybe<Scalars['String']['input']>;
   skip?: InputMaybe<Scalars['Int']['input']>;
   sortBy?: InputMaybe<Scalars['String']['input']>;
-};
-
-export type PaymentModel = {
-  __typename?: 'PaymentModel';
-  checkout_url: Scalars['String']['output'];
-  payment_id: Scalars['String']['output'];
-  response_status: Scalars['String']['output'];
-};
-
-export type PaymentResponseModel = {
-  __typename?: 'PaymentResponseModel';
-  response: PaymentModel;
 };
 
 export type ProductModel = {
@@ -504,11 +493,6 @@ export type UploadFileMutationVariables = Exact<{
 
 export type UploadFileMutation = { __typename?: 'Mutation', uploadFile: string };
 
-export type CreatePaymentMutationVariables = Exact<{ [key: string]: never; }>;
-
-
-export type CreatePaymentMutation = { __typename?: 'Mutation', createFondyPayment: { __typename?: 'PaymentResponseModel', response: { __typename?: 'PaymentModel', checkout_url: string, payment_id: string, response_status: string } } };
-
 export type CreateProductMutationVariables = Exact<{
   data: CreateProductInput;
 }>;
@@ -573,6 +557,8 @@ export type UpdateUserDataMutationVariables = Exact<{
 
 export type UpdateUserDataMutation = { __typename?: 'Mutation', updateUserData: boolean };
 
+export type ProductFragmentFragment = { __typename?: 'ProductModel', id: string, title: string, price: number, brand: string, frontCamera: number, mainCamera: number, ram: number, color: string, builtInMemory: number, processorName: string, processorCores: string, os: string, deliverySet: string, materials: string, simCount: number, simFormat: Array<string>, images: Array<string>, battery: number, screenDiagonal: number, createdAt: any, updatedAt: any };
+
 export type FindAllUsersQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -600,14 +586,38 @@ export type PaginateAndFilterProductsQuery = { __typename?: 'Query', paginateAnd
 export type FindProfileQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type FindProfileQuery = { __typename?: 'Query', findProfile: { __typename?: 'UserModel', id: string, username: string, displayName: string, email: string, avatar?: string | null, city?: string | null, street?: string | null, postOffice?: string | null, createdAt: any, updatedAt: any, favorites: Array<{ __typename?: 'FavoriteItemModel', product: { __typename?: 'ProductModel', id: string, title: string, price: number, brand: string, frontCamera: number, mainCamera: number, ram: number, color: string, builtInMemory: number, processorName: string, processorCores: string, os: string, deliverySet: string, materials: string, simCount: number, simFormat: Array<string>, images: Array<string>, battery: number, screenDiagonal: number, createdAt: any, updatedAt: any } }>, cart: Array<{ __typename?: 'CartItemModel', id: string, count: number, product: { __typename?: 'ProductModel', id: string, title: string, price: number, brand: string, frontCamera: number, mainCamera: number, ram: number, color: string, builtInMemory: number, processorName: string, processorCores: string, os: string, deliverySet: string, materials: string, simCount: number, simFormat: Array<string>, images: Array<string>, battery: number, screenDiagonal: number, createdAt: any, updatedAt: any } }>, reviews: Array<{ __typename?: 'ReviewModel', id: string, text: string, rating: number, createdAt: any, product: { __typename?: 'ProductModel', id: string, images: Array<string>, brand: string, ram: number, builtInMemory: number, color: string }, user: { __typename?: 'UserModel', id: string, displayName: string, avatar?: string | null } }> } };
+export type FindProfileQuery = { __typename?: 'Query', findProfile: { __typename?: 'UserModel', id: string, username: string, displayName: string, email: string, avatar?: string | null, city?: string | null, street?: string | null, postOffice?: string | null, createdAt: any, updatedAt: any, favorites: Array<{ __typename?: 'FavoriteItemModel', product: { __typename?: 'ProductModel', id: string, title: string, price: number, brand: string, frontCamera: number, mainCamera: number, ram: number, color: string, builtInMemory: number, processorName: string, processorCores: string, os: string, deliverySet: string, materials: string, simCount: number, simFormat: Array<string>, images: Array<string>, battery: number, screenDiagonal: number, createdAt: any, updatedAt: any } }>, cart: Array<{ __typename?: 'CartItemModel', id: string, count: number, product: { __typename?: 'ProductModel', id: string, title: string, price: number, brand: string, frontCamera: number, mainCamera: number, ram: number, color: string, builtInMemory: number, processorName: string, processorCores: string, os: string, deliverySet: string, materials: string, simCount: number, simFormat: Array<string>, images: Array<string>, battery: number, screenDiagonal: number, createdAt: any, updatedAt: any } }>, reviews: Array<{ __typename?: 'ReviewModel', id: string, text: string, rating: number, createdAt: any, product: { __typename?: 'ProductModel', id: string, images: Array<string>, brand: string, ram: number, builtInMemory: number, color: string }, user: { __typename?: 'UserModel', id: string, displayName: string, avatar?: string | null } }>, orders: Array<{ __typename?: 'OrderModel', id: string, status: EnumOrderStatus, total: number, createdAt: any, items: Array<{ __typename?: 'OrderItemModel', id: string, price: number, quantity: number, product: { __typename?: 'ProductModel', id: string, title: string, price: number, brand: string, frontCamera: number, mainCamera: number, ram: number, color: string, builtInMemory: number, processorName: string, processorCores: string, os: string, deliverySet: string, materials: string, simCount: number, simFormat: Array<string>, images: Array<string>, battery: number, screenDiagonal: number, createdAt: any, updatedAt: any } }> }> } };
 
 export type GetReviewsByUserQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type GetReviewsByUserQuery = { __typename?: 'Query', getReviewByUserId: Array<{ __typename?: 'ReviewModel', id: string, text: string, rating: number, createdAt: any, product: { __typename?: 'ProductModel', id: string, price: number, images: Array<string>, brand: string, ram: number, builtInMemory: number, color: string }, user: { __typename?: 'UserModel', id: string, displayName: string, avatar?: string | null } }> };
 
-
+export const ProductFragmentFragmentDoc = gql`
+    fragment ProductFragment on ProductModel {
+  id
+  title
+  price
+  brand
+  frontCamera
+  mainCamera
+  ram
+  color
+  builtInMemory
+  processorName
+  processorCores
+  os
+  deliverySet
+  materials
+  simCount
+  simFormat
+  images
+  battery
+  screenDiagonal
+  createdAt
+  updatedAt
+}
+    `;
 export const ClearSessionCookieDocument = gql`
     mutation ClearSessionCookie {
   clearSessionCookie
@@ -829,42 +839,6 @@ export function useUploadFileMutation(baseOptions?: Apollo.MutationHookOptions<U
 export type UploadFileMutationHookResult = ReturnType<typeof useUploadFileMutation>;
 export type UploadFileMutationResult = Apollo.MutationResult<UploadFileMutation>;
 export type UploadFileMutationOptions = Apollo.BaseMutationOptions<UploadFileMutation, UploadFileMutationVariables>;
-export const CreatePaymentDocument = gql`
-    mutation CreatePayment {
-  createFondyPayment {
-    response {
-      checkout_url
-      payment_id
-      response_status
-    }
-  }
-}
-    `;
-export type CreatePaymentMutationFn = Apollo.MutationFunction<CreatePaymentMutation, CreatePaymentMutationVariables>;
-
-/**
- * __useCreatePaymentMutation__
- *
- * To run a mutation, you first call `useCreatePaymentMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useCreatePaymentMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [createPaymentMutation, { data, loading, error }] = useCreatePaymentMutation({
- *   variables: {
- *   },
- * });
- */
-export function useCreatePaymentMutation(baseOptions?: Apollo.MutationHookOptions<CreatePaymentMutation, CreatePaymentMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<CreatePaymentMutation, CreatePaymentMutationVariables>(CreatePaymentDocument, options);
-      }
-export type CreatePaymentMutationHookResult = ReturnType<typeof useCreatePaymentMutation>;
-export type CreatePaymentMutationResult = Apollo.MutationResult<CreatePaymentMutation>;
-export type CreatePaymentMutationOptions = Apollo.BaseMutationOptions<CreatePaymentMutation, CreatePaymentMutationVariables>;
 export const CreateProductDocument = gql`
     mutation CreateProduct($data: CreateProductInput!) {
   createProduct(data: $data) {
@@ -1411,54 +1385,14 @@ export const FindProfileDocument = gql`
     updatedAt
     favorites {
       product {
-        id
-        title
-        price
-        brand
-        frontCamera
-        mainCamera
-        ram
-        color
-        builtInMemory
-        processorName
-        processorCores
-        os
-        deliverySet
-        materials
-        simCount
-        simFormat
-        images
-        battery
-        screenDiagonal
-        createdAt
-        updatedAt
+        ...ProductFragment
       }
     }
     cart {
       id
       count
       product {
-        id
-        title
-        price
-        brand
-        frontCamera
-        mainCamera
-        ram
-        color
-        builtInMemory
-        processorName
-        processorCores
-        os
-        deliverySet
-        materials
-        simCount
-        simFormat
-        images
-        battery
-        screenDiagonal
-        createdAt
-        updatedAt
+        ...ProductFragment
       }
     }
     reviews {
@@ -1480,9 +1414,23 @@ export const FindProfileDocument = gql`
         avatar
       }
     }
+    orders {
+      id
+      status
+      total
+      createdAt
+      items {
+        id
+        price
+        quantity
+        product {
+          ...ProductFragment
+        }
+      }
+    }
   }
 }
-    `;
+    ${ProductFragmentFragmentDoc}`;
 
 /**
  * __useFindProfileQuery__

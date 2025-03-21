@@ -2,9 +2,17 @@
 import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { useParams } from 'next/navigation'
+import { toast } from 'sonner'
+import { useParams, useRouter } from 'next/navigation'
 import { useLocale, useTranslations } from 'next-intl'
 
+import {
+  ProductModel,
+  useToggleCartMutation,
+  useGetAllProductsQuery,
+  useGetProductByIdQuery,
+  useToggleFavoriteMutation,
+} from '@/graphql/generated/output'
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -13,7 +21,10 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from '@/components/ui/common/Breadcrumb'
+import { useCart } from '@/hooks/useCart'
+import { useAuth } from '@/hooks/useAuth'
 import getPhotoUrl from '@/utils/get-photo-url'
+import { useWishlist } from '@/hooks/useWishlist'
 import { Card } from '@/components/ui/common/Card'
 import SaveIcon from '@/components/images/SaveIcon'
 import { Input } from '@/components/ui/common/Input'
@@ -25,7 +36,6 @@ import ButtonWithIcon from '@/components/ui/custom/ButtonWithIcon'
 import ProductTabs from '@/components/features/product/ProductTabs'
 import CatalogCardSkeleton from '@/components/features/CatalogCardSkeleton'
 import { getProductAttributeLabel } from '@/utils/get-product-attribute-label'
-import { ProductModel, useGetAllProductsQuery, useGetProductByIdQuery } from '@/graphql/generated/output'
 
 const mainCharacteristicsKeys = [
   { key: 'screenDiagonal', label_ua: 'Діагональ екрану', label_en: 'Screen diagonal' },
@@ -39,15 +49,92 @@ const mainCharacteristicsKeys = [
 const ProductPage = () => {
   const t = useTranslations('fullProduct')
 
+  const router = useRouter()
   const { id } = useParams()
   const locale = useLocale()
 
+  const { isAuthentificated } = useAuth()
+  const { addItemToWishlist, removeItemFromWishlist, wishlistItems } = useWishlist()
+  const { addItemToCart, cartItems, clearSelectedItems, toggleSelectedCartItems } = useCart()
+
+  const [count, setCount] = React.useState(1)
   const [mainPhotoName, setMainPhotoName] = React.useState('')
 
   const { data } = useGetAllProductsQuery()
+
   const { data: product } = useGetProductByIdQuery({
     variables: { productId: typeof id === 'string' ? id : '' },
   })
+
+  const [addToFavorite, { loading: isFavoriteLoading }] = useToggleFavoriteMutation({
+    onCompleted() {
+      toast.success('Оновлено список збережених товарів')
+    },
+    onError() {
+      toast.error('Помилка при оновленні списку збережених товарів')
+    },
+  })
+
+  const [addToCart, { loading: isCartLoading }] = useToggleCartMutation({
+    onCompleted() {
+      toast.success('Товар було додано до вашої корзини')
+    },
+    onError() {
+      toast.error('Помилка при видаленні товару з корзини')
+    },
+  })
+
+  const isAddedToFavourite = wishlistItems.some((el) => el?.product?.id === product?.getProductById.id)
+  const isAddedToCart = cartItems.some((el) => el?.product?.id === product?.getProductById.id)
+
+  const toggleFavourite = async () => {
+    if (!product) return
+    try {
+      await addToFavorite({ variables: { productId: product.getProductById.id } })
+      if (isAddedToFavourite) {
+        removeItemFromWishlist(product.getProductById.id)
+      } else {
+        addItemToWishlist({ product: product.getProductById as ProductModel })
+      }
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+  const onAddToCart = async () => {
+    if (!product) return
+    if (isAuthentificated) {
+      addToCart({ variables: { input: { productId: product.getProductById.id, count } } })
+      addItemToCart({ count, id: String(Math.random()), product: product.getProductById as ProductModel })
+    } else {
+      alert('Авторизуйтесь щоб додати товар в корзину')
+    }
+  }
+
+  const buyIn1Click = async () => {
+    if (!product) return
+    if (isAuthentificated) {
+      clearSelectedItems()
+      toggleSelectedCartItems(product.getProductById.id, count, product.getProductById as ProductModel)
+      router.push('/checkout')
+    } else {
+      alert('Авторизуйтесь щоб купити товар')
+    }
+  }
+
+  const onChangeCount = (action: 'increment' | 'decrement') => {
+    setCount((prev) => {
+      if (action === 'increment') {
+        return prev + 1
+      } else {
+        if (prev - 1 !== 0) {
+          return prev - 1
+        } else {
+          return prev
+        }
+      }
+    })
+  }
 
   React.useEffect(() => {
     if (product) {
@@ -122,23 +209,31 @@ const ProductPage = () => {
 
             {product?.getProductById ? (
               <>
-                {false ? (
-                  <ButtonWithIcon
-                    VectorIcon={SaveIcon}
-                    text={t('saveButton')}
-                    wrapperClassNames="w-[140]"
-                    iconClassNames="!text-border fill-current text-inherit stroke-current"
-                    classNames="w-full bg-border text-text-muted-foreground rounded-[5] justify-end pr-5"
-                  />
-                ) : (
-                  <ButtonWithIcon
-                    VectorIcon={SaveIcon}
-                    text={t('savedButton')}
-                    buttonVariant="outline"
-                    wrapperClassNames="w-[150]"
-                    classNames="w-full text-primary rounded-[5] justify-end px-4"
-                    iconClassNames="!text-primary fill-current text-inherit stroke-current"
-                  />
+                {isAuthentificated && (
+                  <>
+                    {isAddedToFavourite ? (
+                      <ButtonWithIcon
+                        VectorIcon={SaveIcon}
+                        text={t('savedButton')}
+                        buttonVariant="outline"
+                        wrapperClassNames="w-[150]"
+                        disabled={isFavoriteLoading}
+                        onClick={() => toggleFavourite()}
+                        classNames="w-full text-primary rounded-[5] justify-end px-4"
+                        iconClassNames="!text-primary fill-current text-inherit stroke-current"
+                      />
+                    ) : (
+                      <ButtonWithIcon
+                        VectorIcon={SaveIcon}
+                        text={t('saveButton')}
+                        wrapperClassNames="w-[140]"
+                        disabled={isFavoriteLoading}
+                        onClick={() => toggleFavourite()}
+                        iconClassNames="!text-border fill-muted-foreground text-inherit stroke-muted-foreground"
+                        classNames="w-full bg-border text-text-muted-foreground rounded-[5] justify-end pr-5 w-[150]"
+                      />
+                    )}
+                  </>
                 )}
               </>
             ) : (
@@ -233,23 +328,44 @@ const ProductPage = () => {
                     {product?.getProductById ? (
                       <>
                         <div className={'flex items-center border border-border rounded-full w-[100%]'}>
-                          <Button className="p-[10] pl-[40] bg-transparent text-text">-</Button>
-                          <Input value={1} className="border-[0] grow text-center" />
-                          <Button className="p-[10] pr-[40] bg-transparent text-text">+</Button>
+                          <Button
+                            onClick={() => onChangeCount('decrement')}
+                            className="p-[10] pl-[40] bg-transparent text-text"
+                          >
+                            -
+                          </Button>
+                          <Input value={count} className="border-[0] grow text-center" />
+                          <Button
+                            onClick={() => onChangeCount('increment')}
+                            className="p-[10] pr-[40] bg-transparent text-text"
+                          >
+                            +
+                          </Button>
                         </div>
 
-                        <ButtonWithIcon
-                          iconVariant="left"
-                          classNames="w-full"
-                          buttonVariant="default"
-                          wrapperClassNames="w-full"
-                          text={t('addToCartButton')}
-                          iconSrc="/icons/shopping-bag.png"
-                        />
+                        {isAddedToCart ? (
+                          <Link href="/profile/cart" className="w-full">
+                            <Button variant="secondary" className="w-full">
+                              Перейти в корзину
+                            </Button>
+                          </Link>
+                        ) : (
+                          <ButtonWithIcon
+                            iconVariant="left"
+                            classNames="w-full"
+                            onClick={onAddToCart}
+                            buttonVariant="default"
+                            disabled={isCartLoading}
+                            wrapperClassNames="w-full"
+                            text={t('addToCartButton')}
+                            iconSrc="/icons/shopping-bag.png"
+                          />
+                        )}
 
                         <ButtonWithIcon
                           iconVariant="left"
                           classNames="w-full"
+                          onClick={buyIn1Click}
                           buttonVariant="secondary"
                           wrapperClassNames="w-full"
                           iconSrc="/icons/wallet.png"

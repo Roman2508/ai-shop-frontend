@@ -26,16 +26,15 @@ const advantages = [
 ]
 
 // tido:
-// 2.  Payment
 // 3.  Orders (change status cron)
 // 4.  localization
 // 5.  mobile adaptation
 // 6.  filters (url query params)
 // 8.  search (AI)
 // 9.  recommendation (FAIS vectors)
-// 11. Купити в 1 клік (full product page)
 // 13. Roles
 // 14. Активні сесії
+// 15. Redirect
 
 // 7.  homepage !!!ALMOST_DONE
 // 10. administration (products CRUD) !!!ALMOST_DONE
@@ -44,6 +43,8 @@ const advantages = [
 // 16. Admin page (/admin) !!!ALMOST_DONE
 
 // 1.  Comments !!!DONE
+// 2.  Payment !!!DONE
+// 11. Купити в 1 клік (full product page) !!!DONE
 
 export default function Home() {
   const translations = useTranslations('home')

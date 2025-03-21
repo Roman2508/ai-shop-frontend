@@ -30,7 +30,6 @@ export const cartStore = create(
         // })
       },
       addItemToCart: (item: ICartItem) => {
-        console.log("Add");
         set({ cartItems: [...get().cartItems, item] });
       },
       removeItemFromCart: (id: string) => {

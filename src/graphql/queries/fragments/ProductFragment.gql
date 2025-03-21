@@ -1,0 +1,23 @@
+fragment ProductFragment on ProductModel {
+  id
+  title
+  price
+  brand
+  frontCamera
+  mainCamera
+  ram
+  color
+  builtInMemory
+  processorName
+  processorCores
+  os
+  deliverySet
+  materials
+  simCount
+  simFormat
+  images
+  battery
+  screenDiagonal
+  createdAt
+  updatedAt
+}
