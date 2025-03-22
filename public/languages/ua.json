@@ -122,7 +122,14 @@
         "blockTitle3": "Адрес доставки",
         "city": "Місто",
         "street": "Вулиця",
-        "postOffice": "Відділення"
+        "postOffice": "Відділення",
+        "sessions": {
+          "active": "Активні сесії",
+          "current": "Поточна сесія",
+          "other": "Інші сесії",
+          "endButton": "Завершити",
+          "notFound": "Активних сесій не знайдено"
+        }
       },
       "edit": {
         "blockTitle1": "Особисті дані",
@@ -147,7 +154,21 @@
       "title": "Мої замовлення",
       "ordersButton": "МОЇ ЗАМОВЛЕННЯ",
       "ordersInProcessing": "Замовлення в обробці",
-      "completedOrders": "Виконані замовлення"
+      "completedOrders": "Виконані замовлення",
+      "table": {
+        "count": "К-ть товарів",
+        "date": "Дата",
+        "status": "Статус",
+        "sum": "Сумма",
+        "productsCount": "Позиції",
+        "productCoutnt": "К-сть",
+        "moreDetailsButton": "Показати деталі",
+        "lessDetailsButton": "Приховати деталі"
+      },
+      "status": {
+        "payed": "Доставляється",
+        "delivered": "Виконано"
+      }
     },
     "cart": {
       "title": "Кошик",
@@ -185,6 +206,19 @@
         "home": "Головна",
         "admin": "Адміністрування",
         "users": "Користувачі"
+      },
+      "title": "Користувачі",
+      "table": {
+        "photo": "Фото",
+        "publicName": "Публічне ім'я",
+        "userName": "Ім'я користувача",
+        "email": "Пошта",
+        "createdAt": "Дата створення",
+        "role": "Роль"
+      },
+      "select": {
+        "showAll": "Показати всіх",
+        "showAdmins": "Показати адміністраторів"
       }
     },
     "products": {
@@ -192,6 +226,21 @@
         "home": "Головна",
         "admin": "Адміністрування",
         "products": "Товари"
+      },
+      "title": "Товари",
+      "status": "Є в наявності",
+      "table": {
+        "photo": "Фото",
+        "title": "Заголовок",
+        "price": "Ціна",
+        "count": "К-ть",
+        "status": "Статус",
+        "actions": "Дії"
+      },
+      "buttons": {
+        "clear": "Очистити фільтри",
+        "filter": "Фльтр",
+        "create": "Створити товар"
       }
     }
   },

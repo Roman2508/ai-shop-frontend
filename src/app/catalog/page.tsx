@@ -28,6 +28,7 @@ import ProductsPagination from "@/components/features/ProductsPagination";
 import CatalogCardSkeleton from "@/components/features/CatalogCardSkeleton";
 import ProductFilter from "@/components/features/product-filter/ProductFilter";
 import CatalogFilters from "@/components/features/catalog-filters/CatalogFilters";
+import { useRouter, useSearchParams } from "next/navigation";
 
 const CatalogPage = () => {
   const locale = useLocale();
@@ -100,7 +101,7 @@ const CatalogPage = () => {
     try {
       setIsLoading(true);
       const { data: filteredData } = await refetchFilteredData({ query: { ...filter, ...additionalFilter } });
-
+      // updateFilters({ ...filter, ...additionalFilter });
       const items = filteredData?.paginateAndFilter ? filteredData.paginateAndFilter.products : [];
       setProducts(items as ProductModel[]);
       const total = filteredData?.paginateAndFilter ? filteredData.paginateAndFilter.total : 0;
@@ -128,6 +129,54 @@ const CatalogPage = () => {
     });
     setMaxPrice(maxPrice);
   }, [data]);
+
+  /*  */
+  /*  */
+  /*  */
+
+  // const searchParams = useSearchParams();
+  // const router = useRouter();
+
+  // const updateFilters = (newFilters: PaginateAndFilterInput) => {
+  //   const params = new URLSearchParams(searchParams.toString());
+  //   Object.entries(newFilters).forEach(([key, value]) => {
+  //     if (value) {
+  //       // @ts-ignore
+  //       params.set(key, value);
+  //     } else {
+  //       params.delete(key);
+  //     }
+  //   });
+  //   router.push(`?${params.toString()}`);
+  // };
+
+  // React.useEffect(() => {
+  //   const params = {
+  //     brand: searchParams.get("brand") || undefined,
+  //     battery: searchParams.get("battery") || undefined,
+  //     builtInMemory: searchParams.get("builtInMemory") || undefined,
+  //     color: searchParams.get("color") || undefined,
+  //     deliverySet: searchParams.get("deliverySet") || undefined,
+  //     frontCamera: searchParams.get("frontCamera") || undefined,
+  //     mainCamera: searchParams.get("mainCamera") || undefined,
+  //     materials: searchParams.get("materials") || undefined,
+  //     os: searchParams.get("os") || undefined,
+  //     priceFrom: Number(searchParams.get("priceFrom")) || undefined,
+  //     priceTo: Number(searchParams.get("priceTo")) || undefined,
+  //     processorCores: searchParams.get("processorCores") || undefined,
+  //     processorName: searchParams.get("processorName") || undefined,
+  //     ram: searchParams.get("ram") || undefined,
+  //     screenDiagonal: searchParams.get("screenDiagonal") || undefined,
+  //     simCount: searchParams.get("simCount") || undefined,
+  //     simFormat: searchParams.get("simFormat") || undefined,
+  //     limit: Number(searchParams.get("limit")) || undefined,
+  //     skip: Number(searchParams.get("skip")) || undefined,
+  //     sortBy: searchParams.get("sortBy") || undefined,
+  //   };
+
+  //   const cleanParams = Object.fromEntries(Object.entries(params).filter(([key, value]) => value !== undefined));
+  //   setFilter(cleanParams);
+  // }, [searchParams]);
 
   return (
     <div className="max-w-[1640] mx-auto px-[16]">

@@ -1,0 +1,11 @@
+query FindAllUsers {
+  findAllUsers {
+    id
+    email
+    username
+    displayName
+    avatar
+    role
+    createdAt
+  }
+}

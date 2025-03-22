@@ -123,7 +123,14 @@
         "blockTitle3": "Delivery address",
         "city": "City",
         "street": "Street",
-        "postOffice": "Post office"
+        "postOffice": "Post office",
+        "sessions": {
+          "active": "Active sessions",
+          "current": "Current session",
+          "other": "Other sessions",
+          "endButton": "End session",
+          "notFound": "No active sessions found"
+        }
       },
       "edit": {
         "blockTitle1": "Personal data",
@@ -148,7 +155,21 @@
       "title": "My orders",
       "ordersButton": "MY ORDERS",
       "ordersInProcessing": "Orders in processing",
-      "completedOrders": "Completed orders"
+      "completedOrders": "Completed orders",
+      "table": {
+        "count": "Count",
+        "date": "Date",
+        "status": "Status",
+        "sum": "Sum",
+        "productsCount": "Count",
+        "productCoutnt": "Count",
+        "moreDetailsButton": "More details",
+        "lessDetailsButton": "Less details"
+      },
+      "status": {
+        "payed": "Payed",
+        "delivered": "Delivered"
+      }
     },
     "cart": {
       "title": "Cart",
@@ -186,6 +207,19 @@
         "home": "Home",
         "admin": "Administration",
         "users": "Users"
+      },
+      "title": "Users",
+      "table": {
+        "photo": "Photo",
+        "publicName": "Public name",
+        "userName": "User name",
+        "email": "Email",
+        "createdAt": "Created at",
+        "role": "Role"
+      },
+      "select": {
+        "showAll": "Show all",
+        "showAdmins": "Show admins"
       }
     },
     "products": {
@@ -193,7 +227,34 @@
         "home": "Home",
         "admin": "Administration",
         "products": "Products"
+      },
+      "title": "Products",
+      "status": "In stock",
+      "table": {
+        "photo": "Photo",
+        "title": "Title",
+        "price": "Price",
+        "count": "Count",
+        "status": "Status",
+        "actions": "Actions"
+      },
+      "buttons": {
+        "clear": "Clear filters",
+        "filter": "Filter",
+        "create": "Create product"
       }
+    },
+    "createProduct": {
+      "": "",
+      "": "",
+      "": "",
+      "": "",
+      "": "",
+      "": "",
+      "": "",
+      "": "",
+      "": "",
+      "": ""
     }
   },
   "components": {
