@@ -40,13 +40,12 @@ import { Table, TableRow, TableBody, TableCell, TableHead, TableHeader } from "@
 const AdminProductsPage = () => {
   const t = useTranslations("admin.products");
 
-  const [isLoading, setIsLoading] = React.useState(false);
-  const [maxPrice, setMaxPrice] = React.useState(100000);
   const [total, setTotal] = React.useState(0);
+  const [maxPrice, setMaxPrice] = React.useState(100000);
+  const [isLoading, setIsLoading] = React.useState(false);
   const [currentPage, setCurrentPage] = React.useState(1);
-  const [filter, setFilter] = React.useState<PaginateAndFilterInput>({});
-
   const [products, setProducts] = React.useState<ProductModel[]>([]);
+  const [filter, setFilter] = React.useState<PaginateAndFilterInput>({});
 
   const { data } = useGetAllProductsQuery();
   const { refetch: refetchFilteredData } = usePaginateAndFilterProductsQuery({

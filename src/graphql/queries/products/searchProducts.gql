@@ -1,0 +1,5 @@
+query SearchProducts($data: String!) {
+  searchProduct(data: $data) {
+    ...ProductFragment
+  }
+}

@@ -1,30 +1,30 @@
-"use client";
-import React from "react";
-import Link from "next/link";
-import Image from "next/image";
-import { useTranslations, useLocale } from "next-intl";
+'use client'
+import React from 'react'
+import Link from 'next/link'
+import Image from 'next/image'
+import { useTranslations, useLocale } from 'next-intl'
 
-import { Button } from "@/components/ui/common/Button";
-import ButtonWithIcon from "@/components/ui/custom/ButtonWithIcon";
-import { ProductModel, useGetAllProductsQuery } from "@/graphql/generated/output";
-import CatalogCard from "@/components/features/CatalogCard";
+import { Button } from '@/components/ui/common/Button'
+import ButtonWithIcon from '@/components/ui/custom/ButtonWithIcon'
+import { ProductModel, useGetAllProductsQuery } from '@/graphql/generated/output'
+import CatalogCard from '@/components/features/CatalogCard'
 
-const categories = ["Apple", "Samsung", "Xiaomi", "Google Pixel", "One Plus", "Motorola", "Nokia", "Sony"];
+const categories = ['Apple', 'Samsung', 'Xiaomi', 'Google Pixel', 'One Plus', 'Motorola', 'Nokia', 'Sony']
 
 const advantages = [
   {
-    title: "Широкий асортимент",
-    text: "Ми володіємо досвідом і всіма необхідними знаннями, що дозволяє нам ефективно аналізувати потреби клієнтів і пропонувати найбільш відповідні рішення.",
+    title: 'Широкий асортимент',
+    text: 'Ми володіємо досвідом і всіма необхідними знаннями, що дозволяє нам ефективно аналізувати потреби клієнтів і пропонувати найбільш відповідні рішення.',
   },
   {
-    title: "Швидка доставка",
-    text: "Ми забезпечуємо швидку доставку товарів клієнтам, що допомагає заощадити час і зручно отримати бажаний товар.",
+    title: 'Швидка доставка',
+    text: 'Ми забезпечуємо швидку доставку товарів клієнтам, що допомагає заощадити час і зручно отримати бажаний товар.',
   },
   {
-    title: "Знижки та акції",
-    text: "Ми регулярно проводимо акції та пропонуємо знижки на різні товари, роблячи покупки у нас ще вигіднішими для клієнтів.",
+    title: 'Знижки та акції',
+    text: 'Ми регулярно проводимо акції та пропонуємо знижки на різні товари, роблячи покупки у нас ще вигіднішими для клієнтів.',
   },
-];
+]
 
 // tido:
 // 4.  localization
@@ -32,7 +32,6 @@ const advantages = [
 // 6.  filters (url query params) ???
 // 8.  search (AI)
 // 9.  recommendation (FAIS vectors)
-// 17.  Reviews Page
 
 // 7.  homepage !!!ALMOST_DONE
 // 10. administration (products CRUD) !!!ALMOST_DONE
@@ -47,12 +46,13 @@ const advantages = [
 // 15. Redirect !!!DONE
 // 14. Активні сесії !!!DONE
 // 3.  Orders (change status cron) !!!DONE
+// 17. Reviews Page !!!DONE
 
 export default function Home() {
-  const translations = useTranslations("home");
-  const locale = useLocale();
+  const translations = useTranslations('home')
+  const locale = useLocale()
 
-  const { data } = useGetAllProductsQuery();
+  const { data } = useGetAllProductsQuery()
 
   return (
     <div className="font-[family-name:var(--font-geist-sans)]">
@@ -85,16 +85,16 @@ export default function Home() {
             className="w-full flex-1 rounded-[20] relative overflow-hidden"
             // className="w-full flex-1 rounded-[20] p-[40] relative"
             style={{
-              background: "radial-gradient(circle, rgba(215, 228, 215, 0.8) 30%, rgba(180, 200, 180, 1) 100%)",
+              background: 'radial-gradient(circle, rgba(215, 228, 215, 0.8) 30%, rgba(180, 200, 180, 1) 100%)',
             }}
             // style={{ background: 'radial-gradient(circle,  #3c4d3c 0%, #2d3e2d 70%, #263626 100%)' }}
           >
             <div
               className="absolute top-[0] left-[0] w-full h-full w-[910px] h-[500px] "
               style={{
-                backgroundImage: "url(/images/homapage-image.jpg)",
-                backgroundSize: "cover",
-                backgroundPosition: "center",
+                backgroundImage: 'url(/images/homapage-image.jpg)',
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
               }}
             ></div>
           </div>
@@ -188,5 +188,5 @@ export default function Home() {
         </div>
       </div>
     </div>
-  );
+  )
 }
