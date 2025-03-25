@@ -32,6 +32,7 @@ const advantages = [
 // 6.  filters (url query params) ???
 // 8.  search (AI)
 // 9.  recommendation (FAIS vectors)
+// 18. Кнопка адміністрування не повинна бути видимою звичайним користувачам (сторінка профіль)
 
 // 7.  homepage !!!ALMOST_DONE
 // 10. administration (products CRUD) !!!ALMOST_DONE
