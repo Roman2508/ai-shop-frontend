@@ -44,7 +44,28 @@
     "acceptPayment": "Payment Methods:"
   },
   "home": {
-    "title": "Home page"
+    "categoryButton": "More categories",
+    "advantages": {
+      "choice": "Choosing the perfect smartphone",
+      "equipment": "Equipment and accessories",
+      "service": "Settings and service"
+    },
+    "assortment": {
+      "title": "Wide range",
+      "text": "We have the experience and all the necessary knowledge, which allows us to effectively analyze customer needs and offer the most appropriate solutions."
+    },
+    "delivery": {
+      "title": "Fast delivery",
+      "text": "We provide fast delivery of goods to customers, which helps save time and conveniently receive the desired product."
+    },
+    "discounts": {
+      "title": "Discounts and promotions",
+      "text": "We regularly hold promotions and offer discounts on various products, making shopping with us even more profitable for customers."
+    },
+    "popular": "Popular",
+    "news": "Novelty",
+    "partners": "Our partners",
+    "showMore": "Show more"
   },
   "catalog": {
     "breadcrumbs": {
