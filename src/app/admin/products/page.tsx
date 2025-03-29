@@ -175,7 +175,7 @@ const AdminProductsPage = () => {
       </Breadcrumb>
 
       <div className="flex flex-col gap-[46]">
-        <div className="flex justify-between items-center">
+        <div className="flex justify-between items-center flex-wrap flex-col md:flex-row gap-[20]">
           <h1 className="text-3xl font-semibold">{t("title")}</h1>
 
           <div className="flex gap-[10]">
@@ -227,7 +227,7 @@ const AdminProductsPage = () => {
         </div>
 
         <Table>
-          <TableHeader>
+          <TableHeader className="text-xs md:text-sm">
             <TableRow>
               <TableHead className="text-center">{t("table.photo")}</TableHead>
               <TableHead className="text-center">{t("table.title")}</TableHead>
@@ -243,7 +243,7 @@ const AdminProductsPage = () => {
                 const productName = getProductTitle(product);
 
                 return (
-                  <TableRow key={product.id}>
+                  <TableRow key={product.id} className="text-xs md:text-sm">
                     <TableCell className="text-center">
                       <div>
                         <img
@@ -267,9 +267,14 @@ const AdminProductsPage = () => {
 
                     <TableCell className="text-center">{t("status")}</TableCell>
 
-                    <TableCell className="text-center">
+                    <TableCell className="text-center whitespace-nowrap">
                       <Link href={`/admin/products/update/${product.id}`}>
-                        <Button size="icon" variant="outline" className="w-[42] h-[42] mr-[10]" disabled={isLoading}>
+                        <Button
+                          size="icon"
+                          variant="outline"
+                          disabled={isLoading}
+                          className="w-[32] h-[32] md:w-[42] md:h-[42] mr-[5] md:mr-[10]"
+                        >
                           <Edit2 />
                         </Button>
                       </Link>
@@ -278,7 +283,7 @@ const AdminProductsPage = () => {
                         size="icon"
                         variant="outline"
                         disabled={isLoading}
-                        className="w-[42] h-[42]"
+                        className="w-[32] h-[32] md:w-[42] md:h-[42]"
                         onClick={() => onDeleteProduct(product.id)}
                       >
                         <Trash2 />

@@ -28,7 +28,7 @@ const WishlistPage = () => {
 
   return (
     <ProfileLayout>
-      <div className="flex justify-between items-center pb-[40]">
+      <div className="flex justify-between items-center pb-[40] gap-[20] flex-col md:flex-row">
         <h1 className="text-3xl font-semibold">{t("wishlist.title")}</h1>
 
         <div className="flex gap-[10]">
@@ -46,7 +46,7 @@ const WishlistPage = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-4 gap-[18]">
+      <div className="grid 2xs:grid-cols-1 md:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4 gap-[18]">
         {user &&
           user.favorites.map((favourite) => (
             <CatalogCard viewType={"cards"} product={favourite.product as ProductModel} />

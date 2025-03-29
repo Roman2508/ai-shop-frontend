@@ -11,9 +11,12 @@ import {
   DropdownMenuCheckboxItem,
 } from "@/components/ui/common/DropdownMenu";
 import { Button } from "@/components/ui/common/Button";
+import { useTranslations } from "next-intl";
 
 const ThemeToggler = () => {
   const { setTheme, theme } = useTheme();
+
+  const t = useTranslations("components.mobileMenu.theme");
 
   return (
     <DropdownMenu>
@@ -25,16 +28,14 @@ const ThemeToggler = () => {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="center">
-        {/* <DropdownMenuItem onClick={() => setTheme("light")}>Світла</DropdownMenuItem> */}
-
         <DropdownMenuCheckboxItem checked={theme === "light"} onClick={() => setTheme("light")}>
-          Світла
+          {t("light")}
         </DropdownMenuCheckboxItem>
         <DropdownMenuCheckboxItem checked={theme === "dark"} onClick={() => setTheme("dark")}>
-          Темна
+          {t("dark")}
         </DropdownMenuCheckboxItem>
         <DropdownMenuCheckboxItem checked={theme === "system"} onClick={() => setTheme("system")}>
-          Системна
+          {t("system")}
         </DropdownMenuCheckboxItem>
       </DropdownMenuContent>
     </DropdownMenu>

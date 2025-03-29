@@ -2,41 +2,41 @@
 
 import React from "react";
 import Link from "next/link";
+import { Menu } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 
+import {
+  Drawer,
+  DrawerClose,
+  DrawerTitle,
+  DrawerHeader,
+  DrawerContent,
+  DrawerTrigger,
+  DrawerDescription,
+} from "@/components/ui/common/Drawer";
 import Search from "./Search";
+import { useTheme } from "next-themes";
 import LoginButton from "./LoginButton";
 import LangToggler from "./LangToggler";
 import { useAuth } from "@/hooks/useAuth";
 import { ThemeToggler } from "./ThemeToggler";
-import { Button } from "@/components/ui/common/Button";
-import ButtonWithIcon from "@/components/ui/custom/ButtonWithIcon";
-import {
-  Drawer,
-  DrawerClose,
-  DrawerContent,
-  DrawerDescription,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerTrigger,
-} from "@/components/ui/common/Drawer";
-import { Menu } from "lucide-react";
-import { Checkbox } from "@/components/ui/common/Checkbox";
-import { Label } from "@/components/ui/common/Label";
 import { setLanguage } from "@/libs/i18n/language";
-import { useTheme } from "next-themes";
+import { Label } from "@/components/ui/common/Label";
+import { Button } from "@/components/ui/common/Button";
+import { Checkbox } from "@/components/ui/common/Checkbox";
+import ButtonWithIcon from "@/components/ui/custom/ButtonWithIcon";
 
 const Header = () => {
   const locale = useLocale();
   const t = useTranslations("header");
+  const menuT = useTranslations("components.mobileMenu");
 
   const { setTheme, theme } = useTheme();
 
   const { isAuthentificated } = useAuth();
 
   return (
-    <header className="fixed w-full flex justify-between items-center gap-[20] py-[20] px-[26] bg-dark text-white z-[111]">
-      {/* <header className="flex justify-between p-[20]"> */}
+    <header className="fixed w-full flex justify-between items-center gap-[20] py-[20] px-[26] bg-dark text-white z-[10]">
       <div className="flex-1 flex gap-[20] items-center">
         <Link href="/catalog">
           <ButtonWithIcon
@@ -114,7 +114,7 @@ const Header = () => {
             <DrawerContent>
               <DrawerHeader>
                 <div className="flex justify-between items-center">
-                  <DrawerTitle>Меню</DrawerTitle>
+                  <DrawerTitle>{menuT("title")}</DrawerTitle>
 
                   <DrawerClose>
                     <Button variant="secondary" size="icon" className="">
@@ -124,20 +124,20 @@ const Header = () => {
                 </div>
 
                 <DrawerDescription>
-                  <Link href="" className="block py-[15] border-b border-border">
-                    Профіль
+                  <Link href="/profile/personal-information" className="block py-[15] border-b border-border">
+                    {menuT("links.profile")}
                   </Link>
 
-                  <Link href="" className="block py-[15] border-b border-border">
-                    Корзина
+                  <Link href="/profile/cart" className="block py-[15] border-b border-border">
+                    {menuT("links.cart")}
                   </Link>
 
-                  <Link href="" className="block py-[15] border-b border-border">
-                    Збережене
+                  <Link href="/profile/wishlist" className="block py-[15] border-b border-border">
+                    {menuT("links.favorites")}
                   </Link>
 
                   <div className="py-[15] border-b border-border">
-                    <b className="block mb-[10]">Мова:</b>
+                    <b className="block mb-[10]">{menuT("lang")}:</b>
 
                     <Label className="flex items-center gap-[10] mb-[10]" onClick={() => setLanguage("ua")}>
                       <Checkbox checked={locale === "ua"} />
@@ -151,21 +151,27 @@ const Header = () => {
                   </div>
 
                   <div className="py-[15] border-b border-border">
-                    <b className="block mb-[10]">Тема:</b>
+                    <b className="block mb-[10]">{menuT("theme.title")}:</b>
 
                     <Label className="flex items-center gap-[10] mb-[10]" onClick={() => setTheme("light")}>
                       <Checkbox checked={theme === "light"} />
-                      Світла
+                      {menuT("theme.light")}
                     </Label>
                     <Label className="flex items-center gap-[10] mb-[10]" onClick={() => setTheme("dark")}>
                       <Checkbox checked={theme === "dark"} />
-                      Темна
+                      {menuT("theme.dark")}
                     </Label>
                     <Label className="flex items-center gap-[10]" onClick={() => setTheme("system")}>
                       <Checkbox checked={theme === "system"} />
-                      Системна
+                      {menuT("theme.system")}
                     </Label>
                   </div>
+
+                  {!isAuthentificated && (
+                    <div className="mt-[20]">
+                      <LoginButton classNames="w-full text-muted-foreground hover:border-muted-foreground fill-muted-foreground" />
+                    </div>
+                  )}
                 </DrawerDescription>
               </DrawerHeader>
             </DrawerContent>

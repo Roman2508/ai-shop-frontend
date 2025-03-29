@@ -1,0 +1,14 @@
+query GetAllOrders {
+  getAllOrders {
+    id
+    status
+    total
+    user {
+      id
+      email
+      displayName
+      avatar
+    }
+    createdAt
+  }
+}

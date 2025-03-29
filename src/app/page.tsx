@@ -1,44 +1,33 @@
 "use client";
+
+import "swiper/css";
 import React from "react";
+import "swiper/css/bundle";
+import "swiper/css/autoplay";
 import Link from "next/link";
+import "swiper/css/scrollbar";
 import Image from "next/image";
-import { useTranslations, useLocale } from "next-intl";
+import { Autoplay } from "swiper/modules";
+import { useTranslations } from "next-intl";
+import { Swiper, SwiperSlide } from "swiper/react";
 
 import { Button } from "@/components/ui/common/Button";
 import CatalogCard from "@/components/features/CatalogCard";
 import ButtonWithIcon from "@/components/ui/custom/ButtonWithIcon";
 import { ProductModel, useGetAllProductsQuery } from "@/graphql/generated/output";
 
-// import Swiper core and required modules
-import { Navigation, Pagination, Scrollbar, A11y } from "swiper/modules";
-
-import SwiperCore from "swiper";
-import { Autoplay } from "swiper/modules";
-import { Swiper, SwiperSlide } from "swiper/react";
-// SwiperCore.use([Autoplay]);
-// Import Swiper styles
-import "swiper/css";
-import "swiper/css/bundle";
-// import "swiper/css/navigation";
-// import "swiper/css/pagination";
-import "swiper/css/scrollbar";
-import "swiper/css/autoplay";
-
 const categories = ["Apple", "Samsung", "Xiaomi", "Google Pixel", "One Plus", "Motorola", "Nokia", "Sony"];
 
 // tido:
-// 4.  localization
-// 5.  mobile adaptation
 // 6.  filters (url query params) ???
 // 8.  search (AI)
 // 9.  recommendation (FAIS vectors)
-// 18. Кнопка адміністрування не повинна бути видимою звичайним користувачам (сторінка профіль)
-// 19. Доробити сторінку http://localhost:3000/admin
 
 // 7.  homepage !!!ALMOST_DONE
 // 10. administration (products CRUD) !!!ALMOST_DONE
 // 12. Toast !!!ALMOST_DONE
 // 15. Авторизація !!!ALMOST_DONE
+// 5.  mobile adaptation !!!ALMOST_DONE
 
 // 1.  Comments !!!DONE
 // 2.  Payment !!!DONE
@@ -48,6 +37,9 @@ const categories = ["Apple", "Samsung", "Xiaomi", "Google Pixel", "One Plus", "M
 // 14. Активні сесії !!!DONE
 // 3.  Orders (change status cron) !!!DONE
 // 17. Reviews Page !!!DONE
+// 4.  localization !!!DONE
+// 19. Доробити сторінку http://localhost:3000/admin !!!DONE
+// 18. Кнопка адміністрування не повинна бути видимою звичайним користувачам (сторінка профіль) !!!DONE
 
 const calcSlidesPerView = (windowWidth: number) => {
   if (!windowWidth) return 5;
@@ -60,7 +52,6 @@ const calcSlidesPerView = (windowWidth: number) => {
 
 export default function Home() {
   const t = useTranslations("home");
-  const locale = useLocale();
 
   const { data } = useGetAllProductsQuery();
 

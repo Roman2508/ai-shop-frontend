@@ -1,32 +1,36 @@
-import React from 'react'
-import { useTranslations } from 'next-intl'
+import React from "react";
+import { useTranslations } from "next-intl";
 
-import LoginForm from '@/components/features/LoginForm'
-import RegisterForm from '@/components/features/RegisterForm'
-import ButtonWithIcon from '@/components/ui/custom/ButtonWithIcon'
-import { Dialog, DialogTitle, DialogHeader, DialogTrigger, DialogContent } from '@/components/ui/common/Dialog'
+import LoginForm from "@/components/features/LoginForm";
+import RegisterForm from "@/components/features/RegisterForm";
+import ButtonWithIcon from "@/components/ui/custom/ButtonWithIcon";
+import { Dialog, DialogTitle, DialogHeader, DialogTrigger, DialogContent } from "@/components/ui/common/Dialog";
 
-const LoginButton = () => {
-  const t = useTranslations('header')
+interface ILoginButtonProps {
+  classNames?: string;
+}
 
-  const [formType, setFromType] = React.useState<'login' | 'register'>('login')
+const LoginButton: React.FC<ILoginButtonProps> = ({ classNames = "" }) => {
+  const t = useTranslations("header");
+
+  const [formType, setFromType] = React.useState<"login" | "register">("login");
 
   return (
     <>
       <Dialog>
         <DialogTrigger asChild>
           <ButtonWithIcon
-            text={t('auth.loginBtn')}
-            iconSrc="/icons/user.png"
             buttonVariant="static"
-            classNames="h-[36]"
+            text={t("auth.loginBtn")}
+            iconSrc="/icons/user.png"
+            classNames={`h-[36] ${classNames}`}
           />
         </DialogTrigger>
 
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
-            <DialogTitle>{formType === 'login' ? t('auth.loginForm.title') : t('auth.registerForm.title')}</DialogTitle>
-            {formType === 'login' ? (
+            <DialogTitle>{formType === "login" ? t("auth.loginForm.title") : t("auth.registerForm.title")}</DialogTitle>
+            {formType === "login" ? (
               <LoginForm setFromType={setFromType} />
             ) : (
               <RegisterForm setFromType={setFromType} />
@@ -35,7 +39,7 @@ const LoginButton = () => {
         </DialogContent>
       </Dialog>
     </>
-  )
-}
+  );
+};
 
-export default LoginButton
+export default LoginButton;

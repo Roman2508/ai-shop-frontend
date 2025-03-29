@@ -284,6 +284,21 @@
       "gb": "GB",
       "goToCartButton": "Go to cart",
       "addToCartButton": "Add to cart"
+    },
+    "mobileMenu": {
+      "title": "Menu",
+      "links": {
+        "profile": "Profile",
+        "cart": "Cart",
+        "favorites": "Saved"
+      },
+      "lang": "Language",
+      "theme": {
+        "title": "Theme",
+        "light": "Light",
+        "dark": "Dark",
+        "system": "System"
+      }
     }
   }
 }

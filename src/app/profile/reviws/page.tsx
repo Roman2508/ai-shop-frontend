@@ -19,7 +19,7 @@ const ReviewsPage = () => {
 
   return (
     <ProfileLayout>
-      <div className="flex justify-between items-center pb-[40]">
+      <div className="flex justify-between items-center pb-[40] gap-[20] flex-col md:flex-row">
         <h1 className="text-3xl font-semibold">{t("reviws.title")}</h1>
 
         <div className="flex gap-[10]">
@@ -32,7 +32,7 @@ const ReviewsPage = () => {
         </div>
       </div>
 
-      <div className="px-[50] py-[40] rounded-[5] border border-border">
+      <div className="md:px-[50] md:py-[40] rounded-[5] md:border border-border">
         {user ? (
           user.reviews.length ? (
             // @ts-ignore

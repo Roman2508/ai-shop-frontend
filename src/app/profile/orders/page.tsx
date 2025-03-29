@@ -43,7 +43,7 @@ const OrdersPage = () => {
 
   return (
     <ProfileLayout>
-      <div className="flex justify-between items-center pb-[40]">
+      <div className="flex justify-between items-center pb-[40] gap-[20] flex-col md:flex-row">
         <h1 className="text-3xl font-semibold">{t("title")}</h1>
 
         <div className="flex gap-[10]">
@@ -54,9 +54,9 @@ const OrdersPage = () => {
         </div>
       </div>
 
-      <div className="px-[50] py-[40] rounded-[5] border border-border">
+      <div className="md:px-[50] md:py-[40] rounded-[5] md:border border-border">
         {[payedOrders, deliveredOrders].map((el, index) => (
-          <div className="bg-background rounded-[5] pb-[40] mb-[60] overflow-hidden border border-border">
+          <div className="bg-background rounded-[5] pb-[40] mb-[60] overflow-hidden border border-border" key={index}>
             <h3
               className={`${
                 index === 0 ? "bg-primary text-popover" : "bg-border"
@@ -73,11 +73,11 @@ const OrdersPage = () => {
             </div>
 
             <div className="flex flex-col gap-[40] px-[40]">
-              {el.map((el, index) => {
+              {el.map((el) => {
                 const isItemExpanded = expandedOrders.some((s) => s === el.id);
 
                 return (
-                  <div className="border border-border px-[40] py-[30] rounded-[5]">
+                  <div className="border border-border px-[40] py-[30] rounded-[5]" key={el.id}>
                     <div className="grid grid-cols-4">
                       <div className="text-center">{el.items.length}</div>
                       <div className="text-center">{formatDateTime(el.createdAt)}</div>

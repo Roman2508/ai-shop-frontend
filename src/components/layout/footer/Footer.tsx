@@ -12,7 +12,7 @@ const Footer = () => {
       <div className="flex justify-between items-end flex-wrap grow mb-[50]">
         <div className="w-full xl:w-auto mb-[60] xl:mb-[0]">
           <div className="grow flex gap-[10] items-center mb-[50]">
-            <img src="logo.png" width="30px" height="30px" />
+            <img src="/logo.png" width="30px" height="30px" />
             <b className="text-[16px]">PhoneShop</b>
           </div>
 

@@ -36,7 +36,6 @@ import ButtonWithIcon from "@/components/ui/custom/ButtonWithIcon";
 import ProductTabs from "@/components/features/product/ProductTabs";
 import CatalogCardSkeleton from "@/components/features/CatalogCardSkeleton";
 import { getProductAttributeLabel } from "@/utils/get-product-attribute-label";
-import { useCurrent } from "@/hooks/useCurrent";
 
 const mainCharacteristicsKeys = [
   { key: "screenDiagonal", label_ua: "Діагональ екрану", label_en: "Screen diagonal" },
