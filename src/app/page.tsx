@@ -65,11 +65,11 @@ export default function Home() {
     <div className="font-[family-name:var(--font-geist-sans)]">
       <div className="max-w-[1640px] mx-auto px-[16px]">
         <div className="flex flex-col-reverse lg:flex-row gap-[30px] mb-[70px]">
-          <div className="w-full lg:w-[320] min-w-[320] border rounded-[20]">
-            <div className="pt-[20] px-[25]">
+          <div className="w-full lg:w-[320px] min-w-[320px] border rounded-[20px]">
+            <div className="pt-[20px] px-[25px]">
               {categories.map((el) => (
-                <Link key={el} href="#" className="flex items-center py-[10] gap-[15] border-b border-dotted">
-                  <div className="flex items-center justify-center bg-secondary w-[30] h-[30]">
+                <Link key={el} href="#" className="flex items-center py-[10px] gap-[15px] border-b border-dotted">
+                  <div className="flex items-center justify-center bg-secondary w-[30px] h-[30px]">
                     <Image src="/icons/phone.png" width={20} height={20} alt="phone icon" />
                   </div>
 
@@ -82,14 +82,14 @@ export default function Home() {
               <ButtonWithIcon
                 text={t("categoryButton")}
                 iconSrc="/icons/shopping-bag.png"
-                classNames="w-full rounded-[20]"
-                wrapperClassNames="mt-[15]"
+                classNames="w-full rounded-[20px]"
+                wrapperClassNames="mt-[15px]"
               />
             </Link>
           </div>
 
           <div
-            className="w-full min-h-[400] lg:h-auto flex-1 rounded-[20] relative overflow-hidden"
+            className="w-full min-h-[400px] lg:h-auto flex-1 rounded-[20px] relative overflow-hidden"
             style={{
               background: "radial-gradient(circle, rgba(215, 228, 215, 0.8) 30%, rgba(180, 200, 180, 1) 100%)",
             }}
