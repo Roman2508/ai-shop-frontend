@@ -63,8 +63,8 @@ export default function Home() {
 
   return (
     <div className="font-[family-name:var(--font-geist-sans)]">
-      <div className="max-w-[1640] mx-auto px-[16]">
-        <div className="flex flex-col-reverse lg:flex-row gap-[30] mb-[70]">
+      <div className="max-w-[1640px] mx-auto px-[16px]">
+        <div className="flex flex-col-reverse lg:flex-row gap-[30px] mb-[70px]">
           <div className="w-full lg:w-[320] min-w-[320] border rounded-[20]">
             <div className="pt-[20] px-[25]">
               {categories.map((el) => (
@@ -104,7 +104,7 @@ export default function Home() {
             ></div>
           </div>
 
-          <div className="hidden xl:flex flex-col gap-[20] w-[320] min-w-[320]">
+          <div className="hidden xl:flex flex-col gap-[20px] w-[320px] min-w-[320px]">
             <div className="h-[150] w-full bg-border rounded-[20] p-[20] flex flex-col justify-between">
               <Image src="/images/homepage-filter.svg" width={60} height={60} alt="" />
               <b>{t("advantages.choice")}</b>
@@ -120,7 +120,7 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="flex flex-col lg:flex-row gap-[50] lg:gap-[30] mb-[140]">
+        <div className="flex flex-col lg:flex-row gap-[50px] lg:gap-[30px] mb-[140px]">
           {advantages.map((el, index) => (
             <div key={el.title} className="flex-[1]">
               <div className="flex items-center gap-[15] mb-[15]">
@@ -134,7 +134,7 @@ export default function Home() {
           ))}
         </div>
 
-        <div className="mb-[120]">
+        <div className="mb-[120px]">
           <h3 className="font-semibold text-3xl mb-[40]">{t("popular")}</h3>
           <Swiper
             modules={[Autoplay]}
@@ -165,7 +165,7 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="mb-[120]">
+        <div className="mb-[120px]">
           <h3 className="font-semibold text-3xl mb-[40]">{t("news")}</h3>
 
           <Swiper
