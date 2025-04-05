@@ -174,9 +174,8 @@ const EditProfileForm: React.FC<IEditProfileForm> = ({ user, setPageView }) => {
           <div className="flex flex-col flex-wrap gap-[0]">
             <UploadFiles
               files={files}
-              setFiles={setFiles}
-              actionType="create"
               isMulti={false}
+              setFiles={setFiles}
               buttonText={t('uploadButton')}
             />
           </div>
