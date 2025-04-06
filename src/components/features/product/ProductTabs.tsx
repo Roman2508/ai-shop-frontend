@@ -58,7 +58,7 @@ const ProductTabs: React.FC<IProductTabsProps> = ({ product }) => {
 
             if (!excludedKeys.includes(key)) {
               return (
-                <div className="flex py-[10] border-t border-dashed">
+                <div className="flex py-[10px] border-t border-dashed">
                   <p className="w-[20%]">{getProductAttributeLabel(key, locale as "ua" | "en")}</p>
                   <p className="w-[80%]">{product[key]}</p>
                 </div>
@@ -69,22 +69,22 @@ const ProductTabs: React.FC<IProductTabsProps> = ({ product }) => {
 
       {/* reviews */}
       <TabsContent value="reviews">
-        <div className="max-w-full xl:max-w-[800]">
+        <div className="max-w-full xl:max-w-[800px]">
           {product.reviews.length
             ? product.reviews.map((review) => <Review key={review.id} review={review} type="user" />)
             : ""}
 
           {user && (
-            <div className="mb-[10] py-[10] px-[15]  border border-border rounded-[4]">
+            <div className="mb-[10px] py-[10px] px-[15px] border border-border rounded-[4px]">
               <Textarea
                 value={reviewText}
-                className="rounded-[4]"
+                className="rounded-[4px]"
                 placeholder="Напишить свій відгук сюди"
                 onChange={(e) => setReviewText(e.target.value)}
               ></Textarea>
 
-              <div className="flex justify-end mt-[15]">
-                <Button className="h-[42]" disabled={!reviewText || loading} onClick={onCreateReview}>
+              <div className="flex justify-end mt-[15px]">
+                <Button className="h-[42px]" disabled={!reviewText || loading} onClick={onCreateReview}>
                   Відправити
                 </Button>
               </div>

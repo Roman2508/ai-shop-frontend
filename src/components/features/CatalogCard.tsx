@@ -69,8 +69,6 @@ const CatalogCard: React.FC<CatalogCardPropsType> = ({ product, viewType }) => {
     if (isAuthentificated) {
       addToCart({ variables: { input: { productId, count } } });
       setIsAddedToCart((prev) => !prev);
-
-      console.log("NEW CART ITEM", { count, id: String(Math.random()), product });
       addItemToCart({ count, id: String(Math.random()), product });
     } else {
       alert("Авторизуйтесь щоб додати товар в корзину");
@@ -104,11 +102,11 @@ const CatalogCard: React.FC<CatalogCardPropsType> = ({ product, viewType }) => {
     <Card
       className={
         viewType === "cards"
-          ? "pb-[30] pt-[20] px-[20]"
-          : "flex py-[24] pl-[16] pr-[30] gap-[20] flex-col items-center sm:flex-row"
+          ? "pb-[30px] pt-[20px] px-[20px]"
+          : "flex py-[24px] pl-[16px] pr-[30px] gap-[20px] flex-col items-center sm:flex-row"
       }
     >
-      <div className={viewType === "cards" ? "flex justify-end gap-[10]" : "hidden"}>
+      <div className={viewType === "cards" ? "flex justify-end gap-[10px]" : "hidden"}>
         <Button
           size="icon"
           variant="icon"
@@ -120,10 +118,10 @@ const CatalogCard: React.FC<CatalogCardPropsType> = ({ product, viewType }) => {
         </Button>
       </div>
 
-      <div className="my-[10]">
+      <div className="my-[10px]">
         <Link href={`/catalog/${product.id}`}>
           <img
-            className={viewType === "cards" ? "h-[260] w-full object-cover" : "h-[200] object-cover"}
+            className={viewType === "cards" ? "h-[260px] w-full object-cover" : "h-[200px] object-cover"}
             src={product.images.length ? getPhotoUrl(product.images[0], "products") : "/images/empty-image.webp"}
           />
         </Link>
@@ -133,11 +131,11 @@ const CatalogCard: React.FC<CatalogCardPropsType> = ({ product, viewType }) => {
         className={
           viewType === "cards"
             ? ""
-            : "flex justify-between items-center sm:items-start w-full h-full gap-[20] flex-col 2xl:flex-row"
+            : "flex justify-between items-center sm:items-start w-full h-full gap-[20px] flex-col 2xl:flex-row"
         }
       >
         <div className={viewType === "cards" ? "" : "w-full"}>
-          <div className={viewType === "cards" ? "hidden" : "flex justify-end gap-[10]"}>
+          <div className={viewType === "cards" ? "hidden" : "flex justify-end gap-[10px]"}>
             <Button
               size="icon"
               variant="icon"
@@ -149,33 +147,33 @@ const CatalogCard: React.FC<CatalogCardPropsType> = ({ product, viewType }) => {
             </Button>
           </div>
 
-          <h3 className="mb-[16] text-primary font-semibold truncate">
+          <h3 className="mb-[16px] text-primary font-semibold truncate">
             <Link href={`/catalog/${product.id}`}>
               {`${product.brand}, ${product.ram}/${product.builtInMemory} ${t("gb")}, ${product.color}`}
             </Link>
           </h3>
-          <p className="mb-[16] h-[80] text-sm line-clamp-4">{product.title}</p>
+          <p className="mb-[16px] h-[80px] text-sm line-clamp-4">{product.title}</p>
         </div>
 
         <div
           className={
             viewType === "cards"
               ? ""
-              : "flex flex-col justify-center h-full 2xl:border-l rounded-r-[5] 2xl:pl-[20] w-[230] 2xl:w-auto"
+              : "flex flex-col justify-center h-full 2xl:border-l rounded-r-[5px] 2xl:pl-[20px] w-[230px] 2xl:w-auto"
           }
         >
-          <b className="block mb-[16]">
+          <b className="block mb-[16px]">
             {product.price.toLocaleString("uk-UA")} {t("currency")}
           </b>
 
           {isAddedToCart ? (
             <Link href="/profile/cart">
-              <Button variant="secondary" className={"w-full rounded-[4]"}>
+              <Button variant="secondary" className={"w-full rounded-[4px]"}>
                 {t("goToCartButton")}
               </Button>
             </Link>
           ) : (
-            <div className={viewType === "cards" ? "flex mt-auto" : "flex flex-col w-[230]"}>
+            <div className={viewType === "cards" ? "flex mt-auto" : "flex flex-col w-[230px]"}>
               <div
                 className={
                   viewType === "cards"
@@ -186,8 +184,8 @@ const CatalogCard: React.FC<CatalogCardPropsType> = ({ product, viewType }) => {
                 <Button
                   className={
                     viewType === "cards"
-                      ? "p-[10] pl-[15] bg-transparent text-text"
-                      : "p-[10] pl-[40] bg-transparent text-text"
+                      ? "p-[10px] pl-[15px] bg-transparent text-text"
+                      : "p-[10px] pl-[40px] bg-transparent text-text"
                   }
                   onClick={() => onChangeCount("decrement")}
                 >
@@ -197,8 +195,8 @@ const CatalogCard: React.FC<CatalogCardPropsType> = ({ product, viewType }) => {
                 <Button
                   className={
                     viewType === "cards"
-                      ? "p-[10] pr-[15] bg-transparent text-text"
-                      : "p-[10] pr-[40] bg-transparent text-text"
+                      ? "p-[10px] pr-[15px] bg-transparent text-text"
+                      : "p-[10px] pr-[40px] bg-transparent text-text"
                   }
                   onClick={() => onChangeCount("increment")}
                 >
@@ -209,7 +207,7 @@ const CatalogCard: React.FC<CatalogCardPropsType> = ({ product, viewType }) => {
                 disabled={isCartLoading}
                 onClick={() => onAddToCart(product.id)}
                 className={
-                  viewType === "cards" ? "rounded-r-[5] rounded-l-[0] w-[50%]" : "rounded-b-[5] rounded-t-[0] w-[100%]"
+                  viewType === "cards" ? "rounded-r-[5px] rounded-l-[0] w-[50%]" : "rounded-b-[5px] rounded-t-[0] w-[100%]"
                 }
               >
                 {t("addToCartButton")}

@@ -73,17 +73,17 @@ const CheckoutForm: React.FC<ICheckoutFormProps> = ({
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <h2 className="text-2xl font-semibold">Особисті дані</h2>
 
-        <div className="mt-[20] mb-[60]">
+        <div className="mt-[20px] mb-[60px]">
           <FormField
             control={form.control}
             name="displayName"
             render={({ field }) => (
-              <FormItem className="mb-[30]">
+              <FormItem className="mb-[30px]">
                 <FormControl>
                   <Input
                     placeholder={t("userNamePlaceholder")}
                     variant="primary"
-                    className="h-[50] px-[20] w-full"
+                    className="h-[50px] px-[20px] w-full"
                     {...field}
                   />
                 </FormControl>
@@ -102,7 +102,7 @@ const CheckoutForm: React.FC<ICheckoutFormProps> = ({
                   <Input
                     placeholder={t("userNamePlaceholder")}
                     variant="primary"
-                    className="h-[50] px-[20] w-full"
+                    className="h-[50px] px-[20px] w-full"
                     {...field}
                   />
                 </FormControl>
@@ -113,7 +113,7 @@ const CheckoutForm: React.FC<ICheckoutFormProps> = ({
           />
 
           <div className="flex justify-center">
-            <Button variant="link" className="px-[20]" onClick={handleChangePageView}>
+            <Button variant="link" className="px-[20px]" onClick={handleChangePageView}>
               {pageView === "view" ? "Редагувати" : "Завершити редагування"}
             </Button>
           </div>
@@ -121,22 +121,22 @@ const CheckoutForm: React.FC<ICheckoutFormProps> = ({
 
         <h2 className="text-2xl font-semibold">Інформація про доставку</h2>
 
-        <div className="mt-[20] mb-[40]">
+        <div className="mt-[20px] mb-[40px]">
           <div className="flex flex-col flex-wrap gap-[0]">
             <DeliveryButton setDeliveryData={setDeliveryData} classNames="max-w-full" />
 
-            <div className="pb-[30]">
-              <div className="flex py-[20] border-b border-dashed">
+            <div className="pb-[30px]">
+              <div className="flex py-[20px] border-b border-dashed">
                 <p className="w-[30%]">{t("city")}</p>
                 <p className="w-[70%] text-right font-semibold">{form.watch("city") ? form.watch("city") : "-"}</p>
               </div>
 
-              <div className="flex py-[20] border-b border-dashed">
+              <div className="flex py-[20px] border-b border-dashed">
                 <p className="w-[30%]">{t("street")}</p>
                 <p className="w-[70%] text-right font-semibold">{form.watch("street") ? form.watch("street") : "-"}</p>
               </div>
 
-              <div className="flex py-[20] border-b border-dashed">
+              <div className="flex py-[20px] border-b border-dashed">
                 <p className="w-[30%]">{t("postOffice")}</p>
                 <p className="w-[70%] text-right font-semibold">
                   {form.watch("postOffice") ? form.watch("postOffice") : "-"}
@@ -146,13 +146,13 @@ const CheckoutForm: React.FC<ICheckoutFormProps> = ({
           </div>
 
           <div className="flex justify-center">
-            <Button variant="link" className="px-[20]" onClick={handleChangePageView}>
+            <Button variant="link" className="px-[20px]" onClick={handleChangePageView}>
               {pageView === "view" ? "Редагувати" : "Завершити редагування"}
             </Button>
           </div>
         </div>
 
-        <div className="flex justify-between gap-[20]">
+        <div className="flex justify-between gap-[20px]">
           <ButtonWithIcon
             disabled={isLoading}
             VectorIcon={BackIcon}

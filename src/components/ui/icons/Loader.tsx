@@ -6,7 +6,7 @@ interface ILoaderProps {
 
 const Loader: React.FC<ILoaderProps> = ({ text = 'Шукаємо...' }) => {
   return (
-    <div className="flex justify-center items-center gap-[10] pt-[30]">
+    <div className="flex justify-center items-center gap-[10px] pt-[30px]">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="24"

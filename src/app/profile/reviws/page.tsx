@@ -19,20 +19,20 @@ const ReviewsPage = () => {
 
   return (
     <ProfileLayout>
-      <div className="flex justify-between items-center pb-[40] gap-[20] flex-col md:flex-row">
+      <div className="flex justify-between items-center pb-[40px] gap-[20px] flex-col md:flex-row">
         <h1 className="text-3xl font-semibold">{t("reviws.title")}</h1>
 
-        <div className="flex gap-[10]">
+        <div className="flex gap-[10px]">
           <Link href="/profile/orders">
             <ButtonWithIcon iconSrc="/icons/list.png" text={t("orders.ordersButton")} buttonVariant="secondary" />
           </Link>
-          <Button size="icon" className="h-[44] w-[44]">
+          <Button size="icon" className="h-[44px] w-[44px]">
             {payedOrders.length}
           </Button>
         </div>
       </div>
 
-      <div className="md:px-[50] md:py-[40] rounded-[5] md:border border-border">
+      <div className="md:px-[50px] md:py-[40px] rounded-[5px] md:border border-border">
         {user ? (
           user.reviews.length ? (
             // @ts-ignore

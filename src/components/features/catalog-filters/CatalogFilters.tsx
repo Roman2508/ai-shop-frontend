@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { useTranslations } from "next-intl";
 
 import {
   Select,
@@ -22,9 +23,8 @@ import {
 import { Button } from "@/components/ui/common/Button";
 import ViewCardIcon from "@/components/images/ViewCardIcon";
 import ViewRowsIcon from "@/components/images/ViewRowsIcon";
-import ProductFilter from "@/components/features/product-filter/ProductFilter";
 import { PaginateAndFilterInput } from "@/graphql/generated/output";
-import { useLocale, useTranslations } from "next-intl";
+import ProductFilter from "@/components/features/product-filter/ProductFilter";
 
 interface ICatalogFiltersProps {
   maxPrice: number;
@@ -48,8 +48,8 @@ const CatalogFilters: React.FC<ICatalogFiltersProps> = ({
   const t = useTranslations("catalog");
 
   return (
-    <div className="flex items-center justify-between gap-[50] w-full flex-col md:flex-row">
-      <div className="flex items-center gap-[10]">
+    <div className="flex items-center justify-between gap-[50px] w-full flex-col md:flex-row">
+      <div className="flex items-center gap-[10px]">
         <Drawer>
           <DrawerTrigger>
             <Button className="block xl:hidden">Фільтри</Button>
@@ -98,11 +98,11 @@ const CatalogFilters: React.FC<ICatalogFiltersProps> = ({
         </Select>
       </div>
 
-      <div className="flex items-center gap-[30]">
-        <div className="flex items-center gap-[10]">
+      <div className="flex items-center gap-[30px]">
+        <div className="flex items-center gap-[10px]">
           <div className="">{t("filter.itemsPerPage")}</div>
           <Select onValueChange={(value) => fetchFilteredData({ limit: Number(value) })}>
-            <SelectTrigger className="w-[75]">
+            <SelectTrigger className="w-[75px]">
               <SelectValue placeholder="24" />
             </SelectTrigger>
             <SelectContent>
@@ -117,11 +117,21 @@ const CatalogFilters: React.FC<ICatalogFiltersProps> = ({
         </div>
 
         <div>
-          <Button size="icon" variant="icon" className="border-none w-[44] h-[44]" onClick={() => setViewType("cards")}>
+          <Button
+            size="icon"
+            variant="icon"
+            className="border-none w-[44px] h-[44px]"
+            onClick={() => setViewType("cards")}
+          >
             <ViewCardIcon className={viewType === "cards" ? "fill-primary" : "fill-accent-foreground"} />
           </Button>
 
-          <Button size="icon" variant="icon" className="border-none w-[44] h-[44]" onClick={() => setViewType("rows")}>
+          <Button
+            size="icon"
+            variant="icon"
+            className="border-none w-[44px] h-[44px]"
+            onClick={() => setViewType("rows")}
+          >
             <ViewRowsIcon className={viewType === "rows" ? "fill-primary" : "fill-accent-foreground"} />
           </Button>
         </div>

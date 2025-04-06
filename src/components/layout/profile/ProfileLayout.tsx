@@ -4,7 +4,7 @@ import React from "react";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
-import { Tabs, TabsList, TabsContent, TabsTrigger } from "@/components/ui/common/Tabs";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/common/Tabs";
 import { Heart, ListOrdered, MessageCircle, ShoppingCart, User, Wrench } from "lucide-react";
 
 import {
@@ -15,8 +15,8 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/common/Breadcrumb";
-import { Card } from "@/components/ui/common/Card";
 import { useCurrent } from "@/hooks/useCurrent";
+import { Card } from "@/components/ui/common/Card";
 
 const ProfileLayout = ({ children }: Readonly<{ children: React.ReactNode }>) => {
   const pathname = usePathname();
@@ -65,8 +65,8 @@ const ProfileLayout = ({ children }: Readonly<{ children: React.ReactNode }>) =>
   ];
 
   return (
-    <div className="max-w-[1640] mx-auto px-[16]">
-      <Breadcrumb className="mb-[45]">
+    <div className="max-w-[1640px] mx-auto px-[16px]">
+      <Breadcrumb className="mb-[45px]">
         <BreadcrumbList>
           <BreadcrumbItem>
             <BreadcrumbLink>
@@ -81,19 +81,19 @@ const ProfileLayout = ({ children }: Readonly<{ children: React.ReactNode }>) =>
         </BreadcrumbList>
       </Breadcrumb>
 
-      <div className="block xl:hidden flex justify-center mb-[40]">
+      <div className="block xl:hidden flex justify-center mb-[40px]">
         <Tabs defaultValue="description">
-          <TabsList className="grid grid-cols-3 gap-[40] h-[150] sm:h-[60] sm:block">
+          <TabsList className="grid grid-cols-3 gap-[40px] h-[150px] sm:h-[60px] sm:block">
             {linksList.map((el) => {
               const isAdminPage = el.link.includes("admin");
               if (isAdminPage && user?.role === "USER") return;
 
               return (
-                <TabsTrigger value={el.label} className="text-sm p-[5] md:px-[10] md:py-[5] h-[40]">
+                <TabsTrigger value={el.label} className="text-sm p-[5px] md:px-[10px] md:py-[5px] h-[40px]">
                   <Link
                     key={el.link}
                     href={el.link}
-                    className="flex items-center gap-[5] pb-[10] mb-[10] border-b border-dashed flex-col"
+                    className="flex items-center gap-[5px] pb-[10px] mb-[10px] border-b border-dashed flex-col"
                   >
                     {pathname === el.link ? el.iconActive : el.icon}
                     <p className={pathname === el.link ? "text-primary font-semibold" : ""}>{el.label}</p>
@@ -105,8 +105,8 @@ const ProfileLayout = ({ children }: Readonly<{ children: React.ReactNode }>) =>
         </Tabs>
       </div>
 
-      <div className="flex items-baseline gap-[46]">
-        <Card className="w-[300] py-[20] px-[25] sticky top-[100] hidden xl:block">
+      <div className="flex items-baseline gap-[46px]">
+        <Card className="w-[300px] py-[20px] px-[25px] sticky top-[100px] hidden xl:block">
           {linksList.map((el) => {
             const isAdminPage = el.link.includes("admin");
             if (isAdminPage && user?.role === "USER") return;
@@ -115,7 +115,7 @@ const ProfileLayout = ({ children }: Readonly<{ children: React.ReactNode }>) =>
               <Link
                 key={el.link}
                 href={el.link}
-                className="flex items-center gap-[15] pb-[10] mb-[10] border-b border-dashed"
+                className="flex items-center gap-[15px] pb-[10px] mb-[10px] border-b border-dashed"
               >
                 {pathname === el.link ? el.iconActive : el.icon}
                 <p className={pathname === el.link ? "text-primary font-semibold" : ""}>{el.label}</p>

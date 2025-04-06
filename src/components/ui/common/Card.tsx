@@ -2,7 +2,7 @@ import { cn } from "@/utils/tw-merge";
 import * as React from "react";
 
 const Card = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(({ className, ...props }, ref) => (
-  <div ref={ref} className={cn("overflow-hidden border text-card-foreground rounded-[10]", className)} {...props} />
+  <div ref={ref} className={cn("overflow-hidden border text-card-foreground rounded-[10px]", className)} {...props} />
 ));
 Card.displayName = "Card";
 

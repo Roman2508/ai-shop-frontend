@@ -22,6 +22,7 @@ const categories = ["Apple", "Samsung", "Xiaomi", "Google Pixel", "One Plus", "M
 // 6.  filters (url query params) ???
 // 8.  search (AI)
 // 9.  recommendation (FAIS vectors)
+// 20. англійська версія thank-you page
 
 // 7.  homepage !!!ALMOST_DONE
 // 10. administration (products CRUD) !!!ALMOST_DONE
@@ -105,15 +106,15 @@ export default function Home() {
           </div>
 
           <div className="hidden xl:flex flex-col gap-[20px] w-[320px] min-w-[320px]">
-            <div className="h-[150] w-full bg-border rounded-[20] p-[20] flex flex-col justify-between">
+            <div className="h-[150px] w-full bg-border rounded-[20px] p-[20px] flex flex-col justify-between">
               <Image src="/images/homepage-filter.svg" width={60} height={60} alt="" />
               <b>{t("advantages.choice")}</b>
             </div>
-            <div className="h-[150] w-full bg-border rounded-[20] p-[20] flex flex-col justify-between">
+            <div className="h-[150px] w-full bg-border rounded-[20px] p-[20px] flex flex-col justify-between">
               <Image src="/images/homepage-accessories.svg" width={60} height={60} alt="" />
               <b>{t("advantages.equipment")}</b>
             </div>
-            <div className="h-[150] w-full bg-border rounded-[20] p-[20] flex flex-col justify-between">
+            <div className="h-[150px] w-full bg-border rounded-[20px] p-[20px] flex flex-col justify-between">
               <Image src="/images/homepage-services.svg" width={60} height={60} alt="" />
               <b>{t("advantages.service")}</b>
             </div>
@@ -123,8 +124,8 @@ export default function Home() {
         <div className="flex flex-col lg:flex-row gap-[50px] lg:gap-[30px] mb-[140px]">
           {advantages.map((el, index) => (
             <div key={el.title} className="flex-[1]">
-              <div className="flex items-center gap-[15] mb-[15]">
-                <div className="flex items-center justify-center bg-secondary rounded-full w-[55] h-[55]">
+              <div className="flex items-center gap-[15px] mb-[15px]">
+                <div className="flex items-center justify-center bg-secondary rounded-full w-[55px] h-[55px]">
                   <Image src={`/images/homapage-advantage-${index + 1}.svg`} width={30} height={30} alt="icon" />
                 </div>
                 <h4 className="font-semibold text-xl">{el.title}</h4>
@@ -156,9 +157,9 @@ export default function Home() {
                 ))}
           </Swiper>
 
-          <div className="flex justify-center mt-[20]">
+          <div className="flex justify-center mt-[20px]">
             <Link href="/catalog">
-              <Button variant="link" className="px-[20]">
+              <Button variant="link" className="px-[20px]">
                 {t("showMore")}
               </Button>
             </Link>
@@ -166,7 +167,7 @@ export default function Home() {
         </div>
 
         <div className="mb-[120px]">
-          <h3 className="font-semibold text-3xl mb-[40]">{t("news")}</h3>
+          <h3 className="font-semibold text-3xl mb-[40px]">{t("news")}</h3>
 
           <Swiper
             modules={[Autoplay]}
@@ -181,16 +182,16 @@ export default function Home() {
                     <CatalogCard key={el.id} viewType="cards" product={el as ProductModel} />
                   </SwiperSlide>
                 ))
-              : [...Array(15)].map((el, index) => (
-                  <SwiperSlide>
+              : [...Array(15)].map((_, index) => (
+                  <SwiperSlide key={index}>
                     <div></div>
                   </SwiperSlide>
                 ))}
           </Swiper>
 
-          <div className="flex justify-center mt-[20]">
+          <div className="flex justify-center mt-[20px]">
             <Link href="/catalog">
-              <Button variant="link" className="px-[20]">
+              <Button variant="link" className="px-[20px]">
                 {t("showMore")}
               </Button>
             </Link>
@@ -198,15 +199,15 @@ export default function Home() {
         </div>
 
         <div>
-          <h3 className="font-semibold text-3xl mb-[40]">{t("partners")}</h3>
+          <h3 className="font-semibold text-3xl mb-[40px]">{t("partners")}</h3>
 
-          <div className="grid grid-cols-2 2xs:grid-cols-4 lg:grid-cols-6 gap-[20]">
+          <div className="grid grid-cols-2 2xs:grid-cols-4 lg:grid-cols-6 gap-[20px]">
             {Array(12)
               .fill(null)
               .map((_, index) => (
                 <div
                   key={index}
-                  className="h-[150] w-full bg-border rounded-[20] p-[20] flex justify-center items-center"
+                  className="h-[150px] w-full bg-border rounded-[20px] p-[20px] flex justify-center items-center"
                 >
                   <img src={`images/partners/${index + 1}.png`} className="max-h-[70%]" />
                 </div>

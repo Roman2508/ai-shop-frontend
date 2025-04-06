@@ -23,7 +23,7 @@ const LoginButton: React.FC<ILoginButtonProps> = ({ classNames = "" }) => {
             buttonVariant="static"
             text={t("auth.loginBtn")}
             iconSrc="/icons/user.png"
-            classNames={`h-[36] ${classNames}`}
+            classNames={`h-[36px] ${classNames}`}
           />
         </DialogTrigger>
 

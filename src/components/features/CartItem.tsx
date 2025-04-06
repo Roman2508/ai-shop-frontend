@@ -1,4 +1,5 @@
 import React from 'react'
+import { toast } from 'sonner'
 import { Trash2 } from 'lucide-react'
 import { useDebouncedCallback } from 'use-debounce'
 
@@ -7,9 +8,8 @@ import { Input } from '../ui/common/Input'
 import { Button } from '../ui/common/Button'
 import getPhotoUrl from '@/utils/get-photo-url'
 import { Checkbox } from '../ui/common/Checkbox'
-import { ProductModel, useChangeCartItemCountMutation, useToggleCartMutation } from '@/graphql/generated/output'
 import getProductTitle from '@/utils/getProductTitle'
-import { toast } from 'sonner'
+import { ProductModel, useChangeCartItemCountMutation, useToggleCartMutation } from '@/graphql/generated/output'
 
 type CartItemPropsType = {
   id: string
@@ -62,7 +62,7 @@ const CartItem: React.FC<CartItemPropsType> = ({ id, number, product, count, isE
   }
 
   return (
-    <div className="flex items-center gap-[30] py-[20] border-b border-dashed">
+    <div className="flex items-center gap-[30px] py-[20px] border-b border-dashed">
       {isEditable ? (
         <Checkbox
           checked={isChecked}
@@ -73,7 +73,7 @@ const CartItem: React.FC<CartItemPropsType> = ({ id, number, product, count, isE
         <p>{number}</p>
       )}
 
-      <div className="border border-border w-[110] min-w-[110] h-[110] p-[2]">
+      <div className="border border-border w-[110px] min-w-[110px] h-[110px] p-[2px]">
         <img
           className="h-[100%] object-cover"
           src={product.images.length ? getPhotoUrl(product.images[0], 'products') : '/images/empty-image.webp'}
@@ -86,13 +86,13 @@ const CartItem: React.FC<CartItemPropsType> = ({ id, number, product, count, isE
         <b className="text-xl">{product.price.toLocaleString('uk-UA')} / шт.</b>
       </div>
 
-      <div className="flex gap-[15]">
+      <div className="flex gap-[15px]">
         {isEditable ? (
-          <div className={'flex items-center border border-border rounded-full w-[120]'}>
+          <div className={'flex items-center border border-border rounded-full w-[120px]'}>
             <Button
               disabled={loading}
               onClick={() => handleCountChange('decrement', id)}
-              className="p-[10] pl-[15] bg-transparent text-text"
+              className="p-[10px] pl-[15px] bg-transparent text-text"
             >
               -
             </Button>
@@ -100,7 +100,7 @@ const CartItem: React.FC<CartItemPropsType> = ({ id, number, product, count, isE
             <Button
               disabled={loading}
               onClick={() => handleCountChange('increment', id)}
-              className="p-[10] pr-[15] bg-transparent text-text"
+              className="p-[10px] pr-[15px] bg-transparent text-text"
             >
               +
             </Button>
@@ -114,7 +114,7 @@ const CartItem: React.FC<CartItemPropsType> = ({ id, number, product, count, isE
             size="icon"
             variant="outline"
             disabled={loading}
-            className="w-[42] h-[42]"
+            className="w-[42px] h-[42px]"
             onClick={() => onDeleteItemFromCart(product.id, count)}
           >
             <Trash2 />

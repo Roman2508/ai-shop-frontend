@@ -3,6 +3,7 @@
 import * as React from "react";
 import { useTheme } from "next-themes";
 import { Moon, Sun } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 import {
   DropdownMenu,
@@ -11,7 +12,6 @@ import {
   DropdownMenuCheckboxItem,
 } from "@/components/ui/common/DropdownMenu";
 import { Button } from "@/components/ui/common/Button";
-import { useTranslations } from "next-intl";
 
 const ThemeToggler = () => {
   const { setTheme, theme } = useTheme();
