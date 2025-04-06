@@ -83,8 +83,8 @@ const AdminPage = () => {
   ];
 
   return (
-    <div className="max-w-[1640] mx-auto px-[16]">
-      <Breadcrumb className="mb-[45]">
+    <div className="max-w-[1640px] mx-auto px-[16px]">
+      <Breadcrumb className="mb-[45px]">
         <BreadcrumbList>
           <BreadcrumbItem>
             <BreadcrumbLink>
@@ -100,19 +100,19 @@ const AdminPage = () => {
         </BreadcrumbList>
       </Breadcrumb>
 
-      <div className="flex flex-col gap-[46]">
-        <div className="flex justify-center gap-[20] sm:justify-between items-center flex-col sm:flex-row">
+      <div className="flex flex-col gap-[46px]">
+        <div className="flex justify-center gap-[20px] sm:justify-between items-center flex-col sm:flex-row">
           <h1 className="font-bold text-lg">{t("title")}</h1>
 
-          <div className="flex gap-[10]">
+          <div className="flex gap-[10px]">
             <Link href="/admin/products">
-              <Button variant="outline" className="h-[36] w-[160]">
+              <Button variant="outline" className="h-[36px] w-[160px]">
                 {t("editProductsButton")}
               </Button>
             </Link>
 
             <Link href="/admin/users">
-              <Button variant="outline" className="h-[36] w-[160]">
+              <Button variant="outline" className="h-[36px] w-[160px]">
                 {t("editUsersButton")}
               </Button>
             </Link>
@@ -120,10 +120,13 @@ const AdminPage = () => {
         </div>
 
         <div>
-          <div className="flex justify-between flex-wrap gap-[20]">
+          <div className="flex justify-between flex-wrap gap-[20px]">
             {statsData.map((el) => (
-              <Card key={el.label} className="p-[20] xl:flex-1 h-[108] min-w-full sm:min-w-[calc(50%-10px)] xl:w-auto">
-                <div className="flex items-center justify-between mb-[10]">
+              <Card
+                key={el.label}
+                className="p-[20px] xl:flex-1 h-[108px] min-w-full sm:min-w-[calc(50%-10px)] xl:w-auto"
+              >
+                <div className="flex items-center justify-between mb-[10px]">
                   <p>{el.label}</p>
                   {el.icon}
                 </div>
@@ -132,9 +135,9 @@ const AdminPage = () => {
             ))}
           </div>
 
-          <div className="flex justify-between flex-col xl:flex-row gap-[20] mt-[20]">
-            <Card className="p-[20] w-full xl:w-[calc(60%-10px)]">
-              <b className="text-lg block pb-[10] mb-[10] border-b"> {t("income_stat")}</b>
+          <div className="flex justify-between flex-col xl:flex-row gap-[20px] mt-[20px]">
+            <Card className="p-[20px] w-full xl:w-[calc(60%-10px)]">
+              <b className="text-lg block pb-[10px] mb-[10px] border-b"> {t("income_stat")}</b>
 
               <ChartContainer config={chartConfig} className="aspect-auto h-[250px] w-full">
                 <AreaChart data={chartData}>
@@ -182,14 +185,14 @@ const AdminPage = () => {
               </ChartContainer>
             </Card>
 
-            <Card className="p-[20] w-full xl:w-[calc(40%-10px)]">
-              <b className="text-lg block mb-[10]"> {t("buyers")}</b>
+            <Card className="p-[20px] w-full xl:w-[calc(40%-10px)]">
+              <b className="text-lg block mb-[10px]"> {t("buyers")}</b>
               <div>
                 {orders?.getAllOrders.slice(0, 5).map((el) => (
                   <div key={el.id} className="border-t flex items-center justify-between">
-                    <div className="flex items-center gap-[10] py-[10] flex-1">
+                    <div className="flex items-center gap-[10px] py-[10px] flex-1">
                       <img
-                        className="w-[50] h-[50] rounded-full border"
+                        className="w-[50px] h-[50px] rounded-full border"
                         src={el.user.avatar ? getPhotoUrl(el.user.avatar, "users") : "/images/empty-image.webp"}
                         alt="user avatar"
                       />

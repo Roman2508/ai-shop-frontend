@@ -36,10 +36,10 @@ const CartPage = () => {
 
   return (
     <ProfileLayout>
-      <div className="flex justify-between items-center pb-[40]">
+      <div className="flex justify-between items-center pb-[40px]">
         <h1 className="text-3xl font-semibold">{t("cart.title")}</h1>
 
-        <div className="flex gap-[10]">
+        <div className="flex gap-[10px]">
           <Link href="/profile/orders">
             <ButtonWithIcon
               classNames=""
@@ -48,14 +48,14 @@ const CartPage = () => {
               text={t("orders.ordersButton")}
             />
           </Link>
-          <Button size="icon" className="h-[44] w-[44]">
+          <Button size="icon" className="h-[44px] w-[44px]">
             {payedOrders.length}
           </Button>
         </div>
       </div>
 
-      <div className="px-[50] py-[40] rounded-[5] border border-border">
-        <div className="flex items-center justify-between pb-[20] border-b border-dotted">
+      <div className="px-[50px] py-[40px] rounded-[5px] border border-border">
+        <div className="flex items-center justify-between pb-[20px] border-b border-dotted">
           <h4 className="font-semibold text-lg">
             <div>
               <p className="leading-none">
@@ -87,11 +87,11 @@ const CartPage = () => {
             />
           ))}
 
-        <div className="grid grid-cols-1 gap-[18]">
+        <div className="grid grid-cols-1 gap-[18px]">
           {isLoadingProfile ? (
-            <p className="text-center w-full font-bold text-lg pt-[40]">Loading...</p>
+            <p className="text-center w-full font-bold text-lg pt-[40px]">Loading...</p>
           ) : user && !user.cart.length ? (
-            <p className="text-center w-full font-bold text-lg pt-[40]">Пусто</p>
+            <p className="text-center w-full font-bold text-lg pt-[40px]">Пусто</p>
           ) : (
             ""
           )}

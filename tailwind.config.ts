@@ -81,6 +81,17 @@ export default {
         },
       },
     },
+    // safelist: [
+    //   "p-[10]",
+    //   "px-[10]",
+    //   "py-[10]",
+    //   "p-[20]",
+    //   "px-[20]",
+    //   "py-[20]",
+    //   "px-[26]",
+    //   "gap-[20]",
+    //   "z-[10]",
+    // ],
   },
   plugins: [require("tailwindcss-animate")],
 } satisfies Config;

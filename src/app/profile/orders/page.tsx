@@ -43,41 +43,44 @@ const OrdersPage = () => {
 
   return (
     <ProfileLayout>
-      <div className="flex justify-between items-center pb-[40] gap-[20] flex-col md:flex-row">
+      <div className="flex justify-between items-center pb-[40px] gap-[20px] flex-col md:flex-row">
         <h1 className="text-3xl font-semibold">{t("title")}</h1>
 
-        <div className="flex gap-[10]">
+        <div className="flex gap-[10px]">
           <ButtonWithIcon classNames="" iconSrc="/icons/list.png" buttonVariant="secondary" text={t("ordersButton")} />
-          <Button size="icon" className="h-[44] w-[44]">
+          <Button size="icon" className="h-[44px] w-[44px]">
             {payedOrders.length}
           </Button>
         </div>
       </div>
 
-      <div className="md:px-[50] md:py-[40] rounded-[5] md:border border-border">
+      <div className="md:px-[50px] md:py-[40px] rounded-[5px] md:border border-border">
         {[payedOrders, deliveredOrders].map((el, index) => (
-          <div className="bg-background rounded-[5] pb-[40] mb-[60] overflow-hidden border border-border" key={index}>
+          <div
+            className="bg-background rounded-[5px] pb-[40px] mb-[60px] overflow-hidden border border-border"
+            key={index}
+          >
             <h3
               className={`${
                 index === 0 ? "bg-primary text-popover" : "bg-border"
-              }  px-[40] py-[20] text-xl font-semibold`}
+              }  px-[40px] py-[20px] text-xl font-semibold`}
             >
               {index === 0 ? t("ordersInProcessing") : t("completedOrders")}
             </h3>
 
-            <div className="grid grid-cols-4 my-[25] px-[40] font-semibold">
+            <div className="grid grid-cols-4 my-[25px] px-[40px] font-semibold">
               <div className="text-center">{t("table.count")}</div>
               <div className="text-center">{t("table.date")}</div>
               <div className="text-center">{t("table.status")}</div>
               <div className="text-center">{t("table.sum")}</div>
             </div>
 
-            <div className="flex flex-col gap-[40] px-[40]">
+            <div className="flex flex-col gap-[40px] px-[40px]">
               {el.map((el) => {
                 const isItemExpanded = expandedOrders.some((s) => s === el.id);
 
                 return (
-                  <div className="border border-border px-[40] py-[30] rounded-[5]" key={el.id}>
+                  <div className="border border-border px-[40px] py-[30px] rounded-[5px]" key={el.id}>
                     <div className="grid grid-cols-4">
                       <div className="text-center">{el.items.length}</div>
                       <div className="text-center">{formatDateTime(el.createdAt)}</div>
@@ -87,7 +90,7 @@ const OrdersPage = () => {
                       <div className="text-center">{el.total}</div>
                     </div>
 
-                    {!isItemExpanded && <div className="border-b border-dashed pt-[20]"></div>}
+                    {!isItemExpanded && <div className="border-b border-dashed pt-[20px]"></div>}
 
                     <div
                       className={
@@ -97,15 +100,15 @@ const OrdersPage = () => {
                       }
                     >
                       <div className={"overflow-hidden"}>
-                        <h6 className="font-semibold text-2xl border-b border-dashed pb-[24] mt-[50]">
+                        <h6 className="font-semibold text-2xl border-b border-dashed pb-[24px] mt-[50px]">
                           {t("table.productsCount")} ({el.items.length})
                         </h6>
                         {el.items.map((item, index) => (
-                          <div className="flex items-center gap-[30] py-[20] border-b border-dashed">
+                          <div className="flex items-center gap-[30px] py-[20px] border-b border-dashed">
                             <p>{index + 1}</p>
                             <Link
                               href={`/catalog/${item.product.id}`}
-                              className="border border-border w-[110] min-w-[110] h-[110] p-[10]"
+                              className="border border-border w-[110px] min-w-[110px] h-[110px] p-[10px]"
                             >
                               <img
                                 src={
@@ -133,7 +136,7 @@ const OrdersPage = () => {
 
                     <Button
                       variant={isItemExpanded ? "default" : "secondary"}
-                      className="mt-[20] rounded-[5]"
+                      className="mt-[20px] rounded-[5px]"
                       onClick={() => handleChangeExpandedOrders(el.id)}
                     >
                       {isItemExpanded ? t("table.lessDetailsButton") : t("table.moreDetailsButton")}
