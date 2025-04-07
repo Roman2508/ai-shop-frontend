@@ -147,7 +147,6 @@ export type Mutation = {
   toggleCart: Scalars['Boolean']['output'];
   toggleFavorite: Scalars['Boolean']['output'];
   updateProduct: ProductModel;
-  updateStatus: Scalars['Boolean']['output'];
   updateUserData: Scalars['Boolean']['output'];
   updateUserRole: Scalars['Boolean']['output'];
   uploadAvatar: Scalars['Boolean']['output'];
@@ -349,7 +348,10 @@ export type Query = {
   findCurrentSession: SessionModel;
   findProfile: UserModel;
   findSessionsByUser: Array<SessionModel>;
+  getAllOrders: Array<OrderModel>;
   getAllProducts: ProductsAndTotalModel;
+  getAllProductsCount: Scalars['Float']['output'];
+  getAverageRating: Scalars['Float']['output'];
   getMostPopularProducts: Array<ProductModel>;
   getProductById: ProductModel;
   getReviewByUserId: Array<ReviewModel>;
@@ -460,6 +462,7 @@ export type UserModel = {
   street?: Maybe<Scalars['String']['output']>;
   updatedAt: Scalars['DateTime']['output'];
   username: Scalars['String']['output'];
+  viewedProducts: Array<Scalars['String']['output']>;
 };
 
 export type ClearSessionCookieMutationVariables = Exact<{ [key: string]: never; }>;
