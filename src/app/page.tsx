@@ -1,24 +1,26 @@
-"use client";
+'use client'
 
-import "swiper/css";
-import React from "react";
-import "swiper/css/bundle";
-import "swiper/css/autoplay";
-import Link from "next/link";
-import "swiper/css/scrollbar";
-import Image from "next/image";
-import { Autoplay } from "swiper/modules";
-import { useTranslations } from "next-intl";
-import { Swiper, SwiperSlide } from "swiper/react";
+import 'swiper/css'
+import 'swiper/css/bundle'
+import 'swiper/css/autoplay'
+import 'swiper/css/scrollbar'
 
-import { Button } from "@/components/ui/common/Button";
-import CatalogCard from "@/components/features/CatalogCard";
-import ButtonWithIcon from "@/components/ui/custom/ButtonWithIcon";
-import { ProductModel, useGetAllProductsQuery } from "@/graphql/generated/output";
+import React from 'react'
+import Link from 'next/link'
+import Image from 'next/image'
+import { Autoplay } from 'swiper/modules'
+import { Swiper, SwiperSlide } from 'swiper/react'
+import { useTranslations, useLocale } from 'next-intl'
 
-const categories = ["Apple", "Samsung", "Xiaomi", "Google Pixel", "One Plus", "Motorola", "Nokia", "Sony"];
+import { Button } from '@/components/ui/common/Button'
+import CatalogCard from '@/components/features/CatalogCard'
+import ButtonWithIcon from '@/components/ui/custom/ButtonWithIcon'
+import { ProductModel, useGetAllProductsQuery } from '@/graphql/generated/output'
+
+const categories = ['Apple', 'Samsung', 'Xiaomi', 'Google Pixel', 'One Plus', 'Motorola', 'Nokia', 'Sony']
 
 // tido:
+// 5.  mobile adaptation
 // 6.  filters (url query params) ???
 // 8.  search (AI)
 // 9.  recommendation (FAIS vectors)
@@ -29,7 +31,7 @@ const categories = ["Apple", "Samsung", "Xiaomi", "Google Pixel", "One Plus", "M
 // 10. administration (products CRUD) !!!ALMOST_DONE
 // 12. Toast !!!ALMOST_DONE
 // 15. Авторизація !!!ALMOST_DONE
-// 5.  mobile adaptation !!!ALMOST_DONE
+// 4.  localization !!!ALMOST_DONE
 
 // 1.  Comments !!!DONE
 // 2.  Payment !!!DONE
@@ -44,24 +46,24 @@ const categories = ["Apple", "Samsung", "Xiaomi", "Google Pixel", "One Plus", "M
 // 18. Кнопка адміністрування не повинна бути видимою звичайним користувачам (сторінка профіль) !!!DONE
 
 const calcSlidesPerView = (windowWidth: number) => {
-  if (!windowWidth) return 5;
-  if (windowWidth > 1200) return 5;
-  else if (windowWidth > 1024) return 4;
-  else if (windowWidth > 768) return 3;
-  else if (windowWidth > 550) return 2;
-  else return 1;
-};
+  if (!windowWidth) return 5
+  if (windowWidth > 1200) return 5
+  else if (windowWidth > 1024) return 4
+  else if (windowWidth > 768) return 3
+  else if (windowWidth > 550) return 2
+  else return 1
+}
 
 export default function Home() {
-  const t = useTranslations("home");
+  const t = useTranslations('home')
 
-  const { data } = useGetAllProductsQuery();
+  const { data } = useGetAllProductsQuery()
 
   const advantages = [
-    { title: t("assortment.title"), text: t("assortment.text") },
-    { title: t("delivery.title"), text: t("delivery.text") },
-    { title: t("discounts.title"), text: t("discounts.text") },
-  ];
+    { title: t('assortment.title'), text: t('assortment.text') },
+    { title: t('delivery.title'), text: t('delivery.text') },
+    { title: t('discounts.title'), text: t('discounts.text') },
+  ]
 
   return (
     <div className="font-[family-name:var(--font-geist-sans)]">
@@ -82,7 +84,7 @@ export default function Home() {
 
             <Link href="/catalog">
               <ButtonWithIcon
-                text={t("categoryButton")}
+                text={t('categoryButton')}
                 iconSrc="/icons/shopping-bag.png"
                 classNames="w-full rounded-[20px]"
                 wrapperClassNames="mt-[15px]"
@@ -93,15 +95,15 @@ export default function Home() {
           <div
             className="w-full min-h-[400px] lg:h-auto flex-1 rounded-[20px] relative overflow-hidden"
             style={{
-              background: "radial-gradient(circle, rgba(215, 228, 215, 0.8) 30%, rgba(180, 200, 180, 1) 100%)",
+              background: 'radial-gradient(circle, rgba(215, 228, 215, 0.8) 30%, rgba(180, 200, 180, 1) 100%)',
             }}
           >
             <div
               className="absolute top-[0] left-[0] w-full h-full w-[910px] h-[500px] "
               style={{
-                backgroundImage: "url(/images/homapage-image.jpg)",
-                backgroundSize: "cover",
-                backgroundPosition: "center",
+                backgroundImage: 'url(/images/homapage-image.jpg)',
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
               }}
             ></div>
           </div>
@@ -109,15 +111,15 @@ export default function Home() {
           <div className="hidden xl:flex flex-col gap-[20px] w-[320px] min-w-[320px]">
             <div className="h-[150px] w-full bg-border rounded-[20px] p-[20px] flex flex-col justify-between">
               <Image src="/images/homepage-filter.svg" width={60} height={60} alt="" />
-              <b>{t("advantages.choice")}</b>
+              <b>{t('advantages.choice')}</b>
             </div>
             <div className="h-[150px] w-full bg-border rounded-[20px] p-[20px] flex flex-col justify-between">
               <Image src="/images/homepage-accessories.svg" width={60} height={60} alt="" />
-              <b>{t("advantages.equipment")}</b>
+              <b>{t('advantages.equipment')}</b>
             </div>
             <div className="h-[150px] w-full bg-border rounded-[20px] p-[20px] flex flex-col justify-between">
               <Image src="/images/homepage-services.svg" width={60} height={60} alt="" />
-              <b>{t("advantages.service")}</b>
+              <b>{t('advantages.service')}</b>
             </div>
           </div>
         </div>
@@ -217,5 +219,5 @@ export default function Home() {
         </div>
       </div>
     </div>
-  );
+  )
 }
