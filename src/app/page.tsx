@@ -1,26 +1,10 @@
-<<<<<<< HEAD
 'use client'
-=======
-"use client";
-
-import "swiper/css";
-import React from "react";
-import "swiper/css/bundle";
-import "swiper/css/autoplay";
-import Link from "next/link";
-import "swiper/css/scrollbar";
-import Image from "next/image";
-import { Autoplay } from "swiper/modules";
-import { useTranslations } from "next-intl";
-import { Swiper, SwiperSlide } from "swiper/react";
->>>>>>> 6079c6d43bfb6bc5745e78719fc1d07fab2d3ec9
 
 import 'swiper/css'
 import 'swiper/css/bundle'
 import 'swiper/css/autoplay'
 import 'swiper/css/scrollbar'
 
-<<<<<<< HEAD
 import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
@@ -37,11 +21,6 @@ const categories = ['Apple', 'Samsung', 'Xiaomi', 'Google Pixel', 'One Plus', 'M
 
 // tido:
 // 5.  mobile adaptation
-=======
-const categories = ["Apple", "Samsung", "Xiaomi", "Google Pixel", "One Plus", "Motorola", "Nokia", "Sony"];
-
-// tido:
->>>>>>> 6079c6d43bfb6bc5745e78719fc1d07fab2d3ec9
 // 6.  filters (url query params) ???
 // 8.  search (AI)
 // 9.  recommendation (FAIS vectors)
@@ -51,11 +30,7 @@ const categories = ["Apple", "Samsung", "Xiaomi", "Google Pixel", "One Plus", "M
 // 10. administration (products CRUD) !!!ALMOST_DONE
 // 12. Toast !!!ALMOST_DONE
 // 15. Авторизація !!!ALMOST_DONE
-<<<<<<< HEAD
 // 4.  localization !!!ALMOST_DONE
-=======
-// 5.  mobile adaptation !!!ALMOST_DONE
->>>>>>> 6079c6d43bfb6bc5745e78719fc1d07fab2d3ec9
 
 // 1.  Comments !!!DONE
 // 2.  Payment !!!DONE
@@ -79,12 +54,7 @@ const calcSlidesPerView = (windowWidth: number) => {
 }
 
 export default function Home() {
-<<<<<<< HEAD
   const t = useTranslations('home')
-  const locale = useLocale()
-=======
-  const t = useTranslations("home");
->>>>>>> 6079c6d43bfb6bc5745e78719fc1d07fab2d3ec9
 
   const { data } = useGetAllProductsQuery()
 
@@ -167,13 +137,8 @@ export default function Home() {
           ))}
         </div>
 
-<<<<<<< HEAD
-        <div className="mb-[120]">
-          <h3 className="font-semibold text-3xl mb-[40]">{t('popular')}</h3>
-=======
         <div className="mb-[120px]">
           <h3 className="font-semibold text-3xl mb-[40]">{t("popular")}</h3>
->>>>>>> 6079c6d43bfb6bc5745e78719fc1d07fab2d3ec9
           <Swiper
             modules={[Autoplay]}
             spaceBetween={20}
@@ -196,25 +161,15 @@ export default function Home() {
 
           <div className="flex justify-center mt-[20px]">
             <Link href="/catalog">
-<<<<<<< HEAD
-              <Button variant="link" className="px-[20]">
-                {t('showMore')}
-=======
               <Button variant="link" className="px-[20px]">
                 {t("showMore")}
->>>>>>> 6079c6d43bfb6bc5745e78719fc1d07fab2d3ec9
               </Button>
             </Link>
           </div>
         </div>
 
-<<<<<<< HEAD
-        <div className="mb-[120]">
-          <h3 className="font-semibold text-3xl mb-[40]">{t('news')}</h3>
-=======
         <div className="mb-[120px]">
           <h3 className="font-semibold text-3xl mb-[40px]">{t("news")}</h3>
->>>>>>> 6079c6d43bfb6bc5745e78719fc1d07fab2d3ec9
 
           <Swiper
             modules={[Autoplay]}
@@ -238,24 +193,15 @@ export default function Home() {
 
           <div className="flex justify-center mt-[20px]">
             <Link href="/catalog">
-<<<<<<< HEAD
-              <Button variant="link" className="px-[20]">
-                {t('showMore')}
-=======
               <Button variant="link" className="px-[20px]">
                 {t("showMore")}
->>>>>>> 6079c6d43bfb6bc5745e78719fc1d07fab2d3ec9
               </Button>
             </Link>
           </div>
         </div>
 
         <div>
-<<<<<<< HEAD
-          <h3 className="font-semibold text-3xl mb-[40]">{t('partners')}</h3>
-=======
           <h3 className="font-semibold text-3xl mb-[40px]">{t("partners")}</h3>
->>>>>>> 6079c6d43bfb6bc5745e78719fc1d07fab2d3ec9
 
           <div className="grid grid-cols-2 2xs:grid-cols-4 lg:grid-cols-6 gap-[20px]">
             {Array(12)
