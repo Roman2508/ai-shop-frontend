@@ -13,12 +13,12 @@ export const useCurrent = () => {
   const [clear] = useClearSessionCookieMutation();
 
   React.useEffect(() => {
-    if (error) {
-      if (isAuthentificated) {
-        clear();
-      }
-      exit();
-    }
+    // if (error) {
+    //   if (isAuthentificated) {
+    //     clear();
+    //   }
+    //   exit();
+    // }
   }, [isAuthentificated, exit, clear]);
 
   return {

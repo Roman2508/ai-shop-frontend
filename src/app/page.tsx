@@ -23,6 +23,7 @@ const categories = ["Apple", "Samsung", "Xiaomi", "Google Pixel", "One Plus", "M
 // 8.  search (AI)
 // 9.  recommendation (FAIS vectors)
 // 20. англійська версія thank-you page
+// 21. mobile version product page (full)
 
 // 7.  homepage !!!ALMOST_DONE
 // 10. administration (products CRUD) !!!ALMOST_DONE
@@ -136,7 +137,7 @@ export default function Home() {
         </div>
 
         <div className="mb-[120px]">
-          <h3 className="font-semibold text-3xl mb-[40]">{t("popular")}</h3>
+          <h3 className="font-semibold text-3xl mb-[40px]">{t("popular")}</h3>
           <Swiper
             modules={[Autoplay]}
             spaceBetween={20}
