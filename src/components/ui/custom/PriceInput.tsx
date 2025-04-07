@@ -2,7 +2,6 @@
 
 import React from "react";
 import { Input } from "../common/Input";
-import UahIcon from "@/components/images/UahIcon";
 import { InputMaybe, PaginateAndFilterInput } from "@/graphql/generated/output";
 
 type PriceInputPropsType = {
@@ -43,7 +42,7 @@ const PriceInput: React.FC<PriceInputPropsType> = ({
         value={value}
         max={maxPrice}
         variant="secondary"
-        className="grow text-center pl-[18] pr-[5]"
+        className="grow text-center pl-[18px] pr-[5px]"
         onChange={(e) => {
           setValue(Number(e.target.value));
           handleChangeFilter(variant === "from" ? "priceFrom" : "priceTo", e.target.value);

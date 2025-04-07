@@ -153,8 +153,8 @@ const AdminProductsPage = () => {
   }, [data]);
 
   return (
-    <div className="max-w-[1640] mx-auto px-[16]">
-      <Breadcrumb className="mb-[45]">
+    <div className="max-w-[1640px] mx-auto px-[16px]">
+      <Breadcrumb className="mb-[45px]">
         <BreadcrumbList>
           <BreadcrumbItem>
             <BreadcrumbLink>
@@ -174,11 +174,11 @@ const AdminProductsPage = () => {
         </BreadcrumbList>
       </Breadcrumb>
 
-      <div className="flex flex-col gap-[46]">
-        <div className="flex justify-between items-center">
+      <div className="flex flex-col gap-[46px]">
+        <div className="flex justify-between items-center flex-wrap flex-col md:flex-row gap-[20]">
           <h1 className="text-3xl font-semibold">{t("title")}</h1>
 
-          <div className="flex gap-[10]">
+          <div className="flex gap-[10px]">
             {!!Object.keys(filter).length && (
               <Button variant="link" className="h-[36]" onClick={onClearFilters}>
                 {t("buttons.clear")}
@@ -187,7 +187,7 @@ const AdminProductsPage = () => {
 
             <Drawer>
               <DrawerTrigger>
-                <Button variant="outline" className="h-[36]">
+                <Button variant="outline" className="h-[36px]">
                   {t("buttons.filter")}
                 </Button>
               </DrawerTrigger>
@@ -219,7 +219,7 @@ const AdminProductsPage = () => {
             </Drawer>
 
             <Link href="/admin/products/create">
-              <Button variant="default" className="h-[36]">
+              <Button variant="default" className="h-[36px]">
                 + {t("buttons.create")}
               </Button>
             </Link>
@@ -227,7 +227,7 @@ const AdminProductsPage = () => {
         </div>
 
         <Table>
-          <TableHeader>
+          <TableHeader className="text-xs md:text-sm">
             <TableRow>
               <TableHead className="text-center">{t("table.photo")}</TableHead>
               <TableHead className="text-center">{t("table.title")}</TableHead>
@@ -243,11 +243,11 @@ const AdminProductsPage = () => {
                 const productName = getProductTitle(product);
 
                 return (
-                  <TableRow key={product.id}>
+                  <TableRow key={product.id} className="text-xs md:text-sm">
                     <TableCell className="text-center">
                       <div>
                         <img
-                          className="h-[50] w-[50] object-cover"
+                          className="h-[50px] w-[50px] object-cover"
                           src={
                             product.images.length
                               ? getPhotoUrl(product.images[0], "products")
@@ -267,9 +267,14 @@ const AdminProductsPage = () => {
 
                     <TableCell className="text-center">{t("status")}</TableCell>
 
-                    <TableCell className="text-center">
+                    <TableCell className="text-center whitespace-nowrap">
                       <Link href={`/admin/products/update/${product.id}`}>
-                        <Button size="icon" variant="outline" className="w-[42] h-[42] mr-[10]" disabled={isLoading}>
+                        <Button
+                          size="icon"
+                          variant="outline"
+                          disabled={isLoading}
+                          className="w-[32px] h-[32px] md:w-[42px] md:h-[42px] mr-[5px] md:mr-[10px]"
+                        >
                           <Edit2 />
                         </Button>
                       </Link>
@@ -278,7 +283,7 @@ const AdminProductsPage = () => {
                         size="icon"
                         variant="outline"
                         disabled={isLoading}
-                        className="w-[42] h-[42]"
+                        className="w-[32px] h-[32px] md:w-[42px] md:h-[42px]"
                         onClick={() => onDeleteProduct(product.id)}
                       >
                         <Trash2 />
@@ -294,26 +299,26 @@ const AdminProductsPage = () => {
                   .map((_, index) => (
                     <TableRow key={index}>
                       <TableCell className="text-center">
-                        <Skeleton className="h-[20] w-[20px] rounded-[0]" />
+                        <Skeleton className="h-[20px] w-[20px] rounded-[0px]" />
                       </TableCell>
                       <TableCell className="text-center">
-                        <Skeleton className="h-[50] w-[50px] rounded-[0]" />
+                        <Skeleton className="h-[50px] w-[50px] rounded-[0px]" />
                       </TableCell>
                       <TableCell className="w-full max-w-[40%]">
-                        <Skeleton className="h-[20] w-[100%] rounded-[0]" />
+                        <Skeleton className="h-[20px] w-[100%] rounded-[0px]" />
                       </TableCell>
                       <TableCell className="text-center">
-                        <Skeleton className="h-[20] w-[100%] rounded-[0]" />
+                        <Skeleton className="h-[20px] w-[100%] rounded-[0px]" />
                       </TableCell>
                       <TableCell className="text-center">
-                        <Skeleton className="h-[20] w-[100px] rounded-[0]" />
+                        <Skeleton className="h-[20px] w-[100px] rounded-[0px]" />
                       </TableCell>
                       <TableCell className="text-center">
-                        <Skeleton className="h-[20] w-[100px] rounded-[0]" />
+                        <Skeleton className="h-[20px] w-[100px] rounded-[0px]" />
                       </TableCell>
-                      <TableCell className="flex justify-center gap-[10]">
-                        <Skeleton className="h-[45] w-[45]" />
-                        <Skeleton className="h-[45] w-[45]" />
+                      <TableCell className="flex justify-center gap-[10px]">
+                        <Skeleton className="h-[45px] w-[45px]" />
+                        <Skeleton className="h-[45px] w-[45px]" />
                       </TableCell>
                     </TableRow>
                   ))}

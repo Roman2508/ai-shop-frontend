@@ -52,24 +52,24 @@ const UploadFiles: React.FC<IUploadFilesProps> = ({
   }
 
   return (
-    <div className="mb-[30]">
-      {isMulti && <h4 className="font-semibold mb-[20]">Фото</h4>}
+    <div className="mb-[30px]">
+      {isMulti && <h4 className="font-semibold mb-[20px]">Фото</h4>}
 
-      <div className={`flex flex-col flex-wrap gap-[26] ${isMulti ? 'w-full' : 'w-[150]'}`}>
-        <div className={`flex gap-[10] h-[150] border border-border rounded-[10] ${isMulti ? 'w-full' : 'w-[150]'}`}>
+      <div className={`flex flex-col flex-wrap gap-[26px] ${isMulti ? 'w-full' : 'w-[150px]'}`}>
+        <div className={`flex gap-[10px] h-[150px] border border-border rounded-[10] ${isMulti ? 'w-full' : 'w-[150px]'}`}>
           {isMulti &&
             Array.from(files).map((f, index) => {
               const imageUrl = typeof f === 'string' ? f : URL.createObjectURL(f)
 
               return (
-                <div className="w-[150] h-[150] relative" key={index}>
+                <div className="w-[150px] h-[150px] relative" key={index}>
                   {f && (
                     <>
                       <div
                         className="w-full h-full absolute cursor-pointer flex justify-center items-center group"
                         onClick={() => onRemoveFile(index)}
                       >
-                        <Trash2 className="h-14 w-14 stroke-black bg-primary rounded-lg p-[10] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                        <Trash2 className="h-14 w-14 stroke-black bg-primary rounded-lg p-[10px] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                       </div>
                       {/* @ts-ignore */}
                       <img src={imageUrl} className="w-full h-full object-cover" />
@@ -80,7 +80,7 @@ const UploadFiles: React.FC<IUploadFilesProps> = ({
             })}
 
           {!isMulti && (
-            <div className="w-[150] h-[150] relative">
+            <div className="w-[150px] h-[150px] relative">
               {files[0] && (
                 <img
                   src={typeof files[0] === 'string' ? getPhotoUrl(files[0], 'users') : URL.createObjectURL(files[0])}
@@ -94,7 +94,7 @@ const UploadFiles: React.FC<IUploadFilesProps> = ({
         <Button
           variant="secondary"
           type="button"
-          className="w-[200]"
+          className="w-[200px]"
           onClick={() => {
             if (!fileRef.current) return
             fileRef.current.click()

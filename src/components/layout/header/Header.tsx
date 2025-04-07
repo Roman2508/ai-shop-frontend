@@ -2,62 +2,62 @@
 
 import React from "react";
 import Link from "next/link";
+import { Menu } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 
+import {
+  Drawer,
+  DrawerClose,
+  DrawerTitle,
+  DrawerHeader,
+  DrawerContent,
+  DrawerTrigger,
+  DrawerDescription,
+} from "@/components/ui/common/Drawer";
 import Search from "./Search";
+import { useTheme } from "next-themes";
 import LoginButton from "./LoginButton";
 import LangToggler from "./LangToggler";
 import { useAuth } from "@/hooks/useAuth";
 import { ThemeToggler } from "./ThemeToggler";
-import { Button } from "@/components/ui/common/Button";
-import ButtonWithIcon from "@/components/ui/custom/ButtonWithIcon";
-import {
-  Drawer,
-  DrawerClose,
-  DrawerContent,
-  DrawerDescription,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerTrigger,
-} from "@/components/ui/common/Drawer";
-import { Menu } from "lucide-react";
-import { Checkbox } from "@/components/ui/common/Checkbox";
-import { Label } from "@/components/ui/common/Label";
 import { setLanguage } from "@/libs/i18n/language";
-import { useTheme } from "next-themes";
+import { Label } from "@/components/ui/common/Label";
+import { Button } from "@/components/ui/common/Button";
+import { Checkbox } from "@/components/ui/common/Checkbox";
+import ButtonWithIcon from "@/components/ui/custom/ButtonWithIcon";
 
 const Header = () => {
   const locale = useLocale();
   const t = useTranslations("header");
+  const menuT = useTranslations("components.mobileMenu");
 
   const { setTheme, theme } = useTheme();
 
   const { isAuthentificated } = useAuth();
 
   return (
-    <header className="fixed w-full flex justify-between items-center gap-[20] py-[20] px-[26] bg-dark text-white z-[111]">
-      {/* <header className="flex justify-between p-[20]"> */}
-      <div className="flex-1 flex gap-[20] items-center">
+    <header className="fixed w-full flex justify-between items-center gap-[20px] py-[20px] px-[26px] bg-dark text-white z-[10]">
+      <div className="flex-1 flex gap-[20px] items-center">
         <Link href="/catalog">
           <ButtonWithIcon
             text={t("catalogBtn")}
             iconSrc="/icons/burger-white.png"
-            classNames="text-white h-[36] font-regular"
+            classNames="text-white h-[36px] font-regular"
           />
         </Link>
 
         <Search />
       </div>
 
-      <div className="flex gap-[20]">
-        <Link className="flex gap-[10] items-center" href="/">
+      <div className="flex gap-[20px]">
+        <Link className="flex gap-[10px] items-center" href="/">
           <img src="/logo.png" width="30px" height="30px" />
           <b className="text-[16px] hidden lg:inline-block">PhoneShop</b>
         </Link>
       </div>
 
-      <div className="flex justify-end items-center gap-[15] flex-1">
-        <div className="hidden 2xl:flex gap-[14]">
+      <div className="flex justify-end items-center gap-[15px] flex-1">
+        <div className="hidden 2xl:flex gap-[14px]">
           <Button size="icon" variant="icon">
             <img width="16px" height="16px" src="/icons/telegram.png" />
           </Button>
@@ -71,7 +71,7 @@ const Header = () => {
           <span className="opacity-[0.6] text-[12px]">{t("phoneBtn")}</span>
         </div>
 
-        <div className="hidden md:flex justify-end items-center gap-[15]">
+        <div className="hidden md:flex justify-end items-center gap-[15px]">
           <ThemeToggler />
 
           <LangToggler />
@@ -101,7 +101,7 @@ const Header = () => {
           )}
         </div>
 
-        <div className="flex gap-[15] 2xs:gap-[0]">
+        <div className="flex gap-[15px] 2xs:gap-[0]">
           <Search isMobile={true} />
 
           <Drawer direction="right">
@@ -114,7 +114,7 @@ const Header = () => {
             <DrawerContent>
               <DrawerHeader>
                 <div className="flex justify-between items-center">
-                  <DrawerTitle>Меню</DrawerTitle>
+                  <DrawerTitle>{menuT("title")}</DrawerTitle>
 
                   <DrawerClose>
                     <Button variant="secondary" size="icon" className="">
@@ -124,48 +124,54 @@ const Header = () => {
                 </div>
 
                 <DrawerDescription>
-                  <Link href="" className="block py-[15] border-b border-border">
-                    Профіль
+                  <Link href="/profile/personal-information" className="block py-[15px] border-b border-border">
+                    {menuT("links.profile")}
                   </Link>
 
-                  <Link href="" className="block py-[15] border-b border-border">
-                    Корзина
+                  <Link href="/profile/cart" className="block py-[15px] border-b border-border">
+                    {menuT("links.cart")}
                   </Link>
 
-                  <Link href="" className="block py-[15] border-b border-border">
-                    Збережене
+                  <Link href="/profile/wishlist" className="block py-[15px] border-b border-border">
+                    {menuT("links.favorites")}
                   </Link>
 
-                  <div className="py-[15] border-b border-border">
-                    <b className="block mb-[10]">Мова:</b>
+                  <div className="py-[15px] border-b border-border">
+                    <b className="block mb-[10px]">{menuT("lang")}:</b>
 
-                    <Label className="flex items-center gap-[10] mb-[10]" onClick={() => setLanguage("ua")}>
+                    <Label className="flex items-center gap-[10px] mb-[10px]" onClick={() => setLanguage("ua")}>
                       <Checkbox checked={locale === "ua"} />
                       Українська
                     </Label>
 
-                    <Label className="flex items-center gap-[10]" onClick={() => setLanguage("en")}>
+                    <Label className="flex items-center gap-[10px]" onClick={() => setLanguage("en")}>
                       <Checkbox checked={locale === "en"} />
                       English
                     </Label>
                   </div>
 
-                  <div className="py-[15] border-b border-border">
-                    <b className="block mb-[10]">Тема:</b>
+                  <div className="py-[15px] border-b border-border">
+                    <b className="block mb-[10px]">{menuT("theme.title")}:</b>
 
-                    <Label className="flex items-center gap-[10] mb-[10]" onClick={() => setTheme("light")}>
+                    <Label className="flex items-center gap-[10px] mb-[10px]" onClick={() => setTheme("light")}>
                       <Checkbox checked={theme === "light"} />
-                      Світла
+                      {menuT("theme.light")}
                     </Label>
-                    <Label className="flex items-center gap-[10] mb-[10]" onClick={() => setTheme("dark")}>
+                    <Label className="flex items-center gap-[10px] mb-[10px]" onClick={() => setTheme("dark")}>
                       <Checkbox checked={theme === "dark"} />
-                      Темна
+                      {menuT("theme.dark")}
                     </Label>
-                    <Label className="flex items-center gap-[10]" onClick={() => setTheme("system")}>
+                    <Label className="flex items-center gap-[10px]" onClick={() => setTheme("system")}>
                       <Checkbox checked={theme === "system"} />
-                      Системна
+                      {menuT("theme.system")}
                     </Label>
                   </div>
+
+                  {!isAuthentificated && (
+                    <div className="mt-[20px]">
+                      <LoginButton classNames="w-full text-muted-foreground hover:border-muted-foreground fill-muted-foreground" />
+                    </div>
+                  )}
                 </DrawerDescription>
               </DrawerHeader>
             </DrawerContent>

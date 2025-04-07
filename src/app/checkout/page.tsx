@@ -74,11 +74,11 @@ const CheckoutPage = () => {
   if (!user) return;
 
   return (
-    <div className="max-w-[1640] mx-auto px-[16]">
+    <div className="max-w-[1640px] mx-auto px-[16px]">
       <h1 className="text-3xl font-semibold">Оформлення замовлення</h1>
 
-      <div className="flex gap-[20] mt-[40]">
-        <div className="px-[20] py-[20] w-[40%] rounded-[5] border border-border">
+      <div className="flex gap-[20px] mt-[40px]">
+        <div className="px-[20px] py-[20px] w-[40%] rounded-[5px] border border-border">
           {pageView === "view" && (
             <CheckoutView
               pageView={pageView}
@@ -100,8 +100,8 @@ const CheckoutPage = () => {
           )}
         </div>
 
-        <div className="px-[20] py-[20] w-[60%] rounded-[5] border border-border">
-          <div className="flex items-center justify-between mb-[20]">
+        <div className="px-[20px] py-[20px] w-[60%] rounded-[5px] border border-border">
+          <div className="flex items-center justify-between mb-[20px]">
             <h2 className="text-2xl font-semibold">Ваше замовлення</h2>
             <h2 className="text-2xl font-semibold">{totalPrice.toLocaleString("uk-UA")} ₴</h2>
           </div>

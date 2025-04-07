@@ -57,11 +57,11 @@ const SessionsList = () => {
   if (!sessinData || !sessinsData) return;
 
   return (
-    <div className="bg-background rounded-[5] pb-[40] mb-[60] overflow-hidden border border-border">
-      <h3 className="bg-primary text-popover px-[40] py-[20] text-xl font-semibold">{t("active")}</h3>
-      <div className="px-[40] py-[30]">
-        <p className="font-bold text-center pb-[10] border-b border-dashed">{t("current")}</p>
-        <div className="flex items-center py-[20] border-b border-dashed">
+    <div className="bg-background rounded-[5px] pb-[40px] mb-[60px] overflow-hidden border border-border">
+      <h3 className="bg-primary text-popover px-[40px] py-[20px] text-xl font-semibold">{t("active")}</h3>
+      <div className="px-[40px] py-[30px]">
+        <p className="font-bold text-center pb-[10px] border-b border-dashed">{t("current")}</p>
+        <div className="flex items-center py-[20px] border-b border-dashed">
           <div className="w-[40%] flex flex-col">
             <p className="font-semibold">{`${currentSession.metadata.device.browser}, ${currentSession.metadata.device.os}`}</p>
             <p>{`${formatDateTime(currentSession.createdAt)}`}</p>
@@ -77,10 +77,10 @@ const SessionsList = () => {
           </div>
         </div>
 
-        <p className="font-bold text-center mt-[40] pb-[10] border-b border-dashed">{t("other")}</p>
+        <p className="font-bold text-center mt-[40px] pb-[10px] border-b border-dashed">{t("other")}</p>
         {sessions.length ? (
           sessions.map((s) => (
-            <div className="flex py-[20] border-b border-dashed">
+            <div className="flex py-[20px] border-b border-dashed">
               <div className="w-[40%] flex flex-col">
                 <p className="font-semibold">{`${s.metadata.device.browser}, ${s.metadata.device.os}`}</p>
                 <p>{`${formatDateTime(s.createdAt)}`}</p>
@@ -97,7 +97,7 @@ const SessionsList = () => {
             </div>
           ))
         ) : (
-          <p className="text-center mt-[20]">{t("notFound")}</p>
+          <p className="text-center mt-[20px]">{t("notFound")}</p>
         )}
       </div>
     </div>

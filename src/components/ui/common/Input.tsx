@@ -11,7 +11,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
     const variantClasses = {
       default: 'border-border bg-transparent rounded-md focus:border-dark',
       primary: 'border-border bg-card text-text-muted-foreground rounded-md focus:border-dark',
-      secondary: 'border-border rounded-[5] focus:border-dark',
+      secondary: 'border-border rounded-[5px] focus:border-dark',
       search: 'border-muted-foreground placeholder:text-muted rounded-md focus:border-muted',
       static: 'border-muted-foreground text-white placeholder:text-white rounded-md focus:border-muted',
     }

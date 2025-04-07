@@ -73,8 +73,8 @@ const UserRolesPage = () => {
   }, [viewType]);
 
   return (
-    <div className="max-w-[1640] mx-auto px-[16]">
-      <Breadcrumb className="mb-[45]">
+    <div className="max-w-[1640px] mx-auto px-[16px]">
+      <Breadcrumb className="mb-[45px]">
         <BreadcrumbList>
           <BreadcrumbItem>
             <BreadcrumbLink>
@@ -94,11 +94,11 @@ const UserRolesPage = () => {
         </BreadcrumbList>
       </Breadcrumb>
 
-      <div className="flex flex-col gap-[46]">
+      <div className="flex flex-col gap-[46px]">
         <div className="flex justify-between items-center">
           <h1 className="text-3xl font-semibold">{t("title")}</h1>
 
-          <div className="flex gap-[10]">
+          <div className="flex gap-[10px]">
             <Select onValueChange={(value: "all" | "admins") => setViewType(value)} value={viewType}>
               <SelectTrigger>
                 <SelectValue placeholder={t("select.showAll")} />
@@ -132,7 +132,7 @@ const UserRolesPage = () => {
                     <TableCell className="flex justify-center">
                       <div className="text-center">
                         <img
-                          className="h-[50] w-[50] object-cover"
+                          className="h-[50px] w-[50px] object-cover"
                           src={user.avatar ? getPhotoUrl(user.avatar, "users") : "/images/empty-image.webp"}
                         />
                       </div>
@@ -147,7 +147,7 @@ const UserRolesPage = () => {
                       <Button
                         size="icon"
                         variant="outline"
-                        className="w-[80] h-[42] mr-[10]"
+                        className="w-[80px] h-[42px] mr-[10px]"
                         disabled={loading || user.role === "ADMIN"}
                         onClick={() => changeUserRole(user.id, EnumUserRoles.Admin)}
                       >
@@ -157,7 +157,7 @@ const UserRolesPage = () => {
                       <Button
                         size="icon"
                         variant="outline"
-                        className="w-[80] h-[42]"
+                        className="w-[80px] h-[42px]"
                         disabled={loading || user.role === "USER"}
                         onClick={() => changeUserRole(user.id, EnumUserRoles.User)}
                       >
@@ -174,26 +174,26 @@ const UserRolesPage = () => {
                   .map((_, index) => (
                     <TableRow key={index}>
                       <TableCell className="text-center">
-                        <Skeleton className="h-[20] w-[20px] rounded-[0]" />
+                        <Skeleton className="h-[20px] w-[20px] rounded-[0px]" />
                       </TableCell>
                       <TableCell className="text-center">
-                        <Skeleton className="h-[50] w-[50px] rounded-[0]" />
+                        <Skeleton className="h-[50px] w-[50px] rounded-[0px]" />
                       </TableCell>
                       <TableCell className="w-full max-w-[40%]">
-                        <Skeleton className="h-[20] w-[100%] rounded-[0]" />
+                        <Skeleton className="h-[20px] w-[100%] rounded-[0px]" />
                       </TableCell>
                       <TableCell className="text-center">
-                        <Skeleton className="h-[20] w-[100%] rounded-[0]" />
+                        <Skeleton className="h-[20px] w-[100%] rounded-[0px]" />
                       </TableCell>
                       <TableCell className="text-center">
-                        <Skeleton className="h-[20] w-[100px] rounded-[0]" />
+                        <Skeleton className="h-[20px] w-[100px] rounded-[0px]" />
                       </TableCell>
                       <TableCell className="text-center">
-                        <Skeleton className="h-[20] w-[100px] rounded-[0]" />
+                        <Skeleton className="h-[20px] w-[100px] rounded-[0px]" />
                       </TableCell>
-                      <TableCell className="flex justify-center gap-[10]">
-                        <Skeleton className="h-[45] w-[45]" />
-                        <Skeleton className="h-[45] w-[45]" />
+                      <TableCell className="flex justify-center gap-[10px]">
+                        <Skeleton className="h-[45px] w-[45px]" />
+                        <Skeleton className="h-[45px] w-[45px]" />
                       </TableCell>
                     </TableRow>
                   ))}

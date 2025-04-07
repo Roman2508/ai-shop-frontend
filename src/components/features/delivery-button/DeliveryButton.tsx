@@ -131,7 +131,7 @@ const DeliveryButton: React.FC<IDeliveryButtonProps> = ({ setDeliveryData, class
       <div
         ref={novaPoshtaButton}
         onClick={() => openFrame()}
-        className={`flex py-[11] pl-[16] pr-[40] h-[50] border border-border cursor-pointer w-full max-w-[434] relative mb-[20] items-center gap-[10] flex-row rounded-md ${classNames}`}
+        className={`flex py-[11px] pl-[16px] pr-[40px] h-[50px] border border-border cursor-pointer w-full max-w-[434px] relative mb-[20px] items-center gap-[10px] flex-row rounded-md ${classNames}`}
       >
         <div className="flex items-center">
           <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -141,7 +141,7 @@ const DeliveryButton: React.FC<IDeliveryButtonProps> = ({ setDeliveryData, class
             />
           </svg>
         </div>
-        <div className="absolute top-[50%] translate-y-[-50%] right-[20] h-[16]">
+        <div className="absolute top-[50%] translate-y-[-50%] right-[20px] h-[16px]">
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
               fill="#475569"
@@ -168,7 +168,7 @@ const DeliveryButton: React.FC<IDeliveryButtonProps> = ({ setDeliveryData, class
           style={{ boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)", backgroundColor: "#fff" }}
           className={`relative w-[80%] h-[80%] overflow-hidden rounded-md`}
         >
-          <header className="relative h-[80] px-[20] leading-[80px] border-b-[1] border-border">
+          <header className="relative h-[80px] px-[20px] leading-[80px] border-b-[1px] border-border">
             <h2 className="m-[0] text-xl leading-[80px] font-bold">Вибрати відділення</h2>
             <span
               className="cursor-pointer text-3xl absolute right-[0] top-[15px] w-[40px] h-[40px]"

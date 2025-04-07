@@ -1,64 +1,61 @@
-import React from 'react'
-import { useTranslations } from 'next-intl'
+import React from "react";
+import { useTranslations } from "next-intl";
 
-import { Dialog, DialogTitle, DialogHeader, DialogTrigger, DialogContent } from '@/components/ui/common/Dialog'
-import { Input } from '@/components/ui/common/Input'
-import SearchIcon from '@/components/images/SearchIcon'
-import { Button } from '@/components/ui/common/Button'
-import { ProductModel, useSearchProductsQuery } from '@/graphql/generated/output'
-import { useDebouncedCallback } from 'use-debounce'
-import getPhotoUrl from '@/utils/get-photo-url'
-import getProductTitle from '@/utils/getProductTitle'
-import Loader from '@/components/ui/icons/Loader'
-import Link from 'next/link'
+import { Dialog, DialogTitle, DialogHeader, DialogTrigger, DialogContent } from "@/components/ui/common/Dialog";
+import { Input } from "@/components/ui/common/Input";
+import SearchIcon from "@/components/images/SearchIcon";
+import { Button } from "@/components/ui/common/Button";
+import { ProductModel, useSearchProductsQuery } from "@/graphql/generated/output";
+import { useDebouncedCallback } from "use-debounce";
+import getPhotoUrl from "@/utils/get-photo-url";
+import getProductTitle from "@/utils/getProductTitle";
+import Loader from "@/components/ui/icons/Loader";
+import Link from "next/link";
 
 interface ISearchProps {
-  isMobile?: boolean
+  isMobile?: boolean;
 }
 
 const Search: React.FC<ISearchProps> = ({ isMobile = false }) => {
-  const t = useTranslations('header')
+  const t = useTranslations("header");
 
-  const [loading, setLoading] = React.useState(false)
-  const [searchQuery, setSearchQuery] = React.useState('')
-  const [isDialogOpen, setIsDialogOpen] = React.useState(false)
-  const [products, setProducts] = React.useState<ProductModel[]>([])
+  const [loading, setLoading] = React.useState(false);
+  const [searchQuery, setSearchQuery] = React.useState("");
+  const [isDialogOpen, setIsDialogOpen] = React.useState(false);
+  const [products, setProducts] = React.useState<ProductModel[]>([]);
 
-  const { data, refetch } = useSearchProductsQuery({ variables: { data: searchQuery }, skip: true })
+  const { data, refetch } = useSearchProductsQuery({ variables: { data: searchQuery }, skip: true });
 
   const debouncedChangePriceTo = useDebouncedCallback((value) => {
-    setSearchQuery(value)
-  }, 1000)
+    setSearchQuery(value);
+  }, 1000);
 
   const fetchProducts = async (searchQuery: string) => {
     try {
-      setLoading(true)
-      const { data } = await refetch({ data: searchQuery })
+      setLoading(true);
+      const { data } = await refetch({ data: searchQuery });
       if (data) {
-        setProducts(data.searchProduct as ProductModel[])
+        setProducts(data.searchProduct as ProductModel[]);
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   React.useEffect(() => {
     if (!searchQuery) {
-      setProducts([])
+      setProducts([]);
     } else {
-      fetchProducts(searchQuery)
+      fetchProducts(searchQuery);
     }
     //
-  }, [searchQuery])
-
-  console.log(loading, products, data, data?.searchProduct)
+  }, [searchQuery]);
 
   return (
     <>
       <Dialog>
-        {/* <Dialog open={isDialogOpen} onOpenChange={() => setIsDialogOpen(true)}> */}
         <DialogTrigger asChild>
           <div>
             {!isMobile ? (
@@ -70,8 +67,8 @@ const Search: React.FC<ISearchProps> = ({ isMobile = false }) => {
                 <Input
                   readOnly
                   variant="static"
-                  placeholder={`${t('searchBtn')}...`}
-                  className="cursor-pointer pr-10 w-[128] lg:w-[200] xl:w-[340]"
+                  placeholder={`${t("searchBtn")}...`}
+                  className="cursor-pointer pr-10 w-[128px] lg:w-[200px] xl:w-[340px]"
                 />
               </div>
             ) : (
@@ -84,7 +81,7 @@ const Search: React.FC<ISearchProps> = ({ isMobile = false }) => {
 
         <DialogContent className="sm:max-w-[600px]">
           <DialogHeader>
-            <DialogTitle className="mb-[20]">{t('searchBtn')}</DialogTitle>
+            <DialogTitle className="mb-[20px]">{t("searchBtn")}</DialogTitle>
 
             <div className="relative cursor-pointer">
               <span className="absolute inset-y-0 right-0 flex items-center pr-4">
@@ -94,17 +91,17 @@ const Search: React.FC<ISearchProps> = ({ isMobile = false }) => {
               <Input
                 variant="default"
                 className="pr-10 w-full"
-                placeholder={`${t('searchBtn')}...`}
+                placeholder={`${t("searchBtn")}...`}
                 onChange={(e) => debouncedChangePriceTo(e.target.value)}
               />
             </div>
 
-            <div className="min-h-[400]">
+            <div className="min-h-[400px]">
               {!searchQuery && (
-                <div className="flex flex-col items-center mt-[30]">
+                <div className="flex flex-col items-center mt-[30px]">
                   <div>
                     <h5 className="font-semibold">🔎 Спробуйте шукати:</h5>
-                    <ul className="list-disc ml-[45]">
+                    <ul className="list-disc ml-[45px]">
                       <li>"Бюджетний смартфон до 10 000 грн"</li>
                       <li>"iPhone 15 Pro Max 256 ГБ"</li>
                       <li>"Телефон з гарною камерою"</li>
@@ -115,32 +112,32 @@ const Search: React.FC<ISearchProps> = ({ isMobile = false }) => {
 
               {searchQuery && loading && <Loader />}
 
-              {!loading && searchQuery && !products.length && <p className="text-center pt-[30]">Нічого не знайдено</p>}
+              {!loading && searchQuery && !products.length && <p className="text-center pt-[30px]">Нічого не знайдено</p>}
 
               {!loading && !!products.length && (
                 <div className="max-h-[70vh] overflow-auto">
                   {products.map((el) => {
                     const productPhotoUrl = el.images.length
-                      ? getPhotoUrl(el.images[0], 'products')
-                      : '/images/empty-image.webp'
+                      ? getPhotoUrl(el.images[0], "products")
+                      : "/images/empty-image.webp";
                     return (
                       <Link
                         key={el.id}
                         href={`/catalog/${el.id}`}
                         onClick={() => {
-                          setIsDialogOpen(false)
-                          setProducts([])
+                          setIsDialogOpen(false);
+                          setProducts([]);
                         }}
-                        className="mb-[10] py-[10] px-[15] flex items-center gap-[10] border border-border rounded-[20] cursor-pointer hover:bg-secondary"
+                        className="mb-[10px] py-[10px] px-[15px] flex items-center gap-[10px] border border-border rounded-[20px] cursor-pointer hover:bg-secondary"
                       >
-                        <div className="w-[40] h-[40]">
+                        <div className="w-[40px] h-[40px]">
                           <img src={productPhotoUrl} />
                         </div>
 
                         <h4 className="font-medium flex-1">{getProductTitle(el)}</h4>
-                        <p className="font-bold text-primary">{el.price.toLocaleString('uk-UA')} ₴</p>
+                        <p className="font-bold text-primary">{el.price.toLocaleString("uk-UA")} ₴</p>
                       </Link>
-                    )
+                    );
                   })}
                 </div>
               )}
@@ -149,7 +146,7 @@ const Search: React.FC<ISearchProps> = ({ isMobile = false }) => {
         </DialogContent>
       </Dialog>
     </>
-  )
-}
+  );
+};
 
-export default Search
+export default Search;

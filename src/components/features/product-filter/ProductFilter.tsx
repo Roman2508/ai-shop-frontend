@@ -9,7 +9,6 @@ import PriceInput from "@/components/ui/custom/PriceInput";
 import { Checkbox } from "@/components/ui/common/Checkbox";
 import { productInputFilters } from "@/constants/product-filters";
 import { PaginateAndFilterInput } from "@/graphql/generated/output";
-import { useRouter, useSearchParams } from "next/navigation";
 
 interface IProductFilterProps {
   maxPrice: number;
@@ -35,13 +34,13 @@ const ProductFilter: React.FC<IProductFilterProps> = ({
   return (
     <>
       {productInputFilters.map((filter) => (
-        <div className="pb-[28] mb-[28] border-b-2" key={filter.key}>
-          <b className="block mb-[20]">{locale === "ua" ? filter.label_ua : filter.label_en}</b>
+        <div className="pb-[28px] mb-[28px] border-b-2" key={filter.key}>
+          <b className="block mb-[20px]">{locale === "ua" ? filter.label_ua : filter.label_en}</b>
 
-          <div className="max-h-[230] overflow-y-auto">
+          <div className="max-h-[230px] overflow-y-auto">
             {filter.items.map((el) => (
-              <div className="flex items-center space-x-2 mt-[12]" key={el.key}>
-                <Label className="flex items-center gap-[12]" onClick={() => handleChangeFilter(filter.key, el.key)}>
+              <div className="flex items-center space-x-2 mt-[12px]" key={el.key}>
+                <Label className="flex items-center gap-[12px]" onClick={() => handleChangeFilter(filter.key, el.key)}>
                   <Checkbox />
                   <p className={filter.key === "color" ? "first-letter:uppercase" : ""}>
                     {locale === "ua" ? el.label_ua : el.label_en}
@@ -53,8 +52,8 @@ const ProductFilter: React.FC<IProductFilterProps> = ({
         </div>
       ))}
 
-      <div className="pb-[28] mb-[28] border-b-2">
-        <b className="block mb-[20]">{t("filter.price")}</b>
+      <div className="pb-[28px] mb-[28px] border-b-2">
+        <b className="block mb-[20px]">{t("filter.price")}</b>
 
         <Slider
           min={0}
@@ -63,13 +62,11 @@ const ProductFilter: React.FC<IProductFilterProps> = ({
           defaultValue={[0, maxPrice]}
           value={[filter.priceFrom || 0, filter.priceTo || maxPrice]}
           onValueChange={(e) => {
-            // debouncedChangePriceFrom(e[0])
-            // debouncedChangePriceTo(e[1])
             handleChangeFilter("priceFrom", String(e[0]));
             handleChangeFilter("priceTo", String(e[1]));
           }}
         />
-        <div className="mt-[30] flex gap-[10] align-center">
+        <div className="mt-[30px] flex gap-[10px] align-center">
           <PriceInput
             variant="from"
             locale={locale}
@@ -92,7 +89,7 @@ const ProductFilter: React.FC<IProductFilterProps> = ({
         <DrawerClose>
           <Button
             variant="default"
-            className="w-full mb-[10]"
+            className="w-full mb-[10px]"
             onClick={() => {
               window.scrollTo({ top: 0, behavior: "smooth" });
               fetchFilteredData();
@@ -116,7 +113,7 @@ const ProductFilter: React.FC<IProductFilterProps> = ({
           {" "}
           <Button
             variant="default"
-            className="w-full mb-[10]"
+            className="w-full mb-[10px]"
             onClick={() => {
               window.scrollTo({ top: 0, behavior: "smooth" });
               fetchFilteredData();

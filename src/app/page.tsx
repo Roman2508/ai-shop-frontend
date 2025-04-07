@@ -1,10 +1,26 @@
+<<<<<<< HEAD
 'use client'
+=======
+"use client";
+
+import "swiper/css";
+import React from "react";
+import "swiper/css/bundle";
+import "swiper/css/autoplay";
+import Link from "next/link";
+import "swiper/css/scrollbar";
+import Image from "next/image";
+import { Autoplay } from "swiper/modules";
+import { useTranslations } from "next-intl";
+import { Swiper, SwiperSlide } from "swiper/react";
+>>>>>>> 6079c6d43bfb6bc5745e78719fc1d07fab2d3ec9
 
 import 'swiper/css'
 import 'swiper/css/bundle'
 import 'swiper/css/autoplay'
 import 'swiper/css/scrollbar'
 
+<<<<<<< HEAD
 import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
@@ -21,17 +37,25 @@ const categories = ['Apple', 'Samsung', 'Xiaomi', 'Google Pixel', 'One Plus', 'M
 
 // tido:
 // 5.  mobile adaptation
+=======
+const categories = ["Apple", "Samsung", "Xiaomi", "Google Pixel", "One Plus", "Motorola", "Nokia", "Sony"];
+
+// tido:
+>>>>>>> 6079c6d43bfb6bc5745e78719fc1d07fab2d3ec9
 // 6.  filters (url query params) ???
 // 8.  search (AI)
 // 9.  recommendation (FAIS vectors)
-// 18. Кнопка адміністрування не повинна бути видимою звичайним користувачам (сторінка профіль)
-// 19. Доробити сторінку http://localhost:3000/admin
+// 20. англійська версія thank-you page
 
 // 7.  homepage !!!ALMOST_DONE
 // 10. administration (products CRUD) !!!ALMOST_DONE
 // 12. Toast !!!ALMOST_DONE
 // 15. Авторизація !!!ALMOST_DONE
+<<<<<<< HEAD
 // 4.  localization !!!ALMOST_DONE
+=======
+// 5.  mobile adaptation !!!ALMOST_DONE
+>>>>>>> 6079c6d43bfb6bc5745e78719fc1d07fab2d3ec9
 
 // 1.  Comments !!!DONE
 // 2.  Payment !!!DONE
@@ -41,6 +65,9 @@ const categories = ['Apple', 'Samsung', 'Xiaomi', 'Google Pixel', 'One Plus', 'M
 // 14. Активні сесії !!!DONE
 // 3.  Orders (change status cron) !!!DONE
 // 17. Reviews Page !!!DONE
+// 4.  localization !!!DONE
+// 19. Доробити сторінку http://localhost:3000/admin !!!DONE
+// 18. Кнопка адміністрування не повинна бути видимою звичайним користувачам (сторінка профіль) !!!DONE
 
 const calcSlidesPerView = (windowWidth: number) => {
   if (!windowWidth) return 5
@@ -52,8 +79,12 @@ const calcSlidesPerView = (windowWidth: number) => {
 }
 
 export default function Home() {
+<<<<<<< HEAD
   const t = useTranslations('home')
   const locale = useLocale()
+=======
+  const t = useTranslations("home");
+>>>>>>> 6079c6d43bfb6bc5745e78719fc1d07fab2d3ec9
 
   const { data } = useGetAllProductsQuery()
 
@@ -65,13 +96,13 @@ export default function Home() {
 
   return (
     <div className="font-[family-name:var(--font-geist-sans)]">
-      <div className="max-w-[1640] mx-auto px-[16]">
-        <div className="flex flex-col-reverse lg:flex-row gap-[30] mb-[70]">
-          <div className="w-full lg:w-[320] min-w-[320] border rounded-[20]">
-            <div className="pt-[20] px-[25]">
+      <div className="max-w-[1640px] mx-auto px-[16px]">
+        <div className="flex flex-col-reverse lg:flex-row gap-[30px] mb-[70px]">
+          <div className="w-full lg:w-[320px] min-w-[320px] border rounded-[20px]">
+            <div className="pt-[20px] px-[25px]">
               {categories.map((el) => (
-                <Link key={el} href="#" className="flex items-center py-[10] gap-[15] border-b border-dotted">
-                  <div className="flex items-center justify-center bg-secondary w-[30] h-[30]">
+                <Link key={el} href="#" className="flex items-center py-[10px] gap-[15px] border-b border-dotted">
+                  <div className="flex items-center justify-center bg-secondary w-[30px] h-[30px]">
                     <Image src="/icons/phone.png" width={20} height={20} alt="phone icon" />
                   </div>
 
@@ -84,14 +115,14 @@ export default function Home() {
               <ButtonWithIcon
                 text={t('categoryButton')}
                 iconSrc="/icons/shopping-bag.png"
-                classNames="w-full rounded-[20]"
-                wrapperClassNames="mt-[15]"
+                classNames="w-full rounded-[20px]"
+                wrapperClassNames="mt-[15px]"
               />
             </Link>
           </div>
 
           <div
-            className="w-full min-h-[400] lg:h-auto flex-1 rounded-[20] relative overflow-hidden"
+            className="w-full min-h-[400px] lg:h-auto flex-1 rounded-[20px] relative overflow-hidden"
             style={{
               background: 'radial-gradient(circle, rgba(215, 228, 215, 0.8) 30%, rgba(180, 200, 180, 1) 100%)',
             }}
@@ -106,27 +137,27 @@ export default function Home() {
             ></div>
           </div>
 
-          <div className="hidden xl:flex flex-col gap-[20] w-[320] min-w-[320]">
-            <div className="h-[150] w-full bg-border rounded-[20] p-[20] flex flex-col justify-between">
+          <div className="hidden xl:flex flex-col gap-[20px] w-[320px] min-w-[320px]">
+            <div className="h-[150px] w-full bg-border rounded-[20px] p-[20px] flex flex-col justify-between">
               <Image src="/images/homepage-filter.svg" width={60} height={60} alt="" />
               <b>{t('advantages.choice')}</b>
             </div>
-            <div className="h-[150] w-full bg-border rounded-[20] p-[20] flex flex-col justify-between">
+            <div className="h-[150px] w-full bg-border rounded-[20px] p-[20px] flex flex-col justify-between">
               <Image src="/images/homepage-accessories.svg" width={60} height={60} alt="" />
               <b>{t('advantages.equipment')}</b>
             </div>
-            <div className="h-[150] w-full bg-border rounded-[20] p-[20] flex flex-col justify-between">
+            <div className="h-[150px] w-full bg-border rounded-[20px] p-[20px] flex flex-col justify-between">
               <Image src="/images/homepage-services.svg" width={60} height={60} alt="" />
               <b>{t('advantages.service')}</b>
             </div>
           </div>
         </div>
 
-        <div className="flex flex-col lg:flex-row gap-[50] lg:gap-[30] mb-[140]">
+        <div className="flex flex-col lg:flex-row gap-[50px] lg:gap-[30px] mb-[140px]">
           {advantages.map((el, index) => (
             <div key={el.title} className="flex-[1]">
-              <div className="flex items-center gap-[15] mb-[15]">
-                <div className="flex items-center justify-center bg-secondary rounded-full w-[55] h-[55]">
+              <div className="flex items-center gap-[15px] mb-[15px]">
+                <div className="flex items-center justify-center bg-secondary rounded-full w-[55px] h-[55px]">
                   <Image src={`/images/homapage-advantage-${index + 1}.svg`} width={30} height={30} alt="icon" />
                 </div>
                 <h4 className="font-semibold text-xl">{el.title}</h4>
@@ -136,8 +167,13 @@ export default function Home() {
           ))}
         </div>
 
+<<<<<<< HEAD
         <div className="mb-[120]">
           <h3 className="font-semibold text-3xl mb-[40]">{t('popular')}</h3>
+=======
+        <div className="mb-[120px]">
+          <h3 className="font-semibold text-3xl mb-[40]">{t("popular")}</h3>
+>>>>>>> 6079c6d43bfb6bc5745e78719fc1d07fab2d3ec9
           <Swiper
             modules={[Autoplay]}
             spaceBetween={20}
@@ -158,17 +194,27 @@ export default function Home() {
                 ))}
           </Swiper>
 
-          <div className="flex justify-center mt-[20]">
+          <div className="flex justify-center mt-[20px]">
             <Link href="/catalog">
+<<<<<<< HEAD
               <Button variant="link" className="px-[20]">
                 {t('showMore')}
+=======
+              <Button variant="link" className="px-[20px]">
+                {t("showMore")}
+>>>>>>> 6079c6d43bfb6bc5745e78719fc1d07fab2d3ec9
               </Button>
             </Link>
           </div>
         </div>
 
+<<<<<<< HEAD
         <div className="mb-[120]">
           <h3 className="font-semibold text-3xl mb-[40]">{t('news')}</h3>
+=======
+        <div className="mb-[120px]">
+          <h3 className="font-semibold text-3xl mb-[40px]">{t("news")}</h3>
+>>>>>>> 6079c6d43bfb6bc5745e78719fc1d07fab2d3ec9
 
           <Swiper
             modules={[Autoplay]}
@@ -183,32 +229,41 @@ export default function Home() {
                     <CatalogCard key={el.id} viewType="cards" product={el as ProductModel} />
                   </SwiperSlide>
                 ))
-              : [...Array(15)].map((el, index) => (
-                  <SwiperSlide>
+              : [...Array(15)].map((_, index) => (
+                  <SwiperSlide key={index}>
                     <div></div>
                   </SwiperSlide>
                 ))}
           </Swiper>
 
-          <div className="flex justify-center mt-[20]">
+          <div className="flex justify-center mt-[20px]">
             <Link href="/catalog">
+<<<<<<< HEAD
               <Button variant="link" className="px-[20]">
                 {t('showMore')}
+=======
+              <Button variant="link" className="px-[20px]">
+                {t("showMore")}
+>>>>>>> 6079c6d43bfb6bc5745e78719fc1d07fab2d3ec9
               </Button>
             </Link>
           </div>
         </div>
 
         <div>
+<<<<<<< HEAD
           <h3 className="font-semibold text-3xl mb-[40]">{t('partners')}</h3>
+=======
+          <h3 className="font-semibold text-3xl mb-[40px]">{t("partners")}</h3>
+>>>>>>> 6079c6d43bfb6bc5745e78719fc1d07fab2d3ec9
 
-          <div className="grid grid-cols-2 2xs:grid-cols-4 lg:grid-cols-6 gap-[20]">
+          <div className="grid grid-cols-2 2xs:grid-cols-4 lg:grid-cols-6 gap-[20px]">
             {Array(12)
               .fill(null)
               .map((_, index) => (
                 <div
                   key={index}
-                  className="h-[150] w-full bg-border rounded-[20] p-[20] flex justify-center items-center"
+                  className="h-[150px] w-full bg-border rounded-[20px] p-[20px] flex justify-center items-center"
                 >
                   <img src={`images/partners/${index + 1}.png`} className="max-h-[70%]" />
                 </div>

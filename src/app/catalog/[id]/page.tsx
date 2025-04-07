@@ -36,7 +36,6 @@ import ButtonWithIcon from "@/components/ui/custom/ButtonWithIcon";
 import ProductTabs from "@/components/features/product/ProductTabs";
 import CatalogCardSkeleton from "@/components/features/CatalogCardSkeleton";
 import { getProductAttributeLabel } from "@/utils/get-product-attribute-label";
-import { useCurrent } from "@/hooks/useCurrent";
 
 const mainCharacteristicsKeys = [
   { key: "screenDiagonal", label_ua: "Діагональ екрану", label_en: "Screen diagonal" },
@@ -147,8 +146,8 @@ const ProductPage = () => {
   }, [product]);
 
   return (
-    <div className="max-w-[1640] mx-auto px-[16]">
-      <Breadcrumb className="mb-[45]">
+    <div className="max-w-[1640px] mx-auto px-[16px]">
+      <Breadcrumb className="mb-[45px]">
         <BreadcrumbList>
           <BreadcrumbItem>
             <BreadcrumbLink>
@@ -169,13 +168,13 @@ const ProductPage = () => {
       </Breadcrumb>
 
       <div>
-        <p className="text-right mb-[20] opacity-[60%]">
+        <p className="text-right mb-[20px] opacity-[60%]">
           {product ? `${t("article")} ${product.getProductById.id.slice(2, 8)}` : "..."}
         </p>
 
         {/* main */}
-        <div className="flex gap-[40] mb-[75]">
-          <Card className="p-[10] w-[40%]">
+        <div className="flex gap-[40px] mb-[75px]">
+          <Card className="p-[10px] w-[40%]">
             <div className="h-[100%] w-[100%]">
               {product?.getProductById ? (
                 <div className="flex flex-col h-full">
@@ -186,13 +185,13 @@ const ProductPage = () => {
                     />
                   </div>
 
-                  <div className="h-[20%] flex gap-[10] mt-[10] overflow-y-auto">
+                  <div className="h-[20%] flex gap-[10px] mt-[10px] overflow-y-auto">
                     {product.getProductById.images.map((imgName) => {
                       return (
                         <img
                           src={imgName ? getPhotoUrl(imgName, "products") : "/images/empty-image.webp"}
                           onClick={() => setMainPhotoName(imgName)}
-                          className="w-[100] h-[100] block cursor-pointer"
+                          className="w-[100px] h-[100px] block cursor-pointer"
                         />
                       );
                     })}
@@ -204,11 +203,11 @@ const ProductPage = () => {
             </div>
           </Card>
 
-          <div className="flex flex-col justify-between items-start gap-[20] w-[60%]">
+          <div className="flex flex-col justify-between items-start gap-[20px] w-[60%]">
             {product?.getProductById ? (
               <h1 className="text-3xl font-semibold">{getProductTitle(product.getProductById)}</h1>
             ) : (
-              <Skeleton className="w-[70%] h-[36]" />
+              <Skeleton className="w-[70%] h-[36px]" />
             )}
 
             {product?.getProductById ? (
@@ -220,53 +219,53 @@ const ProductPage = () => {
                         VectorIcon={SaveIcon}
                         text={t("savedButton")}
                         buttonVariant="outline"
-                        wrapperClassNames="w-[150]"
+                        wrapperClassNames="w-[150px]"
                         disabled={isFavoriteLoading}
                         onClick={() => toggleFavourite()}
-                        classNames="w-full text-primary rounded-[5] justify-end px-4"
+                        classNames="w-full text-primary rounded-[5px] justify-end px-4"
                         iconClassNames="!text-primary fill-current text-inherit stroke-current"
                       />
                     ) : (
                       <ButtonWithIcon
                         VectorIcon={SaveIcon}
                         text={t("saveButton")}
-                        wrapperClassNames="w-[140]"
+                        wrapperClassNames="w-[140px]"
                         disabled={isFavoriteLoading}
                         onClick={() => toggleFavourite()}
                         iconClassNames="!text-border fill-muted-foreground text-inherit stroke-muted-foreground"
-                        classNames="w-full bg-border text-text-muted-foreground rounded-[5] justify-end pr-5 w-[150]"
+                        classNames="w-full bg-border text-text-muted-foreground rounded-[5px] justify-end pr-5 w-[150px]"
                       />
                     )}
                   </>
                 )}
               </>
             ) : (
-              <Skeleton className="w-[150] h-[46]" />
+              <Skeleton className="w-[150px] h-[46px]" />
             )}
 
-            <div className="flex gap-[30]">
-              <Card className="p-[30] w-[60%]">
+            <div className="flex gap-[30px]">
+              <Card className="p-[30px] w-[60%]">
                 {product?.getProductById ? (
-                  <b className="mb-[10] block">{t("shortDescription")}</b>
+                  <b className="mb-[10px] block">{t("shortDescription")}</b>
                 ) : (
-                  <Skeleton className="mb-10 w-[120] h-[20]" />
+                  <Skeleton className="mb-10 w-[120px] h-[20px]" />
                 )}
 
                 {product?.getProductById ? (
-                  <p className="mb-[25] line-clamp-[4]">{product?.getProductById.title}</p>
+                  <p className="mb-[25px] line-clamp-[4]">{product?.getProductById.title}</p>
                 ) : (
                   <>
-                    <Skeleton className="mb-2 w-full h-[16]" />
-                    <Skeleton className="mb-2 w-full h-[16]" />
-                    <Skeleton className="mb-2 w-full h-[16]" />
-                    <Skeleton className="mb-[25] w-full h-[16]" />
+                    <Skeleton className="mb-2 w-full h-[16px]" />
+                    <Skeleton className="mb-2 w-full h-[16px]" />
+                    <Skeleton className="mb-2 w-full h-[16px]" />
+                    <Skeleton className="mb-[25px] w-full h-[16px]" />
                   </>
                 )}
 
                 {product?.getProductById ? (
-                  <b className="mb-[10] block">{t("mainParams")}</b>
+                  <b className="mb-[10px] block">{t("mainParams")}</b>
                 ) : (
-                  <Skeleton className="mb-10 w-[180] h-[20]" />
+                  <Skeleton className="mb-10 w-[180px] h-[20px]" />
                 )}
 
                 {product?.getProductById ? (
@@ -277,7 +276,7 @@ const ProductPage = () => {
 
                         if (keys.includes(key)) {
                           return (
-                            <div className="flex py-[10] border-t border-dashed">
+                            <div className="flex py-[10px] border-t border-dashed">
                               <p className="w-[60%]">{getProductAttributeLabel(key, locale as "ua" | "en")}</p>
                               <p className="w-[40%]">{product.getProductById[key]}</p>
                             </div>
@@ -289,13 +288,13 @@ const ProductPage = () => {
                 ) : (
                   <>
                     {[...Array(4).fill(null)].map((_, index) => (
-                      <div className="flex py-[10] border-t border-dashed" key={index}>
+                      <div className="flex py-[10px] border-t border-dashed" key={index}>
                         <div className="w-[60%]">
-                          <Skeleton className="w-[100] h-[20]" />
+                          <Skeleton className="w-[100px] h-[20px]" />
                         </div>
 
                         <div className="w-[40%]">
-                          <Skeleton className="w-[80%] h-[20]" />
+                          <Skeleton className="w-[80%] h-[20px]" />
                         </div>
                       </div>
                     ))}
@@ -304,17 +303,17 @@ const ProductPage = () => {
               </Card>
 
               <Card className="flex flex-col justify-between w-[40%]">
-                <div className="p-[30]">
+                <div className="p-[30px]">
                   {product?.getProductById ? (
-                    <p className="flex items-center gap-[6] pb-[15] mb-[30] border-b border-dashed text-sm">
+                    <p className="flex items-center gap-[6px] pb-[15px] mb-[30px] border-b border-dashed text-sm">
                       <Image src="/icons/check.png" width={13} height={10} alt="check icon" />
                       <span>{t("status")}</span>
                     </p>
                   ) : (
-                    <Skeleton className="w-[40%] h-[20] pb-[15] mb-[30] border-b border-dashed text-sm" />
+                    <Skeleton className="w-[40%] h-[20px] pb-[15px] mb-[30px] border-b border-dashed text-sm" />
                   )}
 
-                  <div className="flex flex-col items-center gap-[15]">
+                  <div className="flex flex-col items-center gap-[15px]">
                     {product?.getProductById ? (
                       <div className="text-center">
                         <p className="text-sm opacity-[70%]">{t("price")}</p>
@@ -324,8 +323,8 @@ const ProductPage = () => {
                       </div>
                     ) : (
                       <div className="flex flex-col items-center">
-                        <Skeleton className="w-[60] h-[20] mb-[4]" />
-                        <Skeleton className="w-[120] h-[24]" />
+                        <Skeleton className="w-[60px] h-[20px] mb-[4px]" />
+                        <Skeleton className="w-[120px] h-[24px]" />
                       </div>
                     )}
 
@@ -334,14 +333,14 @@ const ProductPage = () => {
                         <div className={"flex items-center border border-border rounded-full w-[100%]"}>
                           <Button
                             onClick={() => onChangeCount("decrement")}
-                            className="p-[10] pl-[40] bg-transparent text-text"
+                            className="p-[10px] pl-[40px] bg-transparent text-text"
                           >
                             -
                           </Button>
                           <Input value={count} className="border-[0] grow text-center" />
                           <Button
                             onClick={() => onChangeCount("increment")}
-                            className="p-[10] pr-[40] bg-transparent text-text"
+                            className="p-[10px] pr-[40px] bg-transparent text-text"
                           >
                             +
                           </Button>
@@ -377,17 +376,17 @@ const ProductPage = () => {
                         />
                       </>
                     ) : (
-                      <div className="w-full max-w-[300] flex flex-col gap-[15]">
-                        <Skeleton className="w-full min-w-full h-[42] rounded-full" />
-                        <Skeleton className="w-full h-[42] rounded-full" />
-                        <Skeleton className="w-full h-[42] rounded-full" />
+                      <div className="w-full max-w-[300px] flex flex-col gap-[15px]">
+                        <Skeleton className="w-full min-w-full h-[42px] rounded-full" />
+                        <Skeleton className="w-full h-[42px] rounded-full" />
+                        <Skeleton className="w-full h-[42px] rounded-full" />
                       </div>
                     )}
                   </div>
                 </div>
 
-                <div className="flex items-center gap-[15] bg-secondary mt-auto px-[35] py-[30] rounded-t-[10]">
-                  <Image src="/images/box.png" alt="box icon" width={47} height={47} className="w-[47] h-[47]" />
+                <div className="flex items-center gap-[15px] bg-secondary mt-auto px-[35px] py-[30px] rounded-t-[10px]">
+                  <Image src="/images/box.png" alt="box icon" width={47} height={47} className="w-[47px] h-[47px]" />
                   <p className="text-sm">{t("orderInfo")}</p>
                 </div>
               </Card>
@@ -396,16 +395,16 @@ const ProductPage = () => {
         </div>
 
         {/* more info */}
-        <div className="mb-[75]">
+        <div className="mb-[75px]">
           {/* tabs */}
           <ProductTabs product={product?.getProductById as ProductModel} />
         </div>
 
         {/* popular */}
         <div>
-          <div className="flex justify-between mb-[50]">
+          <div className="flex justify-between mb-[50px]">
             <h2 className="text-2xl font-semibold">{t("popularTitle")}</h2>
-            <div className="flex gap-[10]">
+            <div className="flex gap-[10px]">
               <Button size="icon" variant="outline" className="border-destructive text-destructive">
                 {"<"}
               </Button>
@@ -416,7 +415,7 @@ const ProductPage = () => {
             </div>
           </div>
 
-          <div className="grid grid-cols-5 gap-[18] grid-flow-col">
+          <div className="grid grid-cols-5 gap-[18px] grid-flow-col">
             {data
               ? data.getAllProducts.products
                   .slice(0, 5)

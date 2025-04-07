@@ -6,12 +6,12 @@ import { toast } from "sonner";
 import { useForm } from "react-hook-form";
 import { useTranslations } from "next-intl";
 
+import { useAuth } from "@/hooks/useAuth";
 import { Input } from "../ui/common/Input";
 import { Button } from "../ui/common/Button";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRegisterMutation } from "@/graphql/generated/output";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/common/Form";
-import { useAuth } from "@/hooks/useAuth";
 
 const formSchema = z
   .object({
@@ -91,10 +91,14 @@ const RegisterForm: React.FC<IRegisterFormProps> = ({ setFromType }) => {
           control={form.control}
           name="username"
           render={({ field }) => (
-            <FormItem className="pt-[30] pb-[20]">
+            <FormItem className="pt-[30px] pb-[20px]">
               <FormLabel>{t("auth.registerForm.loginLabel")}</FormLabel>
               <FormControl>
-                <Input placeholder={t("auth.registerForm.loginLabel")} className="h-[50] px-[20] w-full" {...field} />
+                <Input
+                  placeholder={t("auth.registerForm.loginLabel")}
+                  className="h-[50px] px-[20px] w-full"
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -105,12 +109,12 @@ const RegisterForm: React.FC<IRegisterFormProps> = ({ setFromType }) => {
           control={form.control}
           name="email"
           render={({ field }) => (
-            <FormItem className="pb-[30]">
+            <FormItem className="pb-[30px]">
               <FormLabel>{t("auth.registerForm.emailLabel")}</FormLabel>
               <FormControl>
                 <Input
                   placeholder={t("auth.registerForm.emailPlaceholder")}
-                  className="h-[50] px-[20] w-full"
+                  className="h-[50px] px-[20px] w-full"
                   type="email"
                   {...field}
                 />
@@ -124,12 +128,12 @@ const RegisterForm: React.FC<IRegisterFormProps> = ({ setFromType }) => {
           control={form.control}
           name="password"
           render={({ field }) => (
-            <FormItem className="pb-[30]">
+            <FormItem className="pb-[30px]">
               <FormLabel>{t("auth.registerForm.passLabel")}</FormLabel>
               <FormControl>
                 <Input
                   placeholder={t("auth.registerForm.passPlaceholder")}
-                  className="h-[50] px-[20] w-full"
+                  className="h-[50px] px-[20px] w-full"
                   type="password"
                   {...field}
                 />
@@ -143,12 +147,12 @@ const RegisterForm: React.FC<IRegisterFormProps> = ({ setFromType }) => {
           control={form.control}
           name="password2"
           render={({ field }) => (
-            <FormItem className="pb-[30]">
+            <FormItem className="pb-[30px]">
               <FormLabel>{t("auth.registerForm.repeatPassLabel")}</FormLabel>
               <FormControl>
                 <Input
                   placeholder={t("auth.registerForm.repeatPassPlaceholder")}
-                  className="h-[50] px-[20] w-full"
+                  className="h-[50px] px-[20px] w-full"
                   type="password"
                   {...field}
                 />
@@ -162,7 +166,7 @@ const RegisterForm: React.FC<IRegisterFormProps> = ({ setFromType }) => {
           {t("auth.registerBtn")}
         </Button>
 
-        <div className="mt-[20] flex">
+        <div className="mt-[20px] flex">
           <Button
             variant="link"
             type="button"

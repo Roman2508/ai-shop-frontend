@@ -2,7 +2,6 @@
 
 import React from "react";
 import Link from "next/link";
-import { useDebouncedCallback } from "use-debounce";
 import { useLocale, useTranslations } from "next-intl";
 
 import {
@@ -20,18 +19,13 @@ import {
   usePaginateAndFilterProductsQuery,
 } from "@/graphql/generated/output";
 import { Card } from "@/components/ui/common/Card";
-import { Button } from "@/components/ui/common/Button";
 import CatalogCard from "@/components/features/CatalogCard";
-import ViewCardIcon from "@/components/images/ViewCardIcon";
-import ViewRowsIcon from "@/components/images/ViewRowsIcon";
 import ProductsPagination from "@/components/features/ProductsPagination";
 import CatalogCardSkeleton from "@/components/features/CatalogCardSkeleton";
 import ProductFilter from "@/components/features/product-filter/ProductFilter";
 import CatalogFilters from "@/components/features/catalog-filters/CatalogFilters";
-import { useRouter, useSearchParams } from "next/navigation";
 
 const CatalogPage = () => {
-  const locale = useLocale();
   const t = useTranslations("catalog");
 
   const [isLoading, setIsLoading] = React.useState(false);
@@ -48,13 +42,6 @@ const CatalogPage = () => {
     variables: { query: filter },
     skip: true,
   });
-
-  const debouncedChangePriceFrom = useDebouncedCallback((value) => {
-    handleChangeFilter("priceFrom", String(value));
-  }, 100);
-  const debouncedChangePriceTo = useDebouncedCallback((value) => {
-    handleChangeFilter("priceTo", String(value));
-  }, 100);
 
   const handleChangeFilter = (key: keyof PaginateAndFilterInput, value: string) => {
     setFilter((prev: PaginateAndFilterInput) => {
@@ -101,7 +88,6 @@ const CatalogPage = () => {
     try {
       setIsLoading(true);
       const { data: filteredData } = await refetchFilteredData({ query: { ...filter, ...additionalFilter } });
-      // updateFilters({ ...filter, ...additionalFilter });
       const items = filteredData?.paginateAndFilter ? filteredData.paginateAndFilter.products : [];
       setProducts(items as ProductModel[]);
       const total = filteredData?.paginateAndFilter ? filteredData.paginateAndFilter.total : 0;
@@ -130,57 +116,9 @@ const CatalogPage = () => {
     setMaxPrice(maxPrice);
   }, [data]);
 
-  /*  */
-  /*  */
-  /*  */
-
-  // const searchParams = useSearchParams();
-  // const router = useRouter();
-
-  // const updateFilters = (newFilters: PaginateAndFilterInput) => {
-  //   const params = new URLSearchParams(searchParams.toString());
-  //   Object.entries(newFilters).forEach(([key, value]) => {
-  //     if (value) {
-  //       // @ts-ignore
-  //       params.set(key, value);
-  //     } else {
-  //       params.delete(key);
-  //     }
-  //   });
-  //   router.push(`?${params.toString()}`);
-  // };
-
-  // React.useEffect(() => {
-  //   const params = {
-  //     brand: searchParams.get("brand") || undefined,
-  //     battery: searchParams.get("battery") || undefined,
-  //     builtInMemory: searchParams.get("builtInMemory") || undefined,
-  //     color: searchParams.get("color") || undefined,
-  //     deliverySet: searchParams.get("deliverySet") || undefined,
-  //     frontCamera: searchParams.get("frontCamera") || undefined,
-  //     mainCamera: searchParams.get("mainCamera") || undefined,
-  //     materials: searchParams.get("materials") || undefined,
-  //     os: searchParams.get("os") || undefined,
-  //     priceFrom: Number(searchParams.get("priceFrom")) || undefined,
-  //     priceTo: Number(searchParams.get("priceTo")) || undefined,
-  //     processorCores: searchParams.get("processorCores") || undefined,
-  //     processorName: searchParams.get("processorName") || undefined,
-  //     ram: searchParams.get("ram") || undefined,
-  //     screenDiagonal: searchParams.get("screenDiagonal") || undefined,
-  //     simCount: searchParams.get("simCount") || undefined,
-  //     simFormat: searchParams.get("simFormat") || undefined,
-  //     limit: Number(searchParams.get("limit")) || undefined,
-  //     skip: Number(searchParams.get("skip")) || undefined,
-  //     sortBy: searchParams.get("sortBy") || undefined,
-  //   };
-
-  //   const cleanParams = Object.fromEntries(Object.entries(params).filter(([key, value]) => value !== undefined));
-  //   setFilter(cleanParams);
-  // }, [searchParams]);
-
   return (
-    <div className="max-w-[1640] mx-auto px-[16]">
-      <Breadcrumb className="mb-[45]">
+    <div className="max-w-[1640px] mx-auto px-[16px]">
+      <Breadcrumb className="mb-[45px]">
         <BreadcrumbList>
           <BreadcrumbItem>
             <BreadcrumbLink>
@@ -196,11 +134,11 @@ const CatalogPage = () => {
         </BreadcrumbList>
       </Breadcrumb>
 
-      <h1 className="text-xl font-semibold mb-[45]">{t("title")}</h1>
+      <h1 className="text-xl font-semibold mb-[45px]">{t("title")}</h1>
 
-      <div className="flex items-baseline gap-[40]">
+      <div className="flex items-baseline gap-[40px]">
         {/* filters */}
-        <Card className="px-[20] py-[28] w-[300] min-w-[300] hidden xl:block">
+        <Card className="px-[20px] py-[28px] w-[300px] min-w-[300px] hidden xl:block">
           <ProductFilter
             filter={filter}
             setFilter={setFilter}
@@ -210,7 +148,7 @@ const CatalogPage = () => {
           />
         </Card>
 
-        <div className="flex flex-col gap-[34] grow">
+        <div className="flex flex-col gap-[34px] grow">
           {/* catalog filters */}
           <CatalogFilters
             filter={filter}
@@ -226,8 +164,8 @@ const CatalogPage = () => {
           <div
             className={
               viewType === "cards"
-                ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-2 2xl:grid-cols-3 3xl:grid-cols-4 gap-[18]"
-                : "grid grid-cols-1 gap-[18]"
+                ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-2 2xl:grid-cols-3 3xl:grid-cols-4 gap-[18px]"
+                : "grid grid-cols-1 gap-[18px]"
             }
           >
             {!isLoading && data

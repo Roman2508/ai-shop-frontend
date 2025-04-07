@@ -271,6 +271,21 @@
       "gb": "ГБ",
       "goToCartButton": "Перейти в корзину",
       "addToCartButton": "В корзину"
+    },
+    "mobileMenu": {
+      "title": "Меню",
+      "links": {
+        "profile": "Профіль",
+        "cart": "Корзина",
+        "favorites": "Збережене"
+      },
+      "lang": "Мова",
+      "theme": {
+        "title": "Тема",
+        "light": "Світла",
+        "dark": "Темна",
+        "system": "Системна"
+      }
     }
   }
 }

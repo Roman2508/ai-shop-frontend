@@ -42,7 +42,7 @@ export default async function RootLayout({
               <ToasterProvider>
                 <AppProgressBar>
                   <Header />
-                  <main className="grow pt-[110] pb-[100]">{children}</main>
+                  <main className="grow pt-[110px] pb-[100px]">{children}</main>
                   <Footer />
                 </AppProgressBar>
               </ToasterProvider>

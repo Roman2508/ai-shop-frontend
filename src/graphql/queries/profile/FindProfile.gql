@@ -5,7 +5,7 @@ query FindProfile {
     displayName
     email
     avatar
-
+    role
     city
     street
     postOffice
