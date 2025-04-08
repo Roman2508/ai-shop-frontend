@@ -3,15 +3,15 @@ import { NextRequest, NextResponse } from 'next/server'
 const middleware = (request: NextRequest) => {
   // const SESSION_NAME = process.env.NEXT_PUBLIC_SESSION_NAME ?? 'ai-shop-session'
   // const session = request.cookies.get(SESSION_NAME)?.value
-  const SESSION_NAME = 'isAuth'
-  const session = request.cookies.get(SESSION_NAME)?.value
+
+  const isAuth = request.cookies.get('isAuth')?.value
 
   const isProfilePage = request.url.includes('/profile')
   const isAdminPage = request.url.includes('/admin')
 
   if (isProfilePage || isAdminPage) {
-    if (session !== '1') {
-      // if (!session) {
+    // if (!session) {
+    if (isAuth !== '1') {
       return NextResponse.redirect(new URL('/catalog', request.url))
     }
 
