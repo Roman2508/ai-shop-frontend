@@ -24,10 +24,10 @@ import {
 } from "@/graphql/generated/output";
 import getPhotoUrl from "@/utils/get-photo-url";
 import { Card } from "@/components/ui/common/Card";
+import { isDateMatch } from "@/utils/is-date-match";
 import { Button } from "@/components/ui/common/Button";
 import { getLastTwoWeeks } from "@/utils/get-last-two-weeks";
-import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from "../../components/ui/common/Chart";
-import { isDateMatch } from "@/utils/is-date-match";
+import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/common/Chart";
 
 const chartConfig = {
   desktop: {

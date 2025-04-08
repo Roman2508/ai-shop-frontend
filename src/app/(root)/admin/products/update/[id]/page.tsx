@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import Link from "next/link";
+import { toast } from "sonner";
 import { useParams } from "next/navigation";
 
 import {
@@ -13,7 +14,6 @@ import {
 } from "@/components/ui/common/Breadcrumb";
 import { ProductModel, useGetProductByIdQuery } from "@/graphql/generated/output";
 import ProductActionsForm from "@/components/features/product-actions-form/ProductActionsForm";
-import { toast } from "sonner";
 
 const UpdateProductPage = () => {
   const { id } = useParams();

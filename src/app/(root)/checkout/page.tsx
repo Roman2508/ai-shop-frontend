@@ -1,5 +1,6 @@
 "use client";
 import React from "react";
+import { toast } from "sonner";
 import { useTranslations } from "next-intl";
 
 import { useCart } from "@/hooks/useCart";
@@ -9,7 +10,6 @@ import getProductTitle from "@/utils/getProductTitle";
 import { CartItemModel, UserModel } from "@/graphql/generated/output";
 import CheckoutForm from "@/components/features/checkout/CheckoutForm";
 import CheckoutView from "@/components/features/checkout/CheckoutView";
-import { toast } from "sonner";
 
 const CheckoutPage = () => {
   const t = useTranslations("profile");
