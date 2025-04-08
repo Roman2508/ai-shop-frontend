@@ -9,6 +9,7 @@ export const client = new ApolloClient({
       'apollo-require-preflight': 'true',
     },
   }),
+  uri: process.env.NEXT_PUBLIC_SERVER_URL,
   credentials: 'include',
   cache: new InMemoryCache(),
 })
