@@ -77,7 +77,7 @@ const CheckoutView: React.FC<React.PropsWithChildren<ICheckoutViewProps>> = ({
         </div>
       </div>
 
-      <div className="flex justify-between gap-[20px]">
+      <div className="flex justify-between gap-[20px] flex-wrap">
         <ButtonWithIcon
           disabled={isLoading}
           VectorIcon={BackIcon}
