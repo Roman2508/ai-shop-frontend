@@ -143,7 +143,7 @@ export default function Home() {
           <Swiper
             modules={[Autoplay]}
             spaceBetween={20}
-            slidesPerView={calcSlidesPerView(window.innerWidth)}
+            slidesPerView={calcSlidesPerView(window?.innerWidth)}
             autoplay={{ delay: 2000 }}
             loop={true}
           >
@@ -175,7 +175,7 @@ export default function Home() {
           <Swiper
             modules={[Autoplay]}
             spaceBetween={20}
-            slidesPerView={calcSlidesPerView(window.innerWidth)}
+            slidesPerView={calcSlidesPerView(window?.innerWidth)}
             autoplay={{ delay: 2000 }}
             loop={true}
           >
