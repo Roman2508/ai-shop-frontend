@@ -20,6 +20,14 @@ interface ICheckoutFormProps {
   pageView: "view" | "edit";
   handleChangePageView: () => void;
   createPayment: () => Promise<void>;
+  setIsError: React.Dispatch<React.SetStateAction<boolean>>;
+  setDeliveryData: React.Dispatch<
+    React.SetStateAction<{
+      city: string;
+      street: string;
+      postOffice: string;
+    }>
+  >;
 }
 
 const BackIcon = () => {
@@ -30,7 +38,9 @@ const CheckoutForm: React.FC<ICheckoutFormProps> = ({
   user,
   pageView,
   isLoading,
+  setIsError,
   createPayment,
+  setDeliveryData,
   handleChangePageView,
 }) => {
   const router = useRouter();
@@ -39,18 +49,11 @@ const CheckoutForm: React.FC<ICheckoutFormProps> = ({
 
   const form = useForm<z.infer<typeof formSchema>>({ resolver: zodResolver(formSchema) });
 
-  const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    if (!user) return;
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {};
 
-    try {
-      console.log(values);
-    } catch (error) {
-      console.error(error);
-    } finally {
-    }
-  };
-
-  const setDeliveryData = (data: { city: string; street: string; postOffice: string }) => {
+  const changeDeliveryData = (data: { city: string; street: string; postOffice: string }) => {
+    setIsError(false);
+    setDeliveryData(data);
     form.setValue("city", data.city);
     form.setValue("street", data.street);
     form.setValue("postOffice", data.postOffice);
@@ -123,7 +126,7 @@ const CheckoutForm: React.FC<ICheckoutFormProps> = ({
 
         <div className="mt-[20px] mb-[40px]">
           <div className="flex flex-col flex-wrap gap-[0]">
-            <DeliveryButton setDeliveryData={setDeliveryData} classNames="max-w-full" />
+            <DeliveryButton setDeliveryData={changeDeliveryData} classNames="max-w-full" />
 
             <div className="pb-[30px]">
               <div className="flex py-[20px] border-b border-dashed">

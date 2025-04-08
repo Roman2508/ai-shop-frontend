@@ -13,6 +13,7 @@ interface ICheckoutViewProps {
   pageView: "view" | "edit";
   handleChangePageView: () => void;
   createPayment: () => Promise<void>;
+  deliveryData: { city: string; street: string; postOffice: string };
 }
 
 const BackIcon = () => {
@@ -23,6 +24,7 @@ const CheckoutView: React.FC<React.PropsWithChildren<ICheckoutViewProps>> = ({
   user,
   pageView,
   isLoading,
+  deliveryData,
   createPayment,
   handleChangePageView,
 }) => {
@@ -57,17 +59,17 @@ const CheckoutView: React.FC<React.PropsWithChildren<ICheckoutViewProps>> = ({
       <div className="mt-[20px] mb-[40px]">
         <div className="flex py-[20px] border-b border-dashed">
           <p className="w-[40%]">Місто</p>
-          <p className="w-[60%] text-right font-semibold">{user?.city}</p>
+          <p className="w-[60%] text-right font-semibold">{deliveryData.city}</p>
         </div>
 
         <div className="flex py-[20px] border-b border-dashed">
           <p className="w-[40%]">Вулиця</p>
-          <p className="w-[60%] text-right font-semibold">{user?.street}</p>
+          <p className="w-[60%] text-right font-semibold">{deliveryData.street}</p>
         </div>
 
         <div className="flex py-[20px] border-b border-dashed">
           <p className="w-[40%]">Відділення</p>
-          <p className="w-[60%] text-right font-semibold">{user?.postOffice}</p>
+          <p className="w-[60%] text-right font-semibold">{deliveryData.postOffice}</p>
         </div>
 
         <div className="flex justify-center">

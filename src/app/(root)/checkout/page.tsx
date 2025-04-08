@@ -11,14 +11,22 @@ import { CartItemModel, UserModel } from "@/graphql/generated/output";
 import CheckoutForm from "@/components/features/checkout/CheckoutForm";
 import CheckoutView from "@/components/features/checkout/CheckoutView";
 
+const defaultDeliveryData = {
+  city: "",
+  street: "",
+  postOffice: "",
+};
+
 const CheckoutPage = () => {
   const t = useTranslations("profile");
 
   const { user } = useCurrent();
+  const [isError, setIsError] = React.useState(false);
   const { setCartItems, selectedCartItems, clearSelectedItems } = useCart();
 
   const [isLoading, setIsLoading] = React.useState(false);
   const [pageView, setPageView] = React.useState<"view" | "edit">("view");
+  const [deliveryData, setDeliveryData] = React.useState(defaultDeliveryData);
 
   const totalPrice = selectedCartItems.reduce((acc, curr) => curr.product.price * curr.count + acc, 0);
 
@@ -31,6 +39,11 @@ const CheckoutPage = () => {
   };
 
   const createPayment = async () => {
+    if (!deliveryData.postOffice || !deliveryData.city || !deliveryData.street) {
+      setIsError(true);
+      return;
+    }
+
     try {
       setIsLoading(true);
       if (!user) return;
@@ -69,6 +82,11 @@ const CheckoutPage = () => {
   React.useEffect(() => {
     if (!user || !user.cart) return;
     setCartItems(user.cart as CartItemModel[]);
+    setDeliveryData({
+      city: user.city || "",
+      street: user.street || "",
+      postOffice: user.postOffice || "",
+    });
   }, [user]);
 
   if (!user) return;
@@ -84,6 +102,7 @@ const CheckoutPage = () => {
               pageView={pageView}
               isLoading={isLoading}
               user={user as UserModel}
+              deliveryData={deliveryData}
               createPayment={createPayment}
               handleChangePageView={handleChangePageView}
             />
@@ -93,11 +112,15 @@ const CheckoutPage = () => {
             <CheckoutForm
               pageView={pageView}
               isLoading={isLoading}
+              setIsError={setIsError}
               user={user as UserModel}
               createPayment={createPayment}
+              setDeliveryData={setDeliveryData}
               handleChangePageView={handleChangePageView}
             />
           )}
+
+          {isError && <p className="text-error mt-5 text-center">Виберіть поштове відділення для доставки</p>}
         </div>
 
         <div className="px-[20px] py-[20px] w-[60%] rounded-[5px] border border-border">

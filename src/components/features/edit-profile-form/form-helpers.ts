@@ -1,4 +1,4 @@
-import { z } from 'zod'
+import { z } from "zod";
 
 export const formSchema = z.object({
   username: z
@@ -8,14 +8,14 @@ export const formSchema = z.object({
     })
     .regex(
       /^[a-zA-Z0-9_]+(?:-[a-zA-Z0-9_]+)*$/,
-      "Ім'я профілю повинно включати тільки латинські букви та символи -, _"
+      "Ім'я профілю може містити лише латинські літери, цифри, дефіси та підкреслення"
     ),
   displayName: z.string().min(2, {
     message: "Публічне ім'я повинно бути більше 2 символів",
   }),
-  email: z.string().email('Не вірний формат пошти'),
+  email: z.string().email("Не вірний формат пошти"),
   password: z.string().optional(),
   city: z.string(),
   street: z.string(),
   postOffice: z.string(),
-})
+});
