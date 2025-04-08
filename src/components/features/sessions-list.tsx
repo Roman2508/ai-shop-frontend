@@ -82,7 +82,7 @@ const SessionsList = () => {
         <p className="font-bold text-center mt-[40px] pb-[10px] border-b border-dashed">{t('other')}</p>
         {sessions.length ? (
           sessions.map((s) => (
-            <div className="flex py-[20px] border-b border-dashed">
+            <div className="flex py-[20px] border-b border-dashed" key={s.id}>
               <div className="w-[40%] flex flex-col">
                 <p className="font-semibold">{`${s.metadata.device.browser}, ${s.metadata.device.os}`}</p>
                 <p>{`${formatDateTime(s.createdAt)}`}</p>

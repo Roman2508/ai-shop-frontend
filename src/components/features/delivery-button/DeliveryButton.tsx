@@ -16,19 +16,19 @@ const DeliveryButton: React.FC<IDeliveryButtonProps> = ({ setDeliveryData, class
   let latitude = "";
   let longitude = "";
 
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(
-      async (position) => {
-        latitude = String(position.coords.latitude);
-        longitude = String(position.coords.longitude);
-      },
-      (error) => {
-        console.error("Помилка отримання геолокації:", error);
-      }
-    );
-  } else {
-    console.error("Ваш браузер не підтримує геолокацію.");
-  }
+  // if (navigator.geolocation) {
+  //   navigator.geolocation.getCurrentPosition(
+  //     async (position) => {
+  //       latitude = String(position.coords.latitude);
+  //       longitude = String(position.coords.longitude);
+  //     },
+  //     (error) => {
+  //       console.error("Помилка отримання геолокації:", error);
+  //     }
+  //   );
+  // } else {
+  //   console.error("Ваш браузер не підтримує геолокацію.");
+  // }
 
   function getQueryParams() {
     const params = new URLSearchParams(window.location.search);
