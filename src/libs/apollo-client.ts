@@ -1,13 +1,14 @@
-import { ApolloClient, InMemoryCache } from "@apollo/client";
-import createUploadLink from "apollo-upload-client/createUploadLink.mjs";
+import { ApolloClient, InMemoryCache } from '@apollo/client'
+import createUploadLink from 'apollo-upload-client/createUploadLink.mjs'
 
 export const client = new ApolloClient({
   link: createUploadLink({
     uri: process.env.NEXT_PUBLIC_SERVER_URL,
-    credentials: "include",
+    credentials: 'include',
     headers: {
-      "apollo-require-preflight": "true",
+      'apollo-require-preflight': 'true',
     },
   }),
+  credentials: 'include',
   cache: new InMemoryCache(),
-});
+})
