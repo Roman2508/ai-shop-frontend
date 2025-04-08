@@ -4,6 +4,10 @@ const middleware = (request: NextRequest) => {
   const SESSION_NAME = process.env.NEXT_PUBLIC_SESSION_NAME ?? 'ai-shop-session'
   const session = request.cookies.get(SESSION_NAME)?.value
 
+  console.log('session', request.cookies.get(SESSION_NAME))
+  console.log('session.value', session)
+  console.log('SESSION_NAME', SESSION_NAME)
+
   const isProfilePage = request.url.includes('/profile')
   const isAdminPage = request.url.includes('/admin')
 
