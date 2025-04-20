@@ -3,8 +3,15 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { toast } from "sonner";
+import { Autoplay } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
 import { useParams, useRouter } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
+
+import "swiper/css";
+import "swiper/css/bundle";
+import "swiper/css/autoplay";
+import "swiper/css/scrollbar";
 
 import {
   ProductModel,
@@ -45,6 +52,15 @@ const mainCharacteristicsKeys = [
   { key: "proccessorName", label_ua: "Назва процесора", label_en: "Processor name" },
   { key: "processorCores", label_ua: "Кількість ядер процесора", label_en: "Processor cores" },
 ];
+
+const calcSlidesPerView = (windowWidth: number) => {
+  if (!windowWidth) return 5;
+  if (windowWidth > 1200) return 5;
+  else if (windowWidth > 1024) return 4;
+  else if (windowWidth > 768) return 3;
+  else if (windowWidth > 550) return 2;
+  else return 1;
+};
 
 const ProductPage = () => {
   const t = useTranslations("fullProduct");
@@ -173,14 +189,14 @@ const ProductPage = () => {
         </p>
 
         {/* main */}
-        <div className="flex gap-[20px] 2xl:gap-[40px] mb-[75px]">
-          <Card className="p-[10px] w-[40%]">
+        <div className="flex flex-col-reverse md:flex-row gap-[20px] 2xl:gap-[40px] mb-[75px]">
+          <Card className="p-[10px] w-full md:w-[40%]">
             <div className="h-[100%] w-[100%]">
               {product?.getProductById ? (
                 <div className="flex flex-col h-full">
                   <div className="h-[80%] max-h-[500px] flex justify-center">
                     <img
-                      className="w-auto h-full block object-contain 2xl:object-cover"
+                      className="w-auto max-h-full block object-contain 2xl:object-cover"
                       src={mainPhotoName ? getPhotoUrl(mainPhotoName, "products") : "/images/empty-image.webp"}
                     />
                   </div>
@@ -203,7 +219,7 @@ const ProductPage = () => {
             </div>
           </Card>
 
-          <div className="flex flex-col items-start gap-[20px] w-[60%]">
+          <div className="flex flex-col items-start gap-[20px] w-full md:w-[60%]">
             {product?.getProductById ? (
               <h1 className="text-3xl font-semibold">{getProductTitle(product.getProductById)}</h1>
             ) : (
@@ -404,18 +420,30 @@ const ProductPage = () => {
         <div>
           <div className="flex justify-between mb-[50px]">
             <h2 className="text-2xl font-semibold">{t("popularTitle")}</h2>
-            <div className="flex gap-[10px]">
-              <Button size="icon" variant="outline" className="border-destructive text-destructive">
-                {"<"}
-              </Button>
-
-              <Button size="icon" variant="outline">
-                {">"}
-              </Button>
-            </div>
+            <div className="flex gap-[10px]"></div>
           </div>
 
-          <div className="grid grid-cols-5 gap-[18px] grid-flow-col">
+          <Swiper
+            modules={[Autoplay]}
+            spaceBetween={20}
+            slidesPerView={calcSlidesPerView(window?.innerWidth)}
+            autoplay={{ delay: 2000 }}
+            loop={true}
+          >
+            {data && data.getAllProducts.products.length
+              ? data.getAllProducts.products.slice(1, 16).map((el) => (
+                  <SwiperSlide key={el.id}>
+                    <CatalogCard viewType="cards" product={el as ProductModel} />
+                  </SwiperSlide>
+                ))
+              : [...Array(15)].map((_, index) => (
+                  <SwiperSlide key={index}>
+                    <CatalogCardSkeleton />
+                  </SwiperSlide>
+                ))}
+          </Swiper>
+
+          {/* <div className="grid grid-cols-5 gap-[18px] grid-flow-col">
             {data
               ? data.getAllProducts.products
                   .slice(0, 5)
@@ -425,7 +453,7 @@ const ProductPage = () => {
                     .fill(null)
                     .map((_, index) => <CatalogCardSkeleton key={index} viewType="cards" />),
                 ]}
-          </div>
+          </div> */}
         </div>
       </div>
     </div>
