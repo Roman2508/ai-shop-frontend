@@ -119,9 +119,9 @@ const CatalogCard: React.FC<CatalogCardPropsType> = ({ product, viewType }) => {
       </div>
 
       <div className="my-[10px]">
-        <Link href={`/catalog/${product.id}`}>
+        <Link href={`/catalog/${product.id}`} className="flex justify-center">
           <img
-            className={viewType === "cards" ? "h-[260px] w-full object-cover" : "h-[200px] object-cover"}
+            className={viewType === "cards" ? "h-full max-h-[260px] w-auto object-cover" : "h-[200px] object-cover"}
             src={product.images.length ? getPhotoUrl(product.images[0], "products") : "/images/empty-image.webp"}
           />
         </Link>
@@ -207,7 +207,9 @@ const CatalogCard: React.FC<CatalogCardPropsType> = ({ product, viewType }) => {
                 disabled={isCartLoading}
                 onClick={() => onAddToCart(product.id)}
                 className={
-                  viewType === "cards" ? "rounded-r-[5px] rounded-l-[0] w-[50%]" : "rounded-b-[5px] rounded-t-[0] w-[100%]"
+                  viewType === "cards"
+                    ? "rounded-r-[5px] rounded-l-[0] w-[50%]"
+                    : "rounded-b-[5px] rounded-t-[0] w-[100%]"
                 }
               >
                 {t("addToCartButton")}

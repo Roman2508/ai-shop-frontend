@@ -26,7 +26,7 @@ const Search: React.FC<ISearchProps> = ({ isMobile = false }) => {
 
   const { data, refetch } = useSearchProductsQuery({ variables: { data: searchQuery }, skip: true });
 
-  const debouncedChangePriceTo = useDebouncedCallback((value) => {
+  const debouncedSearch = useDebouncedCallback((value) => {
     setSearchQuery(value);
   }, 1000);
 
@@ -55,7 +55,7 @@ const Search: React.FC<ISearchProps> = ({ isMobile = false }) => {
 
   return (
     <>
-      <Dialog>
+      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <DialogTrigger asChild>
           <div>
             {!isMobile ? (
@@ -92,7 +92,7 @@ const Search: React.FC<ISearchProps> = ({ isMobile = false }) => {
                 variant="default"
                 className="pr-10 w-full"
                 placeholder={`${t("searchBtn")}...`}
-                onChange={(e) => debouncedChangePriceTo(e.target.value)}
+                onChange={(e) => debouncedSearch(e.target.value)}
               />
             </div>
 
@@ -104,7 +104,7 @@ const Search: React.FC<ISearchProps> = ({ isMobile = false }) => {
                     <ul className="list-disc ml-[45px]">
                       <li>"Бюджетний смартфон до 10 000 грн"</li>
                       <li>"iPhone 15 Pro Max 256 ГБ"</li>
-                      <li>"Телефон з гарною камерою"</li>
+                      <li>"Андроїд з гарною камерою"</li>
                     </ul>
                   </div>
                 </div>
@@ -112,7 +112,9 @@ const Search: React.FC<ISearchProps> = ({ isMobile = false }) => {
 
               {searchQuery && loading && <Loader />}
 
-              {!loading && searchQuery && !products.length && <p className="text-center pt-[30px]">Нічого не знайдено</p>}
+              {!loading && searchQuery && !products.length && (
+                <p className="text-center pt-[30px]">Нічого не знайдено</p>
+              )}
 
               {!loading && !!products.length && (
                 <div className="max-h-[70vh] overflow-auto">
@@ -130,8 +132,8 @@ const Search: React.FC<ISearchProps> = ({ isMobile = false }) => {
                         }}
                         className="mb-[10px] py-[10px] px-[15px] flex items-center gap-[10px] border border-border rounded-[20px] cursor-pointer hover:bg-secondary"
                       >
-                        <div className="w-[40px] h-[40px]">
-                          <img src={productPhotoUrl} />
+                        <div className="w-[40px] h-[40px] flex justify-center">
+                          <img src={productPhotoUrl} className="h-full w-auto" />
                         </div>
 
                         <h4 className="font-medium flex-1">{getProductTitle(el)}</h4>

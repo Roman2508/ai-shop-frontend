@@ -78,7 +78,7 @@ const CartItem: React.FC<CartItemPropsType> = ({ id, number, product, count, isE
         <p>{number}</p>
       )}
 
-      <div className="border border-border w-[110px] min-w-[110px] h-[110px] p-[2px]">
+      <div className="border border-border w-[110px] min-w-[110px] h-[110px] p-[2px] flex justify-center">
         <img
           className="h-[100%] object-cover"
           src={product.images.length ? getPhotoUrl(product.images[0], "products") : "/images/empty-image.webp"}

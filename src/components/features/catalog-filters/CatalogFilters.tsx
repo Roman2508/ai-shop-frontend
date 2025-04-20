@@ -89,7 +89,6 @@ const CatalogFilters: React.FC<ICatalogFiltersProps> = ({
           <SelectContent>
             <SelectGroup>
               <SelectItem value="default">{t("filter.sort.byDefault")}</SelectItem>
-              <SelectItem value="rating">{t("filter.sort.byRating")}</SelectItem>
               <SelectItem value="new">{t("filter.sort.byNew")}</SelectItem>
               <SelectItem value="price:asc">{t("filter.sort.byPrice:asc")}</SelectItem>
               <SelectItem value="price:desc">{t("filter.sort.byPrice:desc")}</SelectItem>

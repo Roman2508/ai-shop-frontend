@@ -31,19 +31,20 @@ const CheckoutView: React.FC<React.PropsWithChildren<ICheckoutViewProps>> = ({
   const router = useRouter();
 
   const t = useTranslations("profile");
+  const t2 = useTranslations("checkout");
 
   return (
     <>
-      <h2 className="text-2xl font-semibold">Особисті дані</h2>
+      <h2 className="text-2xl font-semibold">{t2("subtitle1")}</h2>
 
       <div className="mt-[20px] mb-[60px]">
         <div className="flex py-[20px] border-b border-dashed">
-          <p className="w-[40%]">Ім'я та прізвище</p>
+          <p className="w-[40%]">{t2("name")}</p>
           <p className="w-[60%] text-right font-semibold">{user?.displayName}</p>
         </div>
 
         <div className="flex py-[20px] border-b border-dashed">
-          <p className="w-[40%]">Електронна пошта</p>
+          <p className="w-[40%]">{t2("email")}</p>
           <p className="w-[60%] text-right font-semibold">{user?.email}</p>
         </div>
 
@@ -54,21 +55,21 @@ const CheckoutView: React.FC<React.PropsWithChildren<ICheckoutViewProps>> = ({
         </div>
       </div>
 
-      <h2 className="text-2xl font-semibold">Інформація про доставку</h2>
+      <h2 className="text-2xl font-semibold">{t2("subtitle2")}</h2>
 
       <div className="mt-[20px] mb-[40px]">
         <div className="flex py-[20px] border-b border-dashed">
-          <p className="w-[40%]">Місто</p>
+          <p className="w-[40%]">{t2("city")}</p>
           <p className="w-[60%] text-right font-semibold">{deliveryData.city}</p>
         </div>
 
         <div className="flex py-[20px] border-b border-dashed">
-          <p className="w-[40%]">Вулиця</p>
+          <p className="w-[40%]">{t2("street")}</p>
           <p className="w-[60%] text-right font-semibold">{deliveryData.street}</p>
         </div>
 
         <div className="flex py-[20px] border-b border-dashed">
-          <p className="w-[40%]">Відділення</p>
+          <p className="w-[40%]">{t2("postOffice")}</p>
           <p className="w-[60%] text-right font-semibold">{deliveryData.postOffice}</p>
         </div>
 
@@ -84,8 +85,9 @@ const CheckoutView: React.FC<React.PropsWithChildren<ICheckoutViewProps>> = ({
           disabled={isLoading}
           VectorIcon={BackIcon}
           buttonVariant="secondary"
-          text="Повернутись назад"
+          text={t2("backButton")}
           onClick={() => router.back()}
+          classNames="!min-w-[120px]"
         />
 
         <Button
@@ -93,7 +95,7 @@ const CheckoutView: React.FC<React.PropsWithChildren<ICheckoutViewProps>> = ({
           onClick={createPayment}
           className="hover:bg-secondary border border-primary hover:text-primary"
         >
-          Перейти до оплати
+          {t2("payButton")}
         </Button>
       </div>
     </>

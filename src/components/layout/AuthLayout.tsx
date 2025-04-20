@@ -1,13 +1,9 @@
-'use client'
+"use client";
 
-import React from 'react'
+import React from "react";
 
 const AppProgressBar: React.FC<React.PropsWithChildren> = ({ children }) => {
-    // const 
-  
-    return <>{children}</>
+  return <>{children}</>;
+};
 
-
-}
-
-export default AppProgressBar
+export default AppProgressBar;

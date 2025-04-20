@@ -173,14 +173,14 @@ const ProductPage = () => {
         </p>
 
         {/* main */}
-        <div className="flex gap-[40px] mb-[75px]">
+        <div className="flex gap-[20px] 2xl:gap-[40px] mb-[75px]">
           <Card className="p-[10px] w-[40%]">
             <div className="h-[100%] w-[100%]">
               {product?.getProductById ? (
                 <div className="flex flex-col h-full">
-                  <div className="h-[80%]">
+                  <div className="h-[80%] max-h-[500px] flex justify-center">
                     <img
-                      className="w-full h-full block"
+                      className="w-auto h-full block object-contain 2xl:object-cover"
                       src={mainPhotoName ? getPhotoUrl(mainPhotoName, "products") : "/images/empty-image.webp"}
                     />
                   </div>
@@ -203,7 +203,7 @@ const ProductPage = () => {
             </div>
           </Card>
 
-          <div className="flex flex-col justify-between items-start gap-[20px] w-[60%]">
+          <div className="flex flex-col items-start gap-[20px] w-[60%]">
             {product?.getProductById ? (
               <h1 className="text-3xl font-semibold">{getProductTitle(product.getProductById)}</h1>
             ) : (
@@ -243,8 +243,8 @@ const ProductPage = () => {
               <Skeleton className="w-[150px] h-[46px]" />
             )}
 
-            <div className="flex gap-[30px]">
-              <Card className="p-[30px] w-[60%]">
+            <div className="flex flex-col 2xl:flex-row gap-[30px]">
+              <Card className="p-[30px] w-full 2xl:w-[60%]">
                 {product?.getProductById ? (
                   <b className="mb-[10px] block">{t("shortDescription")}</b>
                 ) : (
@@ -302,7 +302,7 @@ const ProductPage = () => {
                 )}
               </Card>
 
-              <Card className="flex flex-col justify-between w-[40%]">
+              <Card className="flex flex-col justify-between w-full 2xl:w-[40%]">
                 <div className="p-[30px]">
                   {product?.getProductById ? (
                     <p className="flex items-center gap-[6px] pb-[15px] mb-[30px] border-b border-dashed text-sm">

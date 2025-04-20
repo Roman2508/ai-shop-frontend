@@ -2,6 +2,7 @@
 import React from "react";
 import Link from "next/link";
 import { toast } from "sonner";
+import { useTranslations } from "next-intl";
 import { useParams } from "next/navigation";
 
 import {
@@ -9,13 +10,14 @@ import {
   BreadcrumbItem,
   BreadcrumbLink,
   BreadcrumbList,
-  BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/common/Breadcrumb";
 import { ProductModel, useGetProductByIdQuery } from "@/graphql/generated/output";
 import ProductActionsForm from "@/components/features/product-actions-form/ProductActionsForm";
 
 const UpdateProductPage = () => {
+  const t = useTranslations("admin.products");
+
   const { id } = useParams();
 
   const { data: product } = useGetProductByIdQuery({
@@ -34,18 +36,14 @@ const UpdateProductPage = () => {
         <BreadcrumbList>
           <BreadcrumbItem>
             <BreadcrumbLink>
-              <Link href="/">Home</Link>
+              <Link href="/">{t("breadcrumbs.home")}</Link>
             </BreadcrumbLink>
           </BreadcrumbItem>
           <BreadcrumbSeparator />
           <BreadcrumbItem>
             <BreadcrumbLink>
-              <Link href="/components">Components</Link>
+              <Link href="/admin">{t("breadcrumbs.admin")}</Link>
             </BreadcrumbLink>
-          </BreadcrumbItem>
-          <BreadcrumbSeparator />
-          <BreadcrumbItem>
-            <BreadcrumbPage>Breadcrumb</BreadcrumbPage>
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>

@@ -5,6 +5,7 @@ import SessionsList from "./sessions-list";
 import getPhotoUrl from "@/utils/get-photo-url";
 import formatDateTime from "@/utils/format-date-time";
 import { UserModel } from "@/graphql/generated/output";
+import { useCurrent } from "@/hooks/useCurrent";
 
 interface ViewProfilePropsType {
   user?: Omit<UserModel, "password">;
@@ -12,6 +13,12 @@ interface ViewProfilePropsType {
 
 const ViewProfile: React.FC<ViewProfilePropsType> = ({ user }) => {
   const t = useTranslations("profile.personalInformation.view");
+
+  const { refetch } = useCurrent();
+
+  React.useEffect(() => {
+    refetch();
+  }, []);
 
   if (!user) {
     return <h1 className="font-bold text-center">Завантаження...</h1>;

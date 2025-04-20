@@ -2,7 +2,7 @@ import { z } from "zod";
 import React from "react";
 import { ArrowLeft } from "lucide-react";
 import { useForm } from "react-hook-form";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 
 import { formSchema } from "./form-helpers";
@@ -45,7 +45,10 @@ const CheckoutForm: React.FC<ICheckoutFormProps> = ({
 }) => {
   const router = useRouter();
 
+  const locale = useLocale();
+
   const t = useTranslations("profile.personalInformation.edit");
+  const t2 = useTranslations("checkout");
 
   const form = useForm<z.infer<typeof formSchema>>({ resolver: zodResolver(formSchema) });
 
@@ -74,7 +77,7 @@ const CheckoutForm: React.FC<ICheckoutFormProps> = ({
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
-        <h2 className="text-2xl font-semibold">Особисті дані</h2>
+        <h2 className="text-2xl font-semibold">{t2("subtitle1")}</h2>
 
         <div className="mt-[20px] mb-[60px]">
           <FormField
@@ -117,12 +120,18 @@ const CheckoutForm: React.FC<ICheckoutFormProps> = ({
 
           <div className="flex justify-center">
             <Button variant="link" className="px-[20px]" onClick={handleChangePageView}>
-              {pageView === "view" ? "Редагувати" : "Завершити редагування"}
+              {locale === "ua"
+                ? pageView === "view"
+                  ? "Редагувати"
+                  : "Завершити редагування"
+                : pageView === "view"
+                ? "Edit"
+                : "Finish editing"}
             </Button>
           </div>
         </div>
 
-        <h2 className="text-2xl font-semibold">Інформація про доставку</h2>
+        <h2 className="text-2xl font-semibold">{t2("subtitle2")}</h2>
 
         <div className="mt-[20px] mb-[40px]">
           <div className="flex flex-col flex-wrap gap-[0]">

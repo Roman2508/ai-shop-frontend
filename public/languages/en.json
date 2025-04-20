@@ -278,6 +278,19 @@
       "": ""
     }
   },
+  "checkout": {
+    "title": "Ordering",
+    "subtitle1": "Personal information",
+    "subtitle2": "Shipping information",
+    "subtitle3": "Your order",
+    "name": "First and last name",
+    "email": "Email",
+    "city": "City",
+    "street": "Street",
+    "postOffice": "Post office",
+    "backButton": "Back",
+    "payButton": "Go to payment"
+  },
   "components": {
     "catalogCart": {
       "currency": "uah",

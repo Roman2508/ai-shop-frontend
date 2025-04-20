@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { toast } from "sonner";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 
 import { useCart } from "@/hooks/useCart";
 import { useCurrent } from "@/hooks/useCurrent";
@@ -18,7 +18,9 @@ const defaultDeliveryData = {
 };
 
 const CheckoutPage = () => {
-  const t = useTranslations("profile");
+  const t = useTranslations("checkout");
+
+  const locale = useLocale();
 
   const { user } = useCurrent();
   const [isError, setIsError] = React.useState(false);
@@ -93,10 +95,10 @@ const CheckoutPage = () => {
 
   return (
     <div className="max-w-[1640px] mx-auto px-[16px]">
-      <h1 className="text-3xl font-semibold">Оформлення замовлення</h1>
+      <h1 className="text-3xl font-semibold">{t("title")}</h1>
 
-      <div className="flex gap-[20px] mt-[40px]">
-        <div className="px-[20px] py-[20px] w-[40%] rounded-[5px] border border-border">
+      <div className="flex gap-[20px] mt-[40px] flex-col xl:flex-row">
+        <div className="px-[20px] py-[20px] w-full xl:w-[40%] rounded-[5px] border border-border">
           {pageView === "view" && (
             <CheckoutView
               pageView={pageView}
@@ -120,12 +122,16 @@ const CheckoutPage = () => {
             />
           )}
 
-          {isError && <p className="text-error mt-5 text-center">Виберіть поштове відділення для доставки</p>}
+          {isError && (
+            <p className="text-error mt-5 text-center">
+              {locale === "ua" ? "Виберіть поштове відділення для доставки" : "Select a post office for delivery"}
+            </p>
+          )}
         </div>
 
-        <div className="px-[20px] py-[20px] w-[60%] rounded-[5px] border border-border">
+        <div className="px-[20px] py-[20px] w-full xl:w-[60%] rounded-[5px] border border-border">
           <div className="flex items-center justify-between mb-[20px]">
-            <h2 className="text-2xl font-semibold">Ваше замовлення</h2>
+            <h2 className="text-2xl font-semibold">{t("subtitle3")}</h2>
             <h2 className="text-2xl font-semibold">{totalPrice.toLocaleString("uk-UA")} ₴</h2>
           </div>
 

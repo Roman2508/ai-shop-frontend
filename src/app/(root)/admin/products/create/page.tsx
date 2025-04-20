@@ -1,37 +1,35 @@
 "use client";
 import React from "react";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 
 import {
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbLink,
   BreadcrumbList,
-  BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/common/Breadcrumb";
 import { Button } from "@/components/ui/common/Button";
 import ProductActionsForm from "@/components/features/product-actions-form/ProductActionsForm";
 
 const CreateProductPage = ({}) => {
+  const t = useTranslations("admin.products");
+
   return (
     <div className="max-w-[1640px] mx-auto px-[16px]">
       <Breadcrumb className="mb-[45px]">
         <BreadcrumbList>
           <BreadcrumbItem>
             <BreadcrumbLink>
-              <Link href="/">Home</Link>
+              <Link href="/">{t("breadcrumbs.home")}</Link>
             </BreadcrumbLink>
           </BreadcrumbItem>
           <BreadcrumbSeparator />
           <BreadcrumbItem>
             <BreadcrumbLink>
-              <Link href="/components">Components</Link>
+              <Link href="/admin">{t("breadcrumbs.admin")}</Link>
             </BreadcrumbLink>
-          </BreadcrumbItem>
-          <BreadcrumbSeparator />
-          <BreadcrumbItem>
-            <BreadcrumbPage>Breadcrumb</BreadcrumbPage>
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>

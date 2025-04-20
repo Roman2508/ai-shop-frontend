@@ -1,6 +1,5 @@
-// 'use client'
-import React from 'react'
-import NextTopLoader from 'nextjs-toploader'
+import React from "react";
+import NextTopLoader from "nextjs-toploader";
 
 const AppProgressBar: React.FC<React.PropsWithChildren> = ({ children }) => {
   return (
@@ -22,7 +21,7 @@ const AppProgressBar: React.FC<React.PropsWithChildren> = ({ children }) => {
       />
       {children}
     </>
-  )
-}
+  );
+};
 
-export default AppProgressBar
+export default AppProgressBar;

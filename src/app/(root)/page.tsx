@@ -9,42 +9,16 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Autoplay } from "swiper/modules";
+import { useTranslations } from "next-intl";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { useTranslations, useLocale } from "next-intl";
 
 import { Button } from "@/components/ui/common/Button";
 import CatalogCard from "@/components/features/CatalogCard";
 import ButtonWithIcon from "@/components/ui/custom/ButtonWithIcon";
-import { ProductModel, useGetAllProductsQuery } from "@/graphql/generated/output";
 import CatalogCardSkeleton from "@/components/features/CatalogCardSkeleton";
+import { ProductModel, useGetAllProductsQuery } from "@/graphql/generated/output";
 
 const categories = ["Apple", "Samsung", "Xiaomi", "Google Pixel", "One Plus", "Motorola", "Nokia", "Sony"];
-
-// tido:
-// 5.  mobile adaptation
-// 6.  filters (url query params) ???
-// 8.  search (AI)
-// 9.  recommendation (FAIS vectors)
-// 20. англійська версія thank-you page
-// 21. mobile version product page (full)
-
-// 7.  homepage !!!ALMOST_DONE
-// 10. administration (products CRUD) !!!ALMOST_DONE
-// 12. Toast !!!ALMOST_DONE
-// 15. Авторизація !!!ALMOST_DONE
-// 4.  localization !!!ALMOST_DONE
-
-// 1.  Comments !!!DONE
-// 2.  Payment !!!DONE
-// 11. Купити в 1 клік (full product page) !!!DONE
-// 13. Roles !!!DONE
-// 15. Redirect !!!DONE
-// 14. Активні сесії !!!DONE
-// 3.  Orders (change status cron) !!!DONE
-// 17. Reviews Page !!!DONE
-// 4.  localization !!!DONE
-// 19. Доробити сторінку http://localhost:3000/admin !!!DONE
-// 18. Кнопка адміністрування не повинна бути видимою звичайним користувачам (сторінка профіль) !!!DONE
 
 const calcSlidesPerView = (windowWidth: number) => {
   if (!windowWidth) return 5;
