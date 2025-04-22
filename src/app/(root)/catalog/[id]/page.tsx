@@ -442,18 +442,6 @@ const ProductPage = () => {
                   </SwiperSlide>
                 ))}
           </Swiper>
-
-          {/* <div className="grid grid-cols-5 gap-[18px] grid-flow-col">
-            {data
-              ? data.getAllProducts.products
-                  .slice(0, 5)
-                  .map((product) => <CatalogCard product={product as ProductModel} viewType="cards" />)
-              : [
-                  ...Array(5)
-                    .fill(null)
-                    .map((_, index) => <CatalogCardSkeleton key={index} viewType="cards" />),
-                ]}
-          </div> */}
         </div>
       </div>
     </div>
