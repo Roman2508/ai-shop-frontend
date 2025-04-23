@@ -1,17 +1,17 @@
-"use client";
-import React from "react";
-import Link from "next/link";
-import Image from "next/image";
-import { toast } from "sonner";
-import { Autoplay } from "swiper/modules";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { useParams, useRouter } from "next/navigation";
-import { useLocale, useTranslations } from "next-intl";
+'use client'
+import React from 'react'
+import Link from 'next/link'
+import Image from 'next/image'
+import { toast } from 'sonner'
+import { Autoplay } from 'swiper/modules'
+import { Swiper, SwiperSlide } from 'swiper/react'
+import { useParams, useRouter } from 'next/navigation'
+import { useLocale, useTranslations } from 'next-intl'
 
-import "swiper/css";
-import "swiper/css/bundle";
-import "swiper/css/autoplay";
-import "swiper/css/scrollbar";
+import 'swiper/css'
+import 'swiper/css/bundle'
+import 'swiper/css/autoplay'
+import 'swiper/css/scrollbar'
 
 import {
   ProductModel,
@@ -19,7 +19,8 @@ import {
   useGetAllProductsQuery,
   useGetProductByIdQuery,
   useToggleFavoriteMutation,
-} from "@/graphql/generated/output";
+  useAddProductToViewedMutation,
+} from '@/graphql/generated/output'
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -27,139 +28,150 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from "@/components/ui/common/Breadcrumb";
-import { useCart } from "@/hooks/useCart";
-import { useAuth } from "@/hooks/useAuth";
-import getPhotoUrl from "@/utils/get-photo-url";
-import { useWishlist } from "@/hooks/useWishlist";
-import { Card } from "@/components/ui/common/Card";
-import SaveIcon from "@/components/images/SaveIcon";
-import { Input } from "@/components/ui/common/Input";
-import getProductTitle from "@/utils/getProductTitle";
-import { Button } from "@/components/ui/common/Button";
-import { Skeleton } from "@/components/ui/common/Skeleton";
-import CatalogCard from "@/components/features/CatalogCard";
-import ButtonWithIcon from "@/components/ui/custom/ButtonWithIcon";
-import ProductTabs from "@/components/features/product/ProductTabs";
-import CatalogCardSkeleton from "@/components/features/CatalogCardSkeleton";
-import { getProductAttributeLabel } from "@/utils/get-product-attribute-label";
+} from '@/components/ui/common/Breadcrumb'
+import { useCart } from '@/hooks/useCart'
+import { useAuth } from '@/hooks/useAuth'
+import getPhotoUrl from '@/utils/get-photo-url'
+import { useWishlist } from '@/hooks/useWishlist'
+import { Card } from '@/components/ui/common/Card'
+import SaveIcon from '@/components/images/SaveIcon'
+import { Input } from '@/components/ui/common/Input'
+import getProductTitle from '@/utils/getProductTitle'
+import { Button } from '@/components/ui/common/Button'
+import { Skeleton } from '@/components/ui/common/Skeleton'
+import CatalogCard from '@/components/features/CatalogCard'
+import ButtonWithIcon from '@/components/ui/custom/ButtonWithIcon'
+import ProductTabs from '@/components/features/product/ProductTabs'
+import CatalogCardSkeleton from '@/components/features/CatalogCardSkeleton'
+import { getProductAttributeLabel } from '@/utils/get-product-attribute-label'
+import { useCurrent } from '@/hooks/useCurrent'
 
 const mainCharacteristicsKeys = [
-  { key: "screenDiagonal", label_ua: "Діагональ екрану", label_en: "Screen diagonal" },
-  { key: "os", label_ua: "Операційна система", label_en: "OS" },
-  { key: "frontCamera", label_ua: "Фронтальна камера", label_en: "Front camera" },
-  { key: "mainCamera", label_ua: "Головна камера", label_en: "Main camera" },
-  { key: "proccessorName", label_ua: "Назва процесора", label_en: "Processor name" },
-  { key: "processorCores", label_ua: "Кількість ядер процесора", label_en: "Processor cores" },
-];
+  { key: 'screenDiagonal', label_ua: 'Діагональ екрану', label_en: 'Screen diagonal' },
+  { key: 'os', label_ua: 'Операційна система', label_en: 'OS' },
+  { key: 'frontCamera', label_ua: 'Фронтальна камера', label_en: 'Front camera' },
+  { key: 'mainCamera', label_ua: 'Головна камера', label_en: 'Main camera' },
+  { key: 'proccessorName', label_ua: 'Назва процесора', label_en: 'Processor name' },
+  { key: 'processorCores', label_ua: 'Кількість ядер процесора', label_en: 'Processor cores' },
+]
 
 const calcSlidesPerView = (windowWidth: number) => {
-  if (!windowWidth) return 5;
-  if (windowWidth > 1200) return 5;
-  else if (windowWidth > 1024) return 4;
-  else if (windowWidth > 768) return 3;
-  else if (windowWidth > 550) return 2;
-  else return 1;
-};
+  if (!windowWidth) return 5
+  if (windowWidth > 1200) return 5
+  else if (windowWidth > 1024) return 4
+  else if (windowWidth > 768) return 3
+  else if (windowWidth > 550) return 2
+  else return 1
+}
 
 const ProductPage = () => {
-  const t = useTranslations("fullProduct");
+  const t = useTranslations('fullProduct')
 
-  const router = useRouter();
-  const { id } = useParams();
-  const locale = useLocale();
+  const { user } = useCurrent()
 
-  const { isAuthentificated } = useAuth();
-  const { addItemToWishlist, removeItemFromWishlist, wishlistItems } = useWishlist();
-  const { addItemToCart, cartItems, clearSelectedItems, toggleSelectedCartItems } = useCart();
+  const router = useRouter()
+  const { id } = useParams()
+  const locale = useLocale()
 
-  const [count, setCount] = React.useState(1);
-  const [mainPhotoName, setMainPhotoName] = React.useState("");
+  const { isAuthentificated } = useAuth()
+  const { addItemToWishlist, removeItemFromWishlist, wishlistItems } = useWishlist()
+  const { addItemToCart, cartItems, clearSelectedItems, toggleSelectedCartItems } = useCart()
 
-  const { data } = useGetAllProductsQuery();
+  const [count, setCount] = React.useState(1)
+  const [mainPhotoName, setMainPhotoName] = React.useState('')
+
+  const { data } = useGetAllProductsQuery()
 
   const { data: product } = useGetProductByIdQuery({
-    variables: { productId: typeof id === "string" ? id : "" },
-  });
+    variables: { productId: typeof id === 'string' ? id : '' },
+  })
 
   const [addToFavorite, { loading: isFavoriteLoading }] = useToggleFavoriteMutation({
     onCompleted() {
-      toast.success("Оновлено список збережених товарів");
+      toast.success('Оновлено список збережених товарів')
     },
     onError() {
-      toast.error("Помилка при оновленні списку збережених товарів");
+      toast.error('Помилка при оновленні списку збережених товарів')
     },
-  });
+  })
 
   const [addToCart, { loading: isCartLoading }] = useToggleCartMutation({
     onCompleted() {
-      toast.success("Товар було додано до вашої корзини");
+      toast.success('Товар було додано до вашої корзини')
     },
     onError() {
-      toast.error("Помилка при видаленні товару з корзини");
+      toast.error('Помилка при видаленні товару з корзини')
     },
-  });
+  })
 
-  const isAddedToFavourite = wishlistItems.some((el) => el?.product?.id === product?.getProductById.id);
-  const isAddedToCart = cartItems.some((el) => el?.product?.id === product?.getProductById.id);
+  const [addProductToViewed] = useAddProductToViewedMutation()
+
+  const isAddedToFavourite = wishlistItems.some((el) => el?.product?.id === product?.getProductById.id)
+  const isAddedToCart = cartItems.some((el) => el?.product?.id === product?.getProductById.id)
 
   const toggleFavourite = async () => {
-    if (!product) return;
+    if (!product) return
     try {
-      await addToFavorite({ variables: { productId: product.getProductById.id } });
+      await addToFavorite({ variables: { productId: product.getProductById.id } })
       if (isAddedToFavourite) {
-        removeItemFromWishlist(product.getProductById.id);
+        removeItemFromWishlist(product.getProductById.id)
       } else {
-        addItemToWishlist({ product: product.getProductById as ProductModel });
+        addItemToWishlist({ product: product.getProductById as ProductModel })
       }
     } catch (err) {
-      console.log(err);
+      console.log(err)
     }
-  };
+  }
 
   const onAddToCart = async () => {
-    if (!product) return;
+    if (!product) return
     if (isAuthentificated) {
-      addToCart({ variables: { input: { productId: product.getProductById.id, count } } });
-      addItemToCart({ count, id: String(Math.random()), product: product.getProductById as ProductModel });
+      addToCart({ variables: { input: { productId: product.getProductById.id, count } } })
+      addItemToCart({ count, id: String(Math.random()), product: product.getProductById as ProductModel })
     } else {
-      alert("Авторизуйтесь щоб додати товар в корзину");
+      alert('Авторизуйтесь щоб додати товар в корзину')
     }
-  };
+  }
 
   const buyIn1Click = async () => {
-    if (!product) return;
+    if (!product) return
     if (isAuthentificated) {
-      clearSelectedItems();
-      toggleSelectedCartItems(product.getProductById.id, count, product.getProductById as ProductModel);
-      router.push("/checkout");
+      clearSelectedItems()
+      toggleSelectedCartItems(product.getProductById.id, count, product.getProductById as ProductModel)
+      router.push('/checkout')
     } else {
-      alert("Авторизуйтесь щоб купити товар");
+      alert('Авторизуйтесь щоб купити товар')
     }
-  };
+  }
 
-  const onChangeCount = (action: "increment" | "decrement") => {
+  const onChangeCount = (action: 'increment' | 'decrement') => {
     setCount((prev) => {
-      if (action === "increment") {
-        return prev + 1;
+      if (action === 'increment') {
+        return prev + 1
       } else {
         if (prev - 1 !== 0) {
-          return prev - 1;
+          return prev - 1
         } else {
-          return prev;
+          return prev
         }
       }
-    });
-  };
+    })
+  }
 
   React.useEffect(() => {
     if (product) {
       if (product.getProductById.images.length) {
-        const firstPhotoName = product.getProductById.images[0];
-        setMainPhotoName(firstPhotoName);
+        const firstPhotoName = product.getProductById.images[0]
+        setMainPhotoName(firstPhotoName)
       }
     }
-  }, [product]);
+  }, [product])
+
+  React.useEffect(() => {
+    if (!user || !product) return
+    if (typeof id !== 'string') return
+    addProductToViewed({ variables: { input: { userId: user.id, productId: id } } })
+  }, [user, product])
 
   return (
     <div className="max-w-[1640px] mx-auto px-[16px]">
@@ -167,25 +179,25 @@ const ProductPage = () => {
         <BreadcrumbList>
           <BreadcrumbItem>
             <BreadcrumbLink>
-              <Link href="/">{t("breadcrumbs.home")}</Link>
+              <Link href="/">{t('breadcrumbs.home')}</Link>
             </BreadcrumbLink>
           </BreadcrumbItem>
           <BreadcrumbSeparator />
           <BreadcrumbItem>
             <BreadcrumbLink>
-              <Link href="/catalog">{t("breadcrumbs.catalog")}</Link>
+              <Link href="/catalog">{t('breadcrumbs.catalog')}</Link>
             </BreadcrumbLink>
           </BreadcrumbItem>
           <BreadcrumbSeparator />
           <BreadcrumbItem>
-            <BreadcrumbPage>{product ? getProductTitle(product.getProductById) : ""}</BreadcrumbPage>
+            <BreadcrumbPage>{product ? getProductTitle(product.getProductById) : ''}</BreadcrumbPage>
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>
 
       <div>
         <p className="text-right mb-[20px] opacity-[60%]">
-          {product ? `${t("article")} ${product.getProductById.id.slice(2, 8)}` : "..."}
+          {product ? `${t('article')} ${product.getProductById.id.slice(2, 8)}` : '...'}
         </p>
 
         {/* main */}
@@ -197,7 +209,7 @@ const ProductPage = () => {
                   <div className="h-[80%] max-h-[500px] flex justify-center">
                     <img
                       className="w-auto max-h-full block object-contain 2xl:object-cover"
-                      src={mainPhotoName ? getPhotoUrl(mainPhotoName, "products") : "/images/empty-image.webp"}
+                      src={mainPhotoName ? getPhotoUrl(mainPhotoName, 'products') : '/images/empty-image.webp'}
                     />
                   </div>
 
@@ -205,11 +217,11 @@ const ProductPage = () => {
                     {product.getProductById.images.map((imgName) => {
                       return (
                         <img
-                          src={imgName ? getPhotoUrl(imgName, "products") : "/images/empty-image.webp"}
+                          src={imgName ? getPhotoUrl(imgName, 'products') : '/images/empty-image.webp'}
                           onClick={() => setMainPhotoName(imgName)}
                           className="w-[100px] h-[100px] block cursor-pointer"
                         />
-                      );
+                      )
                     })}
                   </div>
                 </div>
@@ -233,7 +245,7 @@ const ProductPage = () => {
                     {isAddedToFavourite ? (
                       <ButtonWithIcon
                         VectorIcon={SaveIcon}
-                        text={t("savedButton")}
+                        text={t('savedButton')}
                         buttonVariant="outline"
                         wrapperClassNames="w-[150px]"
                         disabled={isFavoriteLoading}
@@ -244,7 +256,7 @@ const ProductPage = () => {
                     ) : (
                       <ButtonWithIcon
                         VectorIcon={SaveIcon}
-                        text={t("saveButton")}
+                        text={t('saveButton')}
                         wrapperClassNames="w-[140px]"
                         disabled={isFavoriteLoading}
                         onClick={() => toggleFavourite()}
@@ -262,7 +274,7 @@ const ProductPage = () => {
             <div className="flex flex-col 2xl:flex-row gap-[30px]">
               <Card className="p-[30px] w-full 2xl:w-[60%]">
                 {product?.getProductById ? (
-                  <b className="mb-[10px] block">{t("shortDescription")}</b>
+                  <b className="mb-[10px] block">{t('shortDescription')}</b>
                 ) : (
                   <Skeleton className="mb-10 w-[120px] h-[20px]" />
                 )}
@@ -279,7 +291,7 @@ const ProductPage = () => {
                 )}
 
                 {product?.getProductById ? (
-                  <b className="mb-[10px] block">{t("mainParams")}</b>
+                  <b className="mb-[10px] block">{t('mainParams')}</b>
                 ) : (
                   <Skeleton className="mb-10 w-[180px] h-[20px]" />
                 )}
@@ -288,15 +300,15 @@ const ProductPage = () => {
                   <>
                     {(Object.keys(product.getProductById) as Array<keyof ProductModel>).map(
                       (key: keyof ProductModel) => {
-                        const keys = mainCharacteristicsKeys.map((el) => el.key);
+                        const keys = mainCharacteristicsKeys.map((el) => el.key)
 
                         if (keys.includes(key)) {
                           return (
                             <div className="flex py-[10px] border-t border-dashed">
-                              <p className="w-[60%]">{getProductAttributeLabel(key, locale as "ua" | "en")}</p>
+                              <p className="w-[60%]">{getProductAttributeLabel(key, locale as 'ua' | 'en')}</p>
                               <p className="w-[40%]">{product.getProductById[key]}</p>
                             </div>
-                          );
+                          )
                         }
                       }
                     )}
@@ -323,7 +335,7 @@ const ProductPage = () => {
                   {product?.getProductById ? (
                     <p className="flex items-center gap-[6px] pb-[15px] mb-[30px] border-b border-dashed text-sm">
                       <Image src="/icons/check.png" width={13} height={10} alt="check icon" />
-                      <span>{t("status")}</span>
+                      <span>{t('status')}</span>
                     </p>
                   ) : (
                     <Skeleton className="w-[40%] h-[20px] pb-[15px] mb-[30px] border-b border-dashed text-sm" />
@@ -332,9 +344,9 @@ const ProductPage = () => {
                   <div className="flex flex-col items-center gap-[15px]">
                     {product?.getProductById ? (
                       <div className="text-center">
-                        <p className="text-sm opacity-[70%]">{t("price")}</p>
+                        <p className="text-sm opacity-[70%]">{t('price')}</p>
                         <b className="text-xl">
-                          {product.getProductById.price.toLocaleString("uk-UA")} {t("currency")}
+                          {product.getProductById.price.toLocaleString('uk-UA')} {t('currency')}
                         </b>
                       </div>
                     ) : (
@@ -346,16 +358,16 @@ const ProductPage = () => {
 
                     {product?.getProductById ? (
                       <>
-                        <div className={"flex items-center border border-border rounded-full w-[100%]"}>
+                        <div className={'flex items-center border border-border rounded-full w-[100%]'}>
                           <Button
-                            onClick={() => onChangeCount("decrement")}
+                            onClick={() => onChangeCount('decrement')}
                             className="p-[10px] pl-[40px] bg-transparent text-text"
                           >
                             -
                           </Button>
                           <Input value={count} className="border-[0] grow text-center" />
                           <Button
-                            onClick={() => onChangeCount("increment")}
+                            onClick={() => onChangeCount('increment')}
                             className="p-[10px] pr-[40px] bg-transparent text-text"
                           >
                             +
@@ -376,7 +388,7 @@ const ProductPage = () => {
                             buttonVariant="default"
                             disabled={isCartLoading}
                             wrapperClassNames="w-full"
-                            text={t("addToCartButton")}
+                            text={t('addToCartButton')}
                             iconSrc="/icons/shopping-bag.png"
                           />
                         )}
@@ -388,7 +400,7 @@ const ProductPage = () => {
                           buttonVariant="secondary"
                           wrapperClassNames="w-full"
                           iconSrc="/icons/wallet.png"
-                          text={t("buyIn1ClickButton")}
+                          text={t('buyIn1ClickButton')}
                         />
                       </>
                     ) : (
@@ -403,7 +415,7 @@ const ProductPage = () => {
 
                 <div className="flex items-center gap-[15px] bg-secondary mt-auto px-[35px] py-[30px] rounded-t-[10px]">
                   <Image src="/images/box.png" alt="box icon" width={47} height={47} className="w-[47px] h-[47px]" />
-                  <p className="text-sm">{t("orderInfo")}</p>
+                  <p className="text-sm">{t('orderInfo')}</p>
                 </div>
               </Card>
             </div>
@@ -419,7 +431,7 @@ const ProductPage = () => {
         {/* popular */}
         <div>
           <div className="flex justify-between mb-[50px]">
-            <h2 className="text-2xl font-semibold">{t("popularTitle")}</h2>
+            <h2 className="text-2xl font-semibold">{t('popularTitle')}</h2>
             <div className="flex gap-[10px]"></div>
           </div>
 
@@ -445,7 +457,7 @@ const ProductPage = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default ProductPage;
+export default ProductPage

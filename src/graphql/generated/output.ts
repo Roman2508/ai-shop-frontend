@@ -24,6 +24,11 @@ export type AddToCartInput = {
   productId: Scalars['String']['input'];
 };
 
+export type AddToViewedInput = {
+  productId: Scalars['String']['input'];
+  userId: Scalars['String']['input'];
+};
+
 export type CartItemModel = {
   __typename?: 'CartItemModel';
   count: Scalars['Float']['output'];
@@ -129,10 +134,12 @@ export type LoginInput = {
 export type Mutation = {
   __typename?: 'Mutation';
   addProductPhoto: Scalars['Boolean']['output'];
+  addProductToViewed: Scalars['Boolean']['output'];
   changeCartItemCount: Scalars['Boolean']['output'];
   changeEmail: Scalars['Boolean']['output'];
   changePassword: Scalars['Boolean']['output'];
   clearSessionCookie: Scalars['Boolean']['output'];
+  createAllEmbeddings: Scalars['Boolean']['output'];
   createManyProducts: Scalars['Boolean']['output'];
   createOrder: OrderModel;
   createProduct: ProductModel;
@@ -157,6 +164,11 @@ export type Mutation = {
 export type MutationAddProductPhotoArgs = {
   file: Scalars['Upload']['input'];
   productId: Scalars['String']['input'];
+};
+
+
+export type MutationAddProductToViewedArgs = {
+  input: AddToViewedInput;
 };
 
 
@@ -564,6 +576,13 @@ export type DeleteReviewMutationVariables = Exact<{
 
 
 export type DeleteReviewMutation = { __typename?: 'Mutation', deleteReview: boolean };
+
+export type AddProductToViewedMutationVariables = Exact<{
+  input: AddToViewedInput;
+}>;
+
+
+export type AddProductToViewedMutation = { __typename?: 'Mutation', addProductToViewed: boolean };
 
 export type ToggleCartMutationVariables = Exact<{
   input: AddToCartInput;
@@ -1127,6 +1146,37 @@ export function useDeleteReviewMutation(baseOptions?: Apollo.MutationHookOptions
 export type DeleteReviewMutationHookResult = ReturnType<typeof useDeleteReviewMutation>;
 export type DeleteReviewMutationResult = Apollo.MutationResult<DeleteReviewMutation>;
 export type DeleteReviewMutationOptions = Apollo.BaseMutationOptions<DeleteReviewMutation, DeleteReviewMutationVariables>;
+export const AddProductToViewedDocument = gql`
+    mutation AddProductToViewed($input: AddToViewedInput!) {
+  addProductToViewed(input: $input)
+}
+    `;
+export type AddProductToViewedMutationFn = Apollo.MutationFunction<AddProductToViewedMutation, AddProductToViewedMutationVariables>;
+
+/**
+ * __useAddProductToViewedMutation__
+ *
+ * To run a mutation, you first call `useAddProductToViewedMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddProductToViewedMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addProductToViewedMutation, { data, loading, error }] = useAddProductToViewedMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useAddProductToViewedMutation(baseOptions?: Apollo.MutationHookOptions<AddProductToViewedMutation, AddProductToViewedMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<AddProductToViewedMutation, AddProductToViewedMutationVariables>(AddProductToViewedDocument, options);
+      }
+export type AddProductToViewedMutationHookResult = ReturnType<typeof useAddProductToViewedMutation>;
+export type AddProductToViewedMutationResult = Apollo.MutationResult<AddProductToViewedMutation>;
+export type AddProductToViewedMutationOptions = Apollo.BaseMutationOptions<AddProductToViewedMutation, AddProductToViewedMutationVariables>;
 export const ToggleCartDocument = gql`
     mutation ToggleCart($input: AddToCartInput!) {
   toggleCart(input: $input)
