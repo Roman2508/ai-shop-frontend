@@ -19,6 +19,7 @@ import {
   useGetAllProductsQuery,
   useGetProductByIdQuery,
   useToggleFavoriteMutation,
+  useAddProductToViewedMutation,
 } from "@/graphql/generated/output";
 import {
   Breadcrumb,
@@ -69,16 +70,15 @@ const ProductPage = () => {
   const router = useRouter();
   const { id } = useParams();
   const locale = useLocale();
-
   const { user } = useCurrent();
+
   const { isAuthentificated } = useAuth();
   const { addItemToWishlist, removeItemFromWishlist, wishlistItems } = useWishlist();
   const { addItemToCart, cartItems, clearSelectedItems, toggleSelectedCartItems } = useCart();
 
+  const { data } = useGetAllProductsQuery({ variables: { userId: user ? user.id : "" } });
   const [count, setCount] = React.useState(1);
   const [mainPhotoName, setMainPhotoName] = React.useState("");
-
-  const { data } = useGetAllProductsQuery({ variables: { userId: user ? user.id : "" } });
 
   const { data: product } = useGetProductByIdQuery({
     variables: { productId: typeof id === "string" ? id : "" },
@@ -101,6 +101,8 @@ const ProductPage = () => {
       toast.error("Помилка при видаленні товару з корзини");
     },
   });
+
+  const [addProductToViewed] = useAddProductToViewedMutation();
 
   const isAddedToFavourite = wishlistItems.some((el) => el?.product?.id === product?.getProductById.id);
   const isAddedToCart = cartItems.some((el) => el?.product?.id === product?.getProductById.id);
@@ -162,6 +164,12 @@ const ProductPage = () => {
       }
     }
   }, [product]);
+
+  React.useEffect(() => {
+    if (!user || !product) return;
+    if (typeof id !== "string") return;
+    addProductToViewed({ variables: { input: { userId: user.id, productId: id } } });
+  }, [user, product]);
 
   return (
     <div className="max-w-[1640px] mx-auto px-[16px]">
@@ -444,18 +452,6 @@ const ProductPage = () => {
                   </SwiperSlide>
                 ))}
           </Swiper>
-
-          {/* <div className="grid grid-cols-5 gap-[18px] grid-flow-col">
-            {data
-              ? data.getAllProducts.products
-                  .slice(0, 5)
-                  .map((product) => <CatalogCard product={product as ProductModel} viewType="cards" />)
-              : [
-                  ...Array(5)
-                    .fill(null)
-                    .map((_, index) => <CatalogCardSkeleton key={index} viewType="cards" />),
-                ]}
-          </div> */}
         </div>
       </div>
     </div>

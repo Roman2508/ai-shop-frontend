@@ -1,7 +1,7 @@
-"use client";
-import React from "react";
-import Link from "next/link";
-import { useTranslations } from "next-intl";
+'use client'
+import React from 'react'
+import Link from 'next/link'
+import { useTranslations } from 'next-intl'
 
 import {
   Breadcrumb,
@@ -9,12 +9,12 @@ import {
   BreadcrumbLink,
   BreadcrumbList,
   BreadcrumbSeparator,
-} from "@/components/ui/common/Breadcrumb";
-import { Button } from "@/components/ui/common/Button";
-import ProductActionsForm from "@/components/features/product-actions-form/ProductActionsForm";
+} from '@/components/ui/common/Breadcrumb'
+import { Button } from '@/components/ui/common/Button'
+import ProductActionsForm from '@/components/features/product-actions-form/ProductActionsForm'
 
 const CreateProductPage = ({}) => {
-  const t = useTranslations("admin.products");
+  const t = useTranslations('admin.products')
 
   return (
     <div className="max-w-[1640px] mx-auto px-[16px]">
@@ -22,20 +22,20 @@ const CreateProductPage = ({}) => {
         <BreadcrumbList>
           <BreadcrumbItem>
             <BreadcrumbLink>
-              <Link href="/">{t("breadcrumbs.home")}</Link>
+              <Link href="/">{t('breadcrumbs.home')}</Link>
             </BreadcrumbLink>
           </BreadcrumbItem>
           <BreadcrumbSeparator />
           <BreadcrumbItem>
             <BreadcrumbLink>
-              <Link href="/admin">{t("breadcrumbs.admin")}</Link>
+              <Link href="/admin">{t('breadcrumbs.admin')}</Link>
             </BreadcrumbLink>
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>
 
       <div className="flex flex-col gap-[46px]">
-        <div className="flex justify-between items-center">
+        <div className="flex justify-between items-center gap-[20px] flex-col md:flex-row">
           <h1 className="text-3xl font-semibold">Створити новий товар</h1>
 
           <div className="flex gap-[10px]">
@@ -51,7 +51,7 @@ const CreateProductPage = ({}) => {
         <ProductActionsForm />
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default CreateProductPage;
+export default CreateProductPage

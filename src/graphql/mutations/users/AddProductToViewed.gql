@@ -1,0 +1,3 @@
+mutation AddProductToViewed($input: AddToViewedInput!) {
+  addProductToViewed(input: $input)
+}
