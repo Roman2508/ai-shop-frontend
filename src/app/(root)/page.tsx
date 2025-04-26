@@ -16,7 +16,8 @@ import { Button } from "@/components/ui/common/Button";
 import CatalogCard from "@/components/features/CatalogCard";
 import ButtonWithIcon from "@/components/ui/custom/ButtonWithIcon";
 import CatalogCardSkeleton from "@/components/features/CatalogCardSkeleton";
-import { ProductModel, useGetAllProductsQuery } from "@/graphql/generated/output";
+import { ProductModel, useGetAllProductsQuery, useGetSimilarProductsQuery } from "@/graphql/generated/output";
+import { useCurrent } from "@/hooks/useCurrent";
 
 const categories = ["Apple", "Samsung", "Xiaomi", "Google Pixel", "One Plus", "Motorola", "Nokia", "Sony"];
 
@@ -32,7 +33,10 @@ const calcSlidesPerView = (windowWidth: number) => {
 export default function Home() {
   const t = useTranslations("home");
 
-  const { data } = useGetAllProductsQuery();
+  const { user } = useCurrent();
+
+  const { data } = useGetAllProductsQuery({ variables: { userId: user ? user.id : "" } });
+  const { data: similarProducts } = useGetSimilarProductsQuery({ variables: { userId: user ? user.id : "" } });
 
   const advantages = [
     { title: t("assortment.title"), text: t("assortment.text") },
@@ -122,13 +126,13 @@ export default function Home() {
             autoplay={{ delay: 2000 }}
             loop={true}
           >
-            {data && data.getAllProducts.products.length
-              ? data.getAllProducts.products.slice(1, 16).map((el) => (
+            {similarProducts && similarProducts.getSimilarProducts.length
+              ? similarProducts.getSimilarProducts.map((el) => (
                   <SwiperSlide key={el.id}>
                     <CatalogCard viewType="cards" product={el as ProductModel} />
                   </SwiperSlide>
                 ))
-              : [...Array(15)].map((_, index) => (
+              : [...Array(10)].map((_, index) => (
                   <SwiperSlide key={index}>
                     <CatalogCardSkeleton />
                   </SwiperSlide>
@@ -155,7 +159,7 @@ export default function Home() {
             loop={true}
           >
             {data && data.getAllProducts.products.length
-              ? data.getAllProducts.products.slice(1, 16).map((el) => (
+              ? data.getAllProducts.products.slice(1, 11).map((el) => (
                   <SwiperSlide key={el.id}>
                     <CatalogCard viewType="cards" product={el as ProductModel} />
                   </SwiperSlide>

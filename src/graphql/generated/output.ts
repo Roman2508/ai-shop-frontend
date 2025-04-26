@@ -24,6 +24,11 @@ export type AddToCartInput = {
   productId: Scalars['String']['input'];
 };
 
+export type AddToViewedInput = {
+  productId: Scalars['String']['input'];
+  userId: Scalars['String']['input'];
+};
+
 export type CartItemModel = {
   __typename?: 'CartItemModel';
   count: Scalars['Float']['output'];
@@ -129,10 +134,12 @@ export type LoginInput = {
 export type Mutation = {
   __typename?: 'Mutation';
   addProductPhoto: Scalars['Boolean']['output'];
+  addProductToViewed: Scalars['Boolean']['output'];
   changeCartItemCount: Scalars['Boolean']['output'];
   changeEmail: Scalars['Boolean']['output'];
   changePassword: Scalars['Boolean']['output'];
   clearSessionCookie: Scalars['Boolean']['output'];
+  createAllEmbeddings: Scalars['Boolean']['output'];
   createManyProducts: Scalars['Boolean']['output'];
   createOrder: OrderModel;
   createProduct: ProductModel;
@@ -157,6 +164,11 @@ export type Mutation = {
 export type MutationAddProductPhotoArgs = {
   file: Scalars['Upload']['input'];
   productId: Scalars['String']['input'];
+};
+
+
+export type MutationAddProductToViewedArgs = {
+  input: AddToViewedInput;
 };
 
 
@@ -355,9 +367,14 @@ export type Query = {
   getMostPopularProducts: Array<ProductModel>;
   getProductById: ProductModel;
   getReviewByUserId: Array<ReviewModel>;
-  getSimilarProducts: ProductModel;
+  getSimilarProducts: Array<ProductModel>;
   paginateAndFilter: ProductsAndTotalModel;
   searchProduct: Array<ProductModel>;
+};
+
+
+export type QueryGetAllProductsArgs = {
+  userId: Scalars['String']['input'];
 };
 
 
@@ -367,7 +384,7 @@ export type QueryGetProductByIdArgs = {
 
 
 export type QueryGetSimilarProductsArgs = {
-  productId: Scalars['String']['input'];
+  userId: Scalars['String']['input'];
 };
 
 
@@ -598,7 +615,9 @@ export type GetAllOrdersQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetAllOrdersQuery = { __typename?: 'Query', getAllOrders: Array<{ __typename?: 'OrderModel', id: string, status: EnumOrderStatus, total: number, createdAt: any, user: { __typename?: 'UserModel', id: string, email: string, displayName: string, avatar?: string | null } }> };
 
-export type GetAllProductsQueryVariables = Exact<{ [key: string]: never; }>;
+export type GetAllProductsQueryVariables = Exact<{
+  userId: Scalars['String']['input'];
+}>;
 
 
 export type GetAllProductsQuery = { __typename?: 'Query', getAllProducts: { __typename?: 'ProductsAndTotalModel', total: number, products: Array<{ __typename?: 'ProductModel', id: string, title: string, price: number, brand: string, frontCamera: number, mainCamera: number, ram: number, color: string, builtInMemory: number, processorName: string, processorCores: string, os: string, deliverySet: string, materials: string, simCount: number, simFormat: Array<string>, images: Array<string>, battery: number, screenDiagonal: number, createdAt: any, updatedAt: any }> } };
@@ -614,6 +633,13 @@ export type GetProductByIdQueryVariables = Exact<{
 
 
 export type GetProductByIdQuery = { __typename?: 'Query', getProductById: { __typename?: 'ProductModel', id: string, title: string, price: number, brand: string, frontCamera: number, mainCamera: number, ram: number, color: string, builtInMemory: number, processorName: string, processorCores: string, os: string, deliverySet: string, materials: string, simCount: number, simFormat: Array<string>, images: Array<string>, battery: number, createdAt: any, screenDiagonal: number, updatedAt: any, reviews: Array<{ __typename?: 'ReviewModel', id: string, text: string, rating: number, createdAt: any, product: { __typename?: 'ProductModel', id: string, price: number, images: Array<string>, brand: string, ram: number, builtInMemory: number, color: string }, user: { __typename?: 'UserModel', id: string, displayName: string, avatar?: string | null } }> } };
+
+export type GetSimilarProductsQueryVariables = Exact<{
+  userId: Scalars['String']['input'];
+}>;
+
+
+export type GetSimilarProductsQuery = { __typename?: 'Query', getSimilarProducts: Array<{ __typename?: 'ProductModel', id: string, title: string, price: number, brand: string, frontCamera: number, mainCamera: number, ram: number, color: string, builtInMemory: number, processorName: string, processorCores: string, os: string, deliverySet: string, materials: string, simCount: number, simFormat: Array<string>, images: Array<string>, battery: number, screenDiagonal: number, createdAt: any, updatedAt: any }> };
 
 export type PaginateAndFilterProductsQueryVariables = Exact<{
   query: PaginateAndFilterInput;
@@ -1300,8 +1326,8 @@ export type GetAllOrdersLazyQueryHookResult = ReturnType<typeof useGetAllOrdersL
 export type GetAllOrdersSuspenseQueryHookResult = ReturnType<typeof useGetAllOrdersSuspenseQuery>;
 export type GetAllOrdersQueryResult = Apollo.QueryResult<GetAllOrdersQuery, GetAllOrdersQueryVariables>;
 export const GetAllProductsDocument = gql`
-    query getAllProducts {
-  getAllProducts {
+    query getAllProducts($userId: String!) {
+  getAllProducts(userId: $userId) {
     products {
       id
       title
@@ -1342,10 +1368,11 @@ export const GetAllProductsDocument = gql`
  * @example
  * const { data, loading, error } = useGetAllProductsQuery({
  *   variables: {
+ *      userId: // value for 'userId'
  *   },
  * });
  */
-export function useGetAllProductsQuery(baseOptions?: Apollo.QueryHookOptions<GetAllProductsQuery, GetAllProductsQueryVariables>) {
+export function useGetAllProductsQuery(baseOptions: Apollo.QueryHookOptions<GetAllProductsQuery, GetAllProductsQueryVariables> & ({ variables: GetAllProductsQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useQuery<GetAllProductsQuery, GetAllProductsQueryVariables>(GetAllProductsDocument, options);
       }
@@ -1478,6 +1505,46 @@ export type GetProductByIdQueryHookResult = ReturnType<typeof useGetProductByIdQ
 export type GetProductByIdLazyQueryHookResult = ReturnType<typeof useGetProductByIdLazyQuery>;
 export type GetProductByIdSuspenseQueryHookResult = ReturnType<typeof useGetProductByIdSuspenseQuery>;
 export type GetProductByIdQueryResult = Apollo.QueryResult<GetProductByIdQuery, GetProductByIdQueryVariables>;
+export const GetSimilarProductsDocument = gql`
+    query GetSimilarProducts($userId: String!) {
+  getSimilarProducts(userId: $userId) {
+    ...ProductFragment
+  }
+}
+    ${ProductFragmentFragmentDoc}`;
+
+/**
+ * __useGetSimilarProductsQuery__
+ *
+ * To run a query within a React component, call `useGetSimilarProductsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetSimilarProductsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetSimilarProductsQuery({
+ *   variables: {
+ *      userId: // value for 'userId'
+ *   },
+ * });
+ */
+export function useGetSimilarProductsQuery(baseOptions: Apollo.QueryHookOptions<GetSimilarProductsQuery, GetSimilarProductsQueryVariables> & ({ variables: GetSimilarProductsQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetSimilarProductsQuery, GetSimilarProductsQueryVariables>(GetSimilarProductsDocument, options);
+      }
+export function useGetSimilarProductsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetSimilarProductsQuery, GetSimilarProductsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetSimilarProductsQuery, GetSimilarProductsQueryVariables>(GetSimilarProductsDocument, options);
+        }
+export function useGetSimilarProductsSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetSimilarProductsQuery, GetSimilarProductsQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetSimilarProductsQuery, GetSimilarProductsQueryVariables>(GetSimilarProductsDocument, options);
+        }
+export type GetSimilarProductsQueryHookResult = ReturnType<typeof useGetSimilarProductsQuery>;
+export type GetSimilarProductsLazyQueryHookResult = ReturnType<typeof useGetSimilarProductsLazyQuery>;
+export type GetSimilarProductsSuspenseQueryHookResult = ReturnType<typeof useGetSimilarProductsSuspenseQuery>;
+export type GetSimilarProductsQueryResult = Apollo.QueryResult<GetSimilarProductsQuery, GetSimilarProductsQueryVariables>;
 export const PaginateAndFilterProductsDocument = gql`
     query PaginateAndFilterProducts($query: PaginateAndFilterInput!) {
   paginateAndFilter(data: $query) {

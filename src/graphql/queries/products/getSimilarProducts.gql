@@ -1,0 +1,5 @@
+query GetSimilarProducts ($userId: String!) {
+  getSimilarProducts (userId: $userId) {
+    ...ProductFragment
+  }
+}

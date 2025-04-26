@@ -24,9 +24,13 @@ import ProductsPagination from "@/components/features/ProductsPagination";
 import CatalogCardSkeleton from "@/components/features/CatalogCardSkeleton";
 import ProductFilter from "@/components/features/product-filter/ProductFilter";
 import CatalogFilters from "@/components/features/catalog-filters/CatalogFilters";
+import { useCurrent } from "@/hooks/useCurrent";
+import { Button } from "@/components/ui/common/Button";
 
 const CatalogPage = () => {
   const t = useTranslations("catalog");
+
+  const { user } = useCurrent();
 
   const [isLoading, setIsLoading] = React.useState(false);
   const [maxPrice, setMaxPrice] = React.useState(100000);
@@ -37,7 +41,7 @@ const CatalogPage = () => {
 
   const [products, setProducts] = React.useState<ProductModel[]>([]);
 
-  const { data } = useGetAllProductsQuery();
+  const { data } = useGetAllProductsQuery({ variables: { userId: user ? user.id : "" } });
   const { refetch: refetchFilteredData } = usePaginateAndFilterProductsQuery({
     variables: { query: filter },
     skip: true,
@@ -116,6 +120,24 @@ const CatalogPage = () => {
     setMaxPrice(maxPrice);
   }, [data]);
 
+  const getFilters = (filters: PaginateAndFilterInput) => {
+    let filtersArray: { key: keyof PaginateAndFilterInput; value: string }[] = [];
+    Object.keys(filters).map((key) => {
+      // @ts-ignore
+      const filterItem = { key: key, value: filters[key].replaceAll(";", ", ") };
+      // @ts-ignore
+      filtersArray.push(filterItem);
+    });
+    return filtersArray;
+  };
+
+  const removeFilter = (key: keyof typeof filter) => {
+    setFilter((prev) => {
+      const { [key]: _, ...rest } = prev;
+      return rest;
+    });
+  };
+
   return (
     <div className="max-w-[1640px] mx-auto px-[16px]">
       <Breadcrumb className="mb-[45px]">
@@ -159,6 +181,19 @@ const CatalogPage = () => {
             handleChangeFilter={handleChangeFilter}
             fetchFilteredData={fetchFilteredData}
           />
+
+          {getFilters(filter).length > 0 && (
+            <div>
+              <h1 className="text-sm font-semibold mb-[15px]">Активні фільтри</h1>
+              <div className="flex flex-wrap gap-4">
+                {getFilters(filter).map((el) => (
+                  <Button variant="outline" onClick={() => removeFilter(el.key)}>
+                    {el.key} {el.value}
+                  </Button>
+                ))}
+              </div>
+            </div>
+          )}
 
           {/* catalog cards */}
           <div

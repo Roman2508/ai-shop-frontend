@@ -43,6 +43,7 @@ import ButtonWithIcon from "@/components/ui/custom/ButtonWithIcon";
 import ProductTabs from "@/components/features/product/ProductTabs";
 import CatalogCardSkeleton from "@/components/features/CatalogCardSkeleton";
 import { getProductAttributeLabel } from "@/utils/get-product-attribute-label";
+import { useCurrent } from "@/hooks/useCurrent";
 
 const mainCharacteristicsKeys = [
   { key: "screenDiagonal", label_ua: "Діагональ екрану", label_en: "Screen diagonal" },
@@ -69,6 +70,7 @@ const ProductPage = () => {
   const { id } = useParams();
   const locale = useLocale();
 
+  const { user } = useCurrent();
   const { isAuthentificated } = useAuth();
   const { addItemToWishlist, removeItemFromWishlist, wishlistItems } = useWishlist();
   const { addItemToCart, cartItems, clearSelectedItems, toggleSelectedCartItems } = useCart();
@@ -76,7 +78,7 @@ const ProductPage = () => {
   const [count, setCount] = React.useState(1);
   const [mainPhotoName, setMainPhotoName] = React.useState("");
 
-  const { data } = useGetAllProductsQuery();
+  const { data } = useGetAllProductsQuery({ variables: { userId: user ? user.id : "" } });
 
   const { data: product } = useGetProductByIdQuery({
     variables: { productId: typeof id === "string" ? id : "" },

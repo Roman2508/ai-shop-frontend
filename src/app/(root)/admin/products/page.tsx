@@ -36,9 +36,12 @@ import { Skeleton } from "@/components/ui/common/Skeleton";
 import ProductsPagination from "@/components/features/ProductsPagination";
 import ProductFilter from "@/components/features/product-filter/ProductFilter";
 import { Table, TableRow, TableBody, TableCell, TableHead, TableHeader } from "@/components/ui/common/Table";
+import { useCurrent } from "@/hooks/useCurrent";
 
 const AdminProductsPage = () => {
   const t = useTranslations("admin.products");
+
+  const { user } = useCurrent();
 
   const [total, setTotal] = React.useState(0);
   const [maxPrice, setMaxPrice] = React.useState(100000);
@@ -47,7 +50,7 @@ const AdminProductsPage = () => {
   const [products, setProducts] = React.useState<ProductModel[]>([]);
   const [filter, setFilter] = React.useState<PaginateAndFilterInput>({});
 
-  const { data } = useGetAllProductsQuery();
+  const { data } = useGetAllProductsQuery({ variables: { userId: user ? user.id : "" } });
   const { refetch: refetchFilteredData } = usePaginateAndFilterProductsQuery({
     variables: { query: filter },
     skip: true,
