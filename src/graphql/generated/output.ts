@@ -677,15 +677,15 @@ export type FindSessionsByUserQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type FindSessionsByUserQuery = { __typename?: 'Query', findSessionsByUser: Array<{ __typename?: 'SessionModel', id: string, createdAt: string, metadata: { __typename?: 'SessionMetadataModel', ip: string, location: { __typename?: 'LocationModel', country: string, city: string, latitude: number, longitude: number }, device: { __typename?: 'DeviceModel', browser: string, os: string } } }> };
 
-export type GetReviewsByUserQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type GetReviewsByUserQuery = { __typename?: 'Query', getReviewByUserId: Array<{ __typename?: 'ReviewModel', id: string, text: string, rating: number, createdAt: any, product: { __typename?: 'ProductModel', id: string, price: number, images: Array<string>, brand: string, ram: number, builtInMemory: number, color: string }, user: { __typename?: 'UserModel', id: string, displayName: string, avatar?: string | null } }> };
-
 export type GetAverageRatingQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type GetAverageRatingQuery = { __typename?: 'Query', getAverageRating: number };
+
+export type GetReviewsByUserQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetReviewsByUserQuery = { __typename?: 'Query', getReviewByUserId: Array<{ __typename?: 'ReviewModel', id: string, text: string, rating: number, createdAt: any, product: { __typename?: 'ProductModel', id: string, price: number, images: Array<string>, brand: string, ram: number, builtInMemory: number, color: string }, user: { __typename?: 'UserModel', id: string, displayName: string, avatar?: string | null } }> };
 
 export type FindAllUsersQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -1886,6 +1886,43 @@ export type FindSessionsByUserQueryHookResult = ReturnType<typeof useFindSession
 export type FindSessionsByUserLazyQueryHookResult = ReturnType<typeof useFindSessionsByUserLazyQuery>;
 export type FindSessionsByUserSuspenseQueryHookResult = ReturnType<typeof useFindSessionsByUserSuspenseQuery>;
 export type FindSessionsByUserQueryResult = Apollo.QueryResult<FindSessionsByUserQuery, FindSessionsByUserQueryVariables>;
+export const GetAverageRatingDocument = gql`
+    query GetAverageRating {
+  getAverageRating
+}
+    `;
+
+/**
+ * __useGetAverageRatingQuery__
+ *
+ * To run a query within a React component, call `useGetAverageRatingQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetAverageRatingQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetAverageRatingQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetAverageRatingQuery(baseOptions?: Apollo.QueryHookOptions<GetAverageRatingQuery, GetAverageRatingQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetAverageRatingQuery, GetAverageRatingQueryVariables>(GetAverageRatingDocument, options);
+      }
+export function useGetAverageRatingLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetAverageRatingQuery, GetAverageRatingQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetAverageRatingQuery, GetAverageRatingQueryVariables>(GetAverageRatingDocument, options);
+        }
+export function useGetAverageRatingSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetAverageRatingQuery, GetAverageRatingQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetAverageRatingQuery, GetAverageRatingQueryVariables>(GetAverageRatingDocument, options);
+        }
+export type GetAverageRatingQueryHookResult = ReturnType<typeof useGetAverageRatingQuery>;
+export type GetAverageRatingLazyQueryHookResult = ReturnType<typeof useGetAverageRatingLazyQuery>;
+export type GetAverageRatingSuspenseQueryHookResult = ReturnType<typeof useGetAverageRatingSuspenseQuery>;
+export type GetAverageRatingQueryResult = Apollo.QueryResult<GetAverageRatingQuery, GetAverageRatingQueryVariables>;
 export const GetReviewsByUserDocument = gql`
     query GetReviewsByUser {
   getReviewByUserId {
@@ -1942,43 +1979,6 @@ export type GetReviewsByUserQueryHookResult = ReturnType<typeof useGetReviewsByU
 export type GetReviewsByUserLazyQueryHookResult = ReturnType<typeof useGetReviewsByUserLazyQuery>;
 export type GetReviewsByUserSuspenseQueryHookResult = ReturnType<typeof useGetReviewsByUserSuspenseQuery>;
 export type GetReviewsByUserQueryResult = Apollo.QueryResult<GetReviewsByUserQuery, GetReviewsByUserQueryVariables>;
-export const GetAverageRatingDocument = gql`
-    query GetAverageRating {
-  getAverageRating
-}
-    `;
-
-/**
- * __useGetAverageRatingQuery__
- *
- * To run a query within a React component, call `useGetAverageRatingQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetAverageRatingQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useGetAverageRatingQuery({
- *   variables: {
- *   },
- * });
- */
-export function useGetAverageRatingQuery(baseOptions?: Apollo.QueryHookOptions<GetAverageRatingQuery, GetAverageRatingQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetAverageRatingQuery, GetAverageRatingQueryVariables>(GetAverageRatingDocument, options);
-      }
-export function useGetAverageRatingLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetAverageRatingQuery, GetAverageRatingQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetAverageRatingQuery, GetAverageRatingQueryVariables>(GetAverageRatingDocument, options);
-        }
-export function useGetAverageRatingSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetAverageRatingQuery, GetAverageRatingQueryVariables>) {
-          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<GetAverageRatingQuery, GetAverageRatingQueryVariables>(GetAverageRatingDocument, options);
-        }
-export type GetAverageRatingQueryHookResult = ReturnType<typeof useGetAverageRatingQuery>;
-export type GetAverageRatingLazyQueryHookResult = ReturnType<typeof useGetAverageRatingLazyQuery>;
-export type GetAverageRatingSuspenseQueryHookResult = ReturnType<typeof useGetAverageRatingSuspenseQuery>;
-export type GetAverageRatingQueryResult = Apollo.QueryResult<GetAverageRatingQuery, GetAverageRatingQueryVariables>;
 export const FindAllUsersDocument = gql`
     query FindAllUsers {
   findAllUsers {

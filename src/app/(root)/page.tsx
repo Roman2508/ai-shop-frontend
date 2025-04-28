@@ -51,7 +51,11 @@ export default function Home() {
           <div className="w-full lg:w-[320px] min-w-[320px] border rounded-[20px]">
             <div className="pt-[20px] px-[25px]">
               {categories.map((el) => (
-                <Link key={el} href="#" className="flex items-center py-[10px] gap-[15px] border-b border-dotted">
+                <Link
+                  key={el}
+                  href="/catalog"
+                  className="flex items-center py-[10px] gap-[15px] border-b border-dotted"
+                >
                   <div className="flex items-center justify-center bg-secondary w-[30px] h-[30px]">
                     <Image src="/icons/phone.png" width={20} height={20} alt="phone icon" />
                   </div>
