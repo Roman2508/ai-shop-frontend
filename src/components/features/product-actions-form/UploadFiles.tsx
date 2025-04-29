@@ -56,13 +56,15 @@ const UploadFiles: React.FC<IUploadFilesProps> = ({
       {isMulti && <h4 className="font-semibold mb-[20px]">Фото</h4>}
 
       <div className={`flex flex-col flex-wrap gap-[26px] ${isMulti ? 'w-full' : 'w-[150px]'}`}>
-        <div className={`flex gap-[10px] h-[150px] border border-border rounded-[10] ${isMulti ? 'w-full' : 'w-[150px]'}`}>
+        <div
+          className={`flex gap-[10px] h-[150px] border border-border rounded-[10] ${isMulti ? 'w-full' : 'w-[150px]'}`}
+        >
           {isMulti &&
             Array.from(files).map((f, index) => {
               const imageUrl = typeof f === 'string' ? f : URL.createObjectURL(f)
 
               return (
-                <div className="w-[150px] h-[150px] relative" key={index}>
+                <div className="w-[150px] h-[150px] relative flex justify-center" key={index}>
                   {f && (
                     <>
                       <div
@@ -72,7 +74,7 @@ const UploadFiles: React.FC<IUploadFilesProps> = ({
                         <Trash2 className="h-14 w-14 stroke-black bg-primary rounded-lg p-[10px] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                       </div>
                       {/* @ts-ignore */}
-                      <img src={imageUrl} className="w-full h-full object-cover" />
+                      <img src={imageUrl} className="w-auto h-full object-cover" />
                     </>
                   )}
                 </div>

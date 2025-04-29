@@ -38,7 +38,7 @@ const ProductActionsForm: React.FC<IProductActionsFormProps> = ({ id, product })
 
   const [createProduct] = useCreateProductMutation({
     onCompleted(data) {
-      toast.success('Створено новий')
+      toast.success('Створено новий товар')
     },
     onError(error) {
       if (error.message) toast.error(error.message)
