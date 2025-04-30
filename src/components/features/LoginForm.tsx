@@ -11,9 +11,9 @@ import { useAuth } from '@/hooks/useAuth'
 import { Input } from '../ui/common/Input'
 import { Button } from '../ui/common/Button'
 import { Checkbox } from '../ui/common/Checkbox'
+import { setAuthCookie } from '@/utils/auth-cookie'
 import { useLoginMutation } from '@/graphql/generated/output'
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '../ui/common/Form'
-import { setAuthCookie } from '@/utils/auth-cookie'
 
 const formSchema = z.object({
   login: z.string().min(3, {

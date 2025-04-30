@@ -2,7 +2,7 @@
 
 import React from 'react'
 import Link from 'next/link'
-import { useLocale, useTranslations } from 'next-intl'
+import { useTranslations } from 'next-intl'
 
 import {
   Breadcrumb,
@@ -14,20 +14,20 @@ import {
 } from '@/components/ui/common/Breadcrumb'
 import {
   ProductModel,
+  GetAllProductsQuery,
   useGetAllProductsQuery,
   PaginateAndFilterInput,
   usePaginateAndFilterProductsQuery,
-  GetAllProductsQuery,
 } from '@/graphql/generated/output'
+import { useAuth } from '@/hooks/useAuth'
+import { useCurrent } from '@/hooks/useCurrent'
 import { Card } from '@/components/ui/common/Card'
+import { Button } from '@/components/ui/common/Button'
 import CatalogCard from '@/components/features/CatalogCard'
 import ProductsPagination from '@/components/features/ProductsPagination'
 import CatalogCardSkeleton from '@/components/features/CatalogCardSkeleton'
 import ProductFilter from '@/components/features/product-filter/ProductFilter'
 import CatalogFilters from '@/components/features/catalog-filters/CatalogFilters'
-import { useCurrent } from '@/hooks/useCurrent'
-import { Button } from '@/components/ui/common/Button'
-import { useAuth } from '@/hooks/useAuth'
 
 const CatalogPage = () => {
   const t = useTranslations('catalog')

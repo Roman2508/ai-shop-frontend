@@ -1,105 +1,105 @@
-"use client";
-import React from "react";
-import { toast } from "sonner";
-import { useLocale, useTranslations } from "next-intl";
+'use client'
+import React from 'react'
+import { toast } from 'sonner'
+import { useLocale, useTranslations } from 'next-intl'
 
-import { useCart } from "@/hooks/useCart";
-import { useCurrent } from "@/hooks/useCurrent";
-import CartItem from "@/components/features/CartItem";
-import getProductTitle from "@/utils/getProductTitle";
-import { CartItemModel, UserModel } from "@/graphql/generated/output";
-import CheckoutForm from "@/components/features/checkout/CheckoutForm";
-import CheckoutView from "@/components/features/checkout/CheckoutView";
+import { useCart } from '@/hooks/useCart'
+import { useCurrent } from '@/hooks/useCurrent'
+import CartItem from '@/components/features/CartItem'
+import getProductTitle from '@/utils/getProductTitle'
+import { CartItemModel, UserModel } from '@/graphql/generated/output'
+import CheckoutForm from '@/components/features/checkout/CheckoutForm'
+import CheckoutView from '@/components/features/checkout/CheckoutView'
 
 const defaultDeliveryData = {
-  city: "",
-  street: "",
-  postOffice: "",
-};
+  city: '',
+  street: '',
+  postOffice: '',
+}
 
 const CheckoutPage = () => {
-  const t = useTranslations("checkout");
+  const t = useTranslations('checkout')
 
-  const locale = useLocale();
+  const locale = useLocale()
 
-  const { user } = useCurrent();
-  const [isError, setIsError] = React.useState(false);
-  const { setCartItems, selectedCartItems, clearSelectedItems } = useCart();
+  const { user } = useCurrent()
+  const [isError, setIsError] = React.useState(false)
+  const { setCartItems, selectedCartItems, clearSelectedItems } = useCart()
 
-  const [isLoading, setIsLoading] = React.useState(false);
-  const [pageView, setPageView] = React.useState<"view" | "edit">("view");
-  const [deliveryData, setDeliveryData] = React.useState(defaultDeliveryData);
+  const [isLoading, setIsLoading] = React.useState(false)
+  const [pageView, setPageView] = React.useState<'view' | 'edit'>('view')
+  const [deliveryData, setDeliveryData] = React.useState(defaultDeliveryData)
 
-  const totalPrice = selectedCartItems.reduce((acc, curr) => curr.product.price * curr.count + acc, 0);
+  const totalPrice = selectedCartItems.reduce((acc, curr) => curr.product.price * curr.count + acc, 0)
 
   const handleChangePageView = () => {
-    if (pageView === "view") {
-      setPageView("edit");
+    if (pageView === 'view') {
+      setPageView('edit')
     } else {
-      setPageView("view");
+      setPageView('view')
     }
-  };
+  }
 
   const createPayment = async () => {
     if (!deliveryData.postOffice || !deliveryData.city || !deliveryData.street) {
-      setIsError(true);
-      return;
+      setIsError(true)
+      return
     }
 
     try {
-      setIsLoading(true);
-      if (!user) return;
+      setIsLoading(true)
+      if (!user) return
       const items = selectedCartItems.map((el) => ({
         quantity: el.count,
         price: el.product.price,
         productId: el.product.id,
-      }));
+      }))
 
-      const totalPrice = items.reduce((acc, cur) => acc + cur.price * cur.quantity, 0);
-      const itemsNames = selectedCartItems.map(({ product }) => getProductTitle(product)).join("; ");
+      const totalPrice = items.reduce((acc, cur) => acc + cur.price * cur.quantity, 0)
+      const itemsNames = selectedCartItems.map(({ product }) => getProductTitle(product)).join('; ')
 
-      const body = JSON.stringify({ name: itemsNames, price: totalPrice, userId: user.id, items });
+      const body = JSON.stringify({ name: itemsNames, price: totalPrice, userId: user.id, items })
 
       const data = await fetch(`${process.env.NEXT_PUBLIC_SERVER_STATIC_URL}/payment/create`, {
         body,
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-      });
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+      })
 
-      const json = await data.json();
+      const json = await data.json()
 
       if (json.response) {
-        clearSelectedItems();
-        window.location.href = json.response.checkout_url;
+        clearSelectedItems()
+        window.location.href = json.response.checkout_url
       } else {
-        toast.error("Сталась помилка з платіжним сервісом. Спробуйте пізніше");
+        toast.error('Сталась помилка з платіжним сервісом. Спробуйте пізніше')
       }
     } catch (error) {
-      toast.error("Сталась помилка з платіжним сервісом. Спробуйте пізніше");
+      toast.error('Сталась помилка з платіжним сервісом. Спробуйте пізніше')
     } finally {
-      setIsLoading(false);
+      setIsLoading(false)
     }
-  };
+  }
 
   React.useEffect(() => {
-    if (!user || !user.cart) return;
-    setCartItems(user.cart as CartItemModel[]);
+    if (!user || !user.cart) return
+    setCartItems(user.cart as CartItemModel[])
     setDeliveryData({
-      city: user.city || "",
-      street: user.street || "",
-      postOffice: user.postOffice || "",
-    });
-  }, [user]);
+      city: user.city || '',
+      street: user.street || '',
+      postOffice: user.postOffice || '',
+    })
+  }, [user])
 
-  if (!user) return;
+  if (!user) return
 
   return (
     <div className="max-w-[1640px] mx-auto px-[16px]">
-      <h1 className="text-3xl font-semibold">{t("title")}</h1>
+      <h1 className="text-3xl font-semibold">{t('title')}</h1>
 
       <div className="flex gap-[20px] mt-[40px] flex-col xl:flex-row">
         <div className="px-[20px] py-[20px] w-full xl:w-[40%] rounded-[5px] border border-border">
-          {pageView === "view" && (
+          {pageView === 'view' && (
             <CheckoutView
               pageView={pageView}
               isLoading={isLoading}
@@ -110,7 +110,7 @@ const CheckoutPage = () => {
             />
           )}
 
-          {pageView === "edit" && (
+          {pageView === 'edit' && (
             <CheckoutForm
               pageView={pageView}
               isLoading={isLoading}
@@ -124,15 +124,15 @@ const CheckoutPage = () => {
 
           {isError && (
             <p className="text-error mt-5 text-center">
-              {locale === "ua" ? "Виберіть поштове відділення для доставки" : "Select a post office for delivery"}
+              {locale === 'ua' ? 'Виберіть поштове відділення для доставки' : 'Select a post office for delivery'}
             </p>
           )}
         </div>
 
         <div className="px-[20px] py-[20px] w-full xl:w-[60%] rounded-[5px] border border-border">
           <div className="flex items-center justify-between mb-[20px]">
-            <h2 className="text-2xl font-semibold">{t("subtitle3")}</h2>
-            <h2 className="text-2xl font-semibold">{totalPrice.toLocaleString("uk-UA")} ₴</h2>
+            <h2 className="text-2xl font-semibold">{t('subtitle3')}</h2>
+            <h2 className="text-2xl font-semibold">{totalPrice.toLocaleString('uk-UA')} ₴</h2>
           </div>
 
           {selectedCartItems ? (
@@ -147,12 +147,12 @@ const CheckoutPage = () => {
               />
             ))
           ) : (
-            <p>Loading...</p>
+            <p>{locale === 'ua' ? 'Завантаження...' : 'Loading...'}</p>
           )}
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default CheckoutPage;
+export default CheckoutPage

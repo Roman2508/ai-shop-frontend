@@ -30,13 +30,13 @@ import {
   BreadcrumbSeparator,
 } from '@/components/ui/common/Breadcrumb'
 import getPhotoUrl from '@/utils/get-photo-url'
+import { useCurrent } from '@/hooks/useCurrent'
 import getProductTitle from '@/utils/getProductTitle'
 import { Button } from '@/components/ui/common/Button'
 import { Skeleton } from '@/components/ui/common/Skeleton'
 import ProductsPagination from '@/components/features/ProductsPagination'
 import ProductFilter from '@/components/features/product-filter/ProductFilter'
 import { Table, TableRow, TableBody, TableCell, TableHead, TableHeader } from '@/components/ui/common/Table'
-import { useCurrent } from '@/hooks/useCurrent'
 
 const AdminProductsPage = () => {
   const t = useTranslations('admin.products')

@@ -1,13 +1,11 @@
-"use client";
+'use client'
 
-// import { Montserrat } from "next/font/google";
-
-import "../../styles/global.css";
+import '../../styles/global.css'
 
 export default function Layout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: React.ReactNode
 }>) {
   return (
     <html>
@@ -19,5 +17,5 @@ export default function Layout({
         </main>
       </body>
     </html>
-  );
+  )
 }

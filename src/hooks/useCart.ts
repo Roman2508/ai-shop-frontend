@@ -3,7 +3,6 @@ import { useShallow } from "zustand/react/shallow";
 import { cartStore } from "@/store/cart/cart.store";
 
 export const useCart = () => {
-  //   const cartItems = cartStore((state) => state.cartItems)
   const {
     cartItems,
     selectedCartItems,

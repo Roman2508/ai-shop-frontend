@@ -73,7 +73,6 @@ const UploadFiles: React.FC<IUploadFilesProps> = ({
                       >
                         <Trash2 className="h-14 w-14 stroke-black bg-primary rounded-lg p-[10px] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                       </div>
-                      {/* @ts-ignore */}
                       <img src={imageUrl} className="w-auto h-full object-cover" />
                     </>
                   )}

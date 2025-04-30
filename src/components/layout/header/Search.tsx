@@ -1,16 +1,16 @@
 import React from 'react'
-import { useTranslations } from 'next-intl'
-
-import { Dialog, DialogTitle, DialogHeader, DialogTrigger, DialogContent } from '@/components/ui/common/Dialog'
-import { Input } from '@/components/ui/common/Input'
-import SearchIcon from '@/components/images/SearchIcon'
-import { Button } from '@/components/ui/common/Button'
-import { ProductModel, useSearchProductsQuery } from '@/graphql/generated/output'
-import { useDebouncedCallback } from 'use-debounce'
-import getPhotoUrl from '@/utils/get-photo-url'
-import getProductTitle from '@/utils/getProductTitle'
-import Loader from '@/components/ui/icons/Loader'
 import Link from 'next/link'
+import { useTranslations } from 'next-intl'
+import { useDebouncedCallback } from 'use-debounce'
+
+import getPhotoUrl from '@/utils/get-photo-url'
+import Loader from '@/components/ui/icons/Loader'
+import { Input } from '@/components/ui/common/Input'
+import getProductTitle from '@/utils/getProductTitle'
+import { Button } from '@/components/ui/common/Button'
+import SearchIcon from '@/components/images/SearchIcon'
+import { ProductModel, useSearchProductsQuery } from '@/graphql/generated/output'
+import { Dialog, DialogTitle, DialogHeader, DialogTrigger, DialogContent } from '@/components/ui/common/Dialog'
 
 interface ISearchProps {
   isMobile?: boolean
@@ -24,7 +24,7 @@ const Search: React.FC<ISearchProps> = ({ isMobile = false }) => {
   const [isDialogOpen, setIsDialogOpen] = React.useState(false)
   const [products, setProducts] = React.useState<ProductModel[]>([])
 
-  const { data, refetch } = useSearchProductsQuery({ variables: { data: searchQuery }, skip: true })
+  const { refetch } = useSearchProductsQuery({ variables: { data: searchQuery }, skip: true })
 
   const debouncedSearch = useDebouncedCallback((value) => {
     setSearchQuery(value)

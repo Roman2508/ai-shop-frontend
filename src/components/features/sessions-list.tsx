@@ -47,6 +47,9 @@ const SessionsList = () => {
     clearSelectedItems()
     setWishlistItems([])
     setCartItems([])
+    localStorage.removeItem('userData')
+    localStorage.removeItem('order')
+    localStorage.removeItem('wishlist')
     exit()
     removeAuthCookie()
   }

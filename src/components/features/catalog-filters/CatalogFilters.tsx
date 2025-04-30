@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react'
-import { useTranslations } from 'next-intl'
+import { useLocale, useTranslations } from 'next-intl'
 
 import {
   Select,
@@ -49,18 +49,20 @@ const CatalogFilters: React.FC<ICatalogFiltersProps> = ({
 }) => {
   const t = useTranslations('catalog')
 
+  const locale = useLocale()
+
   return (
     <div className="flex items-center justify-between gap-[50px] w-full flex-col md:flex-row">
       <div className="flex items-center gap-[10px]">
         <Drawer>
           <DrawerTrigger>
-            <Button className="block xl:hidden">Фільтри</Button>
+            <Button className="block xl:hidden">{locale === 'ua' ? 'Фільтри' : 'Filters'}</Button>
           </DrawerTrigger>
 
           <DrawerContent data-vaul-no-drag>
             <DrawerHeader>
               <div className="flex justify-between items-center">
-                <DrawerTitle>Фільтри</DrawerTitle>
+                <DrawerTitle>{locale === 'ua' ? 'Фільтри' : 'Filters'}</DrawerTitle>
 
                 <DrawerClose>
                   <Button variant="secondary" size="icon" className="">
